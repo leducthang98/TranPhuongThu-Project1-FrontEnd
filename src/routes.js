@@ -26,52 +26,62 @@ import Icons from "views/examples/Icons.js";
 var routes = [
   {
     path: "/index",
-    name: "Dashboard",
-    icon: "ni ni-tv-2 text-primary",
+    name: "Trang chủ",
+    icon: "ni ni-shop text-red",
     component: Index,
-    layout: "/admin"
+    layout: "/admin",
+    render: true
   },
   {
     path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
+    name: "Quần",
+    icon: "ni ni-bold-right text-red",
     component: Icons,
-    layout: "/admin"
+    layout: "/admin",
+    render: true
   },
   {
     path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
+    name: "Áo",
+    icon: "ni ni-bold-right text-red ",
     component: Maps,
-    layout: "/admin"
+    layout: "/admin",
+    render: true
   },
+
   {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: Profile,
-    layout: "/admin"
+    path: "/tables",
+    name: "Giỏ hàng",
+    icon: "ni ni-bag-17 text-blue",
+    component: Tables,
+    layout: "/admin",
+    render: true
   },
   {
     path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
+    name: "Tin tức",
+    icon: "ni ni-collection text-blue",
     component: Tables,
-    layout: "/admin"
+    layout: "/admin",
+    render: true
   },
+
   {
     path: "/login",
     name: "Login",
     icon: "ni ni-key-25 text-info",
     component: Login,
-    layout: "/auth"
+    layout: "/auth",
+    render: false
   },
   {
     path: "/register",
     name: "Register",
     icon: "ni ni-circle-08 text-pink",
     component: Register,
-    layout: "/auth"
+    layout: "/auth",
+    render: false
   }
+
 ];
 export default routes;

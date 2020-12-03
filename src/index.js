@@ -25,14 +25,18 @@ import "assets/scss/argon-dashboard-react.scss";
 
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
-
+import 'react-notifications-component/dist/theme.css';
+import ReactNotification from 'react-notifications-component';
 ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      <Route path="/admin" render={props => <AdminLayout {...props} />} />
-      <Route path="/auth" render={props => <AuthLayout {...props} />} />
-      <Redirect from="/" to="/auth" />
-    </Switch>
-  </BrowserRouter>,
+  <>
+    <ReactNotification />
+    <BrowserRouter>
+      <Switch>
+        <Route path="/admin" render={props => <AdminLayout {...props} />} />
+        <Route path="/auth" render={props => <AuthLayout {...props} />} />
+        <Redirect from="/" to="/auth" />
+      </Switch>
+    </BrowserRouter>
+  </>,
   document.getElementById("root")
 );

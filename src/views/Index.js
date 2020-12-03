@@ -22,6 +22,8 @@ import classnames from "classnames";
 import Chart from "chart.js";
 // react plugin used to create charts
 import { Line, Bar } from "react-chartjs-2";
+import { store } from 'react-notifications-component';
+
 // reactstrap components
 import {
   Button,
@@ -35,7 +37,9 @@ import {
   Table,
   Container,
   Row,
+  Alert,
   Col,
+  UncontrolledAlert
 } from "reactstrap";
 
 // core components
@@ -48,38 +52,37 @@ import {
 import "./index.css";
 
 import Header from "components/Headers/Header.js";
-
 const listData = [
   {
     id: 1,
-    name: "Áo Thun A",
+    name: "Áo thun",
     type: "1",
     price: 15000,
     description: "Đây là áo thun",
     amount: "20",
-    image: null,
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaJHHovVO36rCgZDgAad5hchXWr1ZSil8bfw&usqp=CAU',
   },
   {
     id: 2,
-    name: "Áo Thun B",
+    name: "Áo khoác gió",
     type: "1",
     price: 10000,
     description: "Đây là áo thun B",
     amount: "10",
-    image: null,
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaJHHovVO36rCgZDgAad5hchXWr1ZSil8bfw&usqp=CAU',
   },
   {
     id: 3,
-    name: "Áo Thun C",
+    name: "Áo nỉ",
     type: "1",
     price: 10000,
     description: "Đây là áo thun C",
     amount: "5",
-    image: null,
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaJHHovVO36rCgZDgAad5hchXWr1ZSil8bfw&usqp=CAU',
   },
   {
     id: 4,
-    name: "Áo thun D",
+    name: "Quần âu",
     type: "1",
     price: 10000,
     description: "Đây là áo thun D",
@@ -88,7 +91,7 @@ const listData = [
   },
   {
     id: 5,
-    name: "Áo thun D",
+    name: "Áo hoodie Mỹ",
     type: "1",
     price: 10000,
     description: "Đây là áo thun D",
@@ -97,7 +100,7 @@ const listData = [
   },
   {
     id: 6,
-    name: "Áo thun D",
+    name: "Áo LV",
     type: "1",
     price: 10000,
     description: "Đây là áo thun D",
@@ -106,7 +109,7 @@ const listData = [
   },
   {
     id: 7,
-    name: "Áo thun D",
+    name: "Quần bò da",
     type: "1",
     price: 10000,
     description: "Đây là áo thun D",
@@ -115,7 +118,7 @@ const listData = [
   },
   {
     id: 8,
-    name: "Áo thun D",
+    name: "Quần jogger hàng hiệu",
     type: "1",
     price: 10000,
     description: "Đây là áo thun D",
@@ -124,7 +127,7 @@ const listData = [
   },
   {
     id: 9,
-    name: "Áo thun D",
+    name: "Áo thu đông",
     type: "1",
     price: 10000,
     description: "Đây là áo thun D",
@@ -133,7 +136,7 @@ const listData = [
   },
   {
     id: 10,
-    name: "Áo thun D",
+    name: "Quần đồng phục học sinh",
     type: "1",
     price: 10000,
     description: "Đây là áo thun D",
@@ -142,7 +145,7 @@ const listData = [
   },
   {
     id: 11,
-    name: "Áo thun D",
+    name: "Quần short",
     type: "1",
     price: 10000,
     description: "Đây là áo thun D",
@@ -151,7 +154,7 @@ const listData = [
   },
   {
     id: 12,
-    name: "Áo thun D",
+    name: "Áo ba lỗ",
     type: "1",
     price: 10000,
     description: "Đây là áo thun D",
@@ -160,7 +163,7 @@ const listData = [
   },
   {
     id: 13,
-    name: "Áo thun D",
+    name: "Quần sịp",
     type: "1",
     price: 10000,
     description: "Đây là áo thun D",
@@ -175,6 +178,7 @@ class Index extends React.Component {
     this.state = {
       activeNav: 1,
       chartExample1Data: "data1",
+      alertVisible: false
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
@@ -198,15 +202,50 @@ class Index extends React.Component {
           <Row>
             <div className=" col">
               <Card className=" shadow">
-                <CardHeader className=" bg-transparent">
-                  <h3 className=" mb-0">Icons</h3>
-                </CardHeader>
                 <CardBody>
                   <Row className=" icon-examples">
-                    <div className="gridContainer">
-                      {listData.map((item) => {
-                        return <div className="item">{item.description}</div>;
-                      })}
+                    <div
+
+                      className="gridContainer">
+                      {
+                        listData.map((item) => {
+                          return <div
+                            style={{ width: 200, marginLeft: 10, marginBottom: 15 }}
+                            className="item">
+                            <img
+                              alt="..."
+                              className=" img-fluid rounded shadow"
+                              src={item?.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaJHHovVO36rCgZDgAad5hchXWr1ZSil8bfw&usqp=CAU'}
+                              style={{ width: 200 }}
+                            ></img>
+
+                            <div
+                              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
+                            >
+                              <Button
+                                onClick={() => {
+                                  console.log('ok')
+                                  store.addNotification({
+                                    title: "Thông báo",
+                                    message: "Đã thêm: " + item.name,
+                                    type: "success",
+                                    insert: "top",
+                                    container: "bottom-left",
+                                    animationOut: ["animate__animated animate__fadeOut"],
+                                    dismiss: {
+                                      duration: 2000,
+
+                                    }
+                                  });
+                                }}
+                                style={{ marginTop: 10, marginLeft: 10, width: '90%', marginBottom: 5 }} outline color="primary">Thêm vào giỏ hàng</Button>
+                              <h3 style={{ color: 'red', fontWeight: 'bold' }}>({item.price} VND)</h3>
+                              <p style={{ marginTop: -5, fontWeight: 'normal' }}>{item.name}</p>
+
+                            </div>
+
+                          </div>;
+                        })}
                     </div>
                   </Row>
                 </CardBody>

@@ -24,7 +24,8 @@ class Login extends React.Component {
     }
   }
   _onClickLogin() {
-    if (this.state.username === 'admin' && this.state.password === 'admin') {
+    if (this.state.username === 'user' && this.state.password === 'user') {
+      // neu ten dang nhap va mat khau = user thi chuyen den trang home cua user (/admin)
       this.props.history.push('/admin')
     } else {
       alert('Sai tài khoản hoặc mật khẩu')
@@ -95,13 +96,13 @@ class Login extends React.Component {
              
             </Col>
             <Col className="text-right" xs="6">
-              <a
+              {/* <a
                 className="text-light"
                 href="#pablo"
                 onClick={e => e.preventDefault()}
               >
                 <small>Tạo tài khoản mới</small>
-              </a>
+              </a> */}
             </Col>
           </Row>
         </Col>
