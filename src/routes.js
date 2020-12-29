@@ -22,6 +22,7 @@ import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
+import News from "views/examples/News.js";
 
 var routes = [
   {
@@ -48,19 +49,18 @@ var routes = [
     layout: "/admin",
     render: true
   },
-
   {
-    path: "/tables",
-    name: "Giỏ hàng",
-    icon: "ni ni-bag-17 text-blue",
-    component: Tables,
+    path: "/news",
+    name: "Tin tức",
+    icon: "ni ni-circle-08 text-pink",
+    component: News,
     layout: "/admin",
     render: true
   },
   {
     path: "/tables",
-    name: "Tin tức",
-    icon: "ni ni-collection text-blue",
+    name: "Giỏ hàng",
+    icon: "ni ni-bag-17 text-blue",
     component: Tables,
     layout: "/admin",
     render: true
@@ -81,7 +81,8 @@ var routes = [
     component: Register,
     layout: "/auth",
     render: false
-  }
+  },
+
 
 ];
 export default routes;
