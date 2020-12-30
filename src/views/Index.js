@@ -72,8 +72,9 @@ class Index extends React.Component {
       parseOptions(Chart, chartOptions());
     }
   }
-  componentDidMount() {
-    this.getData()
+ async componentDidMount() {
+    await axios.get("https://103.142.26.130:6001/get/all")
+    // this.getData()
   }
   getData = async () => {
     console.log(getAllItem);
