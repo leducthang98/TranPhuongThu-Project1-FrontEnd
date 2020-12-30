@@ -35,6 +35,7 @@ import {
 import "../index.css";
 
 import Header from "components/Headers/Header.js";
+import HomeModal from "./ModalHome";
 const listData = [
   {
     id: 1,
@@ -156,8 +157,32 @@ const listData = [
 ];
 
 class Icons extends React.Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      listData: [],
+      isMouseOver: [],
+      displayModal: false,
+      activeNav: 1,
+      alertVisible: false
+    }
+  } handleMouseOver = async (isMouseOver, idx) => {
+    for (let index = 0; index < listData.length; index++) {
+      isMouseOver[index] = false
+      if (index === idx) {
+        isMouseOver[index] = true
+      }
+    }
+    await this.setState({
+      ...this.state,
+      isMouseOver: isMouseOver
+    })
+    console.log(this.state.isMouseOver);
+  }
   render() {
+    var isMouseOver = this.state.isMouseOver
+    isMouseOver.length = listData.length
+
     return (
       <>
         <Header />
@@ -173,17 +198,23 @@ class Icons extends React.Component {
 
                       className="gridContainer">
                       {
-                        listData.map((item) => {
+                        listData.map((item, idx) => {
                           return <div
                             style={{ width: 200, marginLeft: 10, marginBottom: 15 }}
+                            onMouseEnter={() => this.handleMouseOver(isMouseOver, idx)}
                             className="item">
-                            <img
-                              alt="..."
-                              className=" img-fluid rounded shadow"
-                              src={item?.image || 'https://i-shop.vnecdn.net/resize/560/560/images/2018/11/16/5bee16b6d7f5b-img_5068.jpg'}
-                              style={{ width: 200 }}
-                            ></img>
-
+                            <div>
+                              <img
+                                alt="..."
+                                className=" img-fluid rounded shadow"
+                                src={item?.image || 'https://i-shop.vnecdn.net/resize/560/560/images/2018/11/16/5bee16b6d7f5b-img_5068.jpg'}
+                                style={{ width: 200 }}
+                              ></img>
+                              {
+                                (this.state.isMouseOver[idx]) ? (< HomeModal data={item} />
+                                ) : ('')
+                              }
+                            </div>
                             <div
                               style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
                             >

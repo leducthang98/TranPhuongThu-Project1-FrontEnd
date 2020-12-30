@@ -17,7 +17,7 @@ const HomeModal = (props) => {
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     const handleAddToCart = () => {
-        
+
         setModal(!modal);
     }
     return (
@@ -37,7 +37,7 @@ const HomeModal = (props) => {
                                 <p style={{ color: '#000' }}>{data.description}</p>
                             </FormGroup>
                             <div style={{ paddingTop: '20px', display: 'flex', textAlign: 'center', paddingLeft: '150px' }}>
-                                <button style={{ height: '30px' }}>
+                                <button style={{ height: '30px', background: 'none', borderRight: 'none' }}>
                                     <i class="fas fa-minus-circle" onClick={() => {
                                         if (amount === 1) {
                                             setAmount(1)
@@ -52,7 +52,7 @@ const HomeModal = (props) => {
                                     paddingLeft: '5px', paddingRight: '5px',
                                     textAlign: 'center'
                                 }}>{parseInt(amount)}</p>
-                                <button style={{ height: '30px' }}>
+                                <button style={{ height: '30px', background: 'none', borderLeft: 'none' }}>
                                     <i class="fas fa-plus-circle" onClick={() => {
                                         if (amount === data.amount) {
                                             setAdd(amount)

@@ -41,87 +41,60 @@ import {
 import "../index.css";
 
 import Header from "components/Headers/Header.js";
+import ModalNews from "./ModalNews";
 const listData = [
   {
     id: 1,
+    name: "Sky uses cookies to create a better experience for you",
+    title: 'Sky uses cookies to create a better experience for you',
+    description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
+    image: "https://e3.365dm.com/20/12/768x432/skynews-papers-thursday_5201469.jpg?20201209232059'",
+  },
+  {
+    id: 1,
+    name: "Sky uses cookies to create a better experience for you",
+    title: 'Sky uses cookies to create a better experience for you',
+    description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
+    image: "https://e3.365dm.com/20/12/768x432/skynews-papers-thursday_5201469.jpg?20201209232059'",
+  },
+  {
+    id: 1,
+    name: "Sky uses cookies to create a better experience for you",
+    title: 'Sky uses cookies to create a better experience for you',
+    description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
+    image: "https://e3.365dm.com/20/12/768x432/skynews-papers-thursday_5201469.jpg?20201209232059'",
+  },
+  {
+    id: 1,
+    name: "Sky uses cookies to create a better experience for you",
     title: 'Sky uses cookies to create a better experience for you',
     description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
     image: null,
   },
   {
     id: 1,
+    name: "Sky uses cookies to create a better experience for you",
     title: 'Sky uses cookies to create a better experience for you',
     description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
     image: null,
   },
   {
     id: 1,
+    name: "Sky uses cookies to create a better experience for you",
     title: 'Sky uses cookies to create a better experience for you',
     description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
     image: null,
   },
   {
     id: 1,
+    name: "Sky uses cookies to create a better experience for you",
     title: 'Sky uses cookies to create a better experience for you',
     description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
     image: null,
   },
   {
     id: 1,
-    title: 'Sky uses cookies to create a better experience for you',
-    description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
-    image: null,
-  },
-  {
-    id: 1,
-    title: 'Sky uses cookies to create a better experience for you',
-    description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
-    image: null,
-  },
-  {
-    id: 1,
-    title: 'Sky uses cookies to create a better experience for you',
-    description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
-    image: null,
-  },
-  {
-    id: 1,
-    title: 'Sky uses cookies to create a better experience for you',
-    description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
-    image: null,
-  },
-  {
-    id: 1,
-    title: 'Sky uses cookies to create a better experience for you',
-    description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
-    image: null,
-  },
-  {
-    id: 1,
-    title: 'Sky uses cookies to create a better experience for you',
-    description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
-    image: null,
-  },
-  {
-    id: 1,
-    title: 'Sky uses cookies to create a better experience for you',
-    description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
-    image: null,
-  },
-  {
-    id: 1,
-    title: 'Sky uses cookies to create a better experience for you',
-    description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
-    image: null,
-  },
-  {
-    id: 1,
-    title: 'Sky uses cookies to create a better experience for you',
-    description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
-    image: null,
-  },
-  {
-    id: 1,
+    name: "Sky uses cookies to create a better experience for you",
     title: 'Sky uses cookies to create a better experience for you',
     description: 'Sky News requires your consent for our trusted partners to store and access cookies, unique identifiers, personal data, and information on your browsing behaviour on this device. This applies to Sky News only. You can change your preferences at any time in “Privacy Options”, located at the bottom of every page. You don’t have to accept, but some personalised content and advertising may not work if you don’t. Our partners use your data for:',
     image: null,
@@ -130,8 +103,32 @@ const listData = [
 ];
 
 class News extends React.Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      listData: [],
+      isMouseOver: [],
+      displayModal: false,
+      activeNav: 1,
+      alertVisible: false
+    }
+  } handleMouseOver = async (isMouseOver, idx) => {
+    for (let index = 0; index < listData.length; index++) {
+      isMouseOver[index] = false
+      if (index === idx) {
+        isMouseOver[index] = true
+      }
+    }
+    await this.setState({
+      ...this.state,
+      isMouseOver: isMouseOver
+    })
+    console.log(this.state.isMouseOver);
+  }
   render() {
+    var isMouseOver = this.state.isMouseOver
+    isMouseOver.length = listData.length
+
     return (
       <>
         <Header />
@@ -167,19 +164,24 @@ class News extends React.Component {
                       className="gridNewsContainer">
 
 
-
                       {
-                        listData.map((item) => {
+                        listData.map((item, idx) => {
                           return <div
-                            style={{ width: 350, marginLeft: 5, marginBottom: 40 }}
+                            style={{ width: 200, marginLeft: 10, marginBottom: 15 }}
+                            onMouseEnter={() => this.handleMouseOver(isMouseOver, idx)}
                             className="item">
-                            <img
-                              alt="..."
-                              className=" img-fluid shadow"
-                              src={item?.image || 'https://e3.365dm.com/20/12/768x432/skynews-papers-thursday_5201469.jpg?20201209232059'}
-                              style={{ width: 350 }}
-                            ></img>
-
+                            <div>
+                              <img
+                                alt="..."
+                                className=" img-fluid shadow"
+                                src={item?.image || 'https://e3.365dm.com/20/12/768x432/skynews-papers-thursday_5201469.jpg?20201209232059'}
+                                style={{ width: 350 }}
+                              ></img>
+                              {
+                                (this.state.isMouseOver[idx]) ? (<ModalNews data={item} />
+                                ) : ('')
+                              }
+                            </div>
                             <div
                               style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginTop: 10 }}
                             >

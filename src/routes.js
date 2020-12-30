@@ -82,6 +82,14 @@ var routes = [
     layout: "/auth",
     render: false
   },
+  {
+    path: "/user-profile",
+    name: "profile",
+    icon: "ni ni-circle-08 text-pink",
+    component: Profile,
+    layout: "/admin",
+    render: false
+  },
 
 
 ];
