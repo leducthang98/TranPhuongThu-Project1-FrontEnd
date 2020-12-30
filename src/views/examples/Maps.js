@@ -1,115 +1,813 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
-// react plugin used to create google maps
-import {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker
-} from "react-google-maps";
+// node.js library that concatenates classes (strings)
+import classnames from "classnames";
+// javascipt plugin for creating charts
+import Chart from "chart.js";
+// react plugin used to create charts
+import { Line, Bar } from "react-chartjs-2";
+import { store } from 'react-notifications-component';
 
 // reactstrap components
-import { Card, Container, Row } from "reactstrap";
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  NavItem,
+  NavLink,
+  Nav,
+  Progress,
+  Table,
+  Container,
+  Row,
+  Alert,
+  Col,
+  UncontrolledAlert
+} from "reactstrap";
 
 // core components
-import Header from "components/Headers/Header.js";
-// mapTypeId={google.maps.MapTypeId.ROADMAP}
-const MapWrapper = withScriptjs(
-  withGoogleMap(props => (
-    <GoogleMap
-      defaultZoom={12}
-      defaultCenter={{ lat: 40.748817, lng: -73.985428 }}
-      defaultOptions={{
-        scrollwheel: false,
-        styles: [
-          {
-            featureType: "administrative",
-            elementType: "labels.text.fill",
-            stylers: [{ color: "#444444" }]
-          },
-          {
-            featureType: "landscape",
-            elementType: "all",
-            stylers: [{ color: "#f2f2f2" }]
-          },
-          {
-            featureType: "poi",
-            elementType: "all",
-            stylers: [{ visibility: "off" }]
-          },
-          {
-            featureType: "road",
-            elementType: "all",
-            stylers: [{ saturation: -100 }, { lightness: 45 }]
-          },
-          {
-            featureType: "road.highway",
-            elementType: "all",
-            stylers: [{ visibility: "simplified" }]
-          },
-          {
-            featureType: "road.arterial",
-            elementType: "labels.icon",
-            stylers: [{ visibility: "off" }]
-          },
-          {
-            featureType: "transit",
-            elementType: "all",
-            stylers: [{ visibility: "off" }]
-          },
-          {
-            featureType: "water",
-            elementType: "all",
-            stylers: [{ color: "#5e72e4" }, { visibility: "on" }]
-          }
-        ]
-      }}
-    >
-      <Marker position={{ lat: 40.748817, lng: -73.985428 }} />
-    </GoogleMap>
-  ))
-);
+import {
+  chartOptions,
+  parseOptions,
+  chartExample1,
+  chartExample2,
+} from "variables/charts.js";
+import "../index.css";
 
-class Maps extends React.Component {
+import Header from "components/Headers/Header.js";
+const listData = [
+  {
+    id: 1,
+    name: "Áo thun",
+    type: "1",
+    price: 15000,
+    description: "Đây là áo thun",
+    amount: "20",
+    image: null,
+  },
+  {
+    id: 2,
+    name: "Áo khoác gió",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun B",
+    amount: "10",
+    image: null,
+  },
+  {
+    id: 3,
+    name: "Áo nỉ",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun C",
+    amount: "5",
+    image: null,
+  },
+  {
+    id: 4,
+    name: "Quần âu",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 5,
+    name: "Áo hoodie Mỹ",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 6,
+    name: "Áo LV",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 7,
+    name: "Quần bò da",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 8,
+    name: "Quần jogger hàng hiệu",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 9,
+    name: "Áo thu đông",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 10,
+    name: "Quần đồng phục học sinh",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 11,
+    name: "Quần short",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 12,
+    name: "Áo ba lỗ",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 13,
+    name: "Quần sịp",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 8,
+    name: "Quần jogger hàng hiệu",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 9,
+    name: "Áo thu đông",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 10,
+    name: "Quần đồng phục học sinh",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 11,
+    name: "Quần short",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 12,
+    name: "Áo ba lỗ",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 13,
+    name: "Quần sịp",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 8,
+    name: "Quần jogger hàng hiệu",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 9,
+    name: "Áo thu đông",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 10,
+    name: "Quần đồng phục học sinh",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 11,
+    name: "Quần short",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 12,
+    name: "Áo ba lỗ",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 13,
+    name: "Quần sịp",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 8,
+    name: "Quần jogger hàng hiệu",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 9,
+    name: "Áo thu đông",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 10,
+    name: "Quần đồng phục học sinh",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 11,
+    name: "Quần short",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 12,
+    name: "Áo ba lỗ",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 13,
+    name: "Quần sịp",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 8,
+    name: "Quần jogger hàng hiệu",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 9,
+    name: "Áo thu đông",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 10,
+    name: "Quần đồng phục học sinh",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 11,
+    name: "Quần short",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 12,
+    name: "Áo ba lỗ",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 13,
+    name: "Quần sịp",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 8,
+    name: "Quần jogger hàng hiệu",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 9,
+    name: "Áo thu đông",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 10,
+    name: "Quần đồng phục học sinh",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 11,
+    name: "Quần short",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 12,
+    name: "Áo ba lỗ",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 13,
+    name: "Quần sịp",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 8,
+    name: "Quần jogger hàng hiệu",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 9,
+    name: "Áo thu đông",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 10,
+    name: "Quần đồng phục học sinh",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 11,
+    name: "Quần short",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 12,
+    name: "Áo ba lỗ",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 13,
+    name: "Quần sịp",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 8,
+    name: "Quần jogger hàng hiệu",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 9,
+    name: "Áo thu đông",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 10,
+    name: "Quần đồng phục học sinh",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 11,
+    name: "Quần short",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 12,
+    name: "Áo ba lỗ",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 13,
+    name: "Quần sịp",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 8,
+    name: "Quần jogger hàng hiệu",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 9,
+    name: "Áo thu đông",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 10,
+    name: "Quần đồng phục học sinh",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 11,
+    name: "Quần short",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 12,
+    name: "Áo ba lỗ",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 13,
+    name: "Quần sịp",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 8,
+    name: "Quần jogger hàng hiệu",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 9,
+    name: "Áo thu đông",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 10,
+    name: "Quần đồng phục học sinh",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 11,
+    name: "Quần short",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 12,
+    name: "Áo ba lỗ",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 13,
+    name: "Quần sịp",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 8,
+    name: "Quần jogger hàng hiệu",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 9,
+    name: "Áo thu đông",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 10,
+    name: "Quần đồng phục học sinh",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 11,
+    name: "Quần short",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 12,
+    name: "Áo ba lỗ",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 13,
+    name: "Quần sịp",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 8,
+    name: "Quần jogger hàng hiệu",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 9,
+    name: "Áo thu đông",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 10,
+    name: "Quần đồng phục học sinh",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 11,
+    name: "Quần short",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 12,
+    name: "Áo ba lỗ",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+  {
+    id: 13,
+    name: "Quần sịp",
+    type: "1",
+    price: 10000,
+    description: "Đây là áo thun D",
+    amount: "30",
+    image: null,
+  },
+];
+
+class Icons extends React.Component {
+  state = {};
   render() {
     return (
       <>
         <Header />
         {/* Page content */}
-        <Container className="mt--7" fluid>
+        <Container className=" mt--7" fluid>
+          {/* Table */}
           <Row>
-            <div className="col">
-              <Card className="shadow border-0">
-                <MapWrapper
-                  googleMapURL="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"
-                  loadingElement={<div style={{ height: `100%` }} />}
-                  containerElement={
+            <div className=" col">
+              <Card className=" shadow">
+                <CardBody>
+                  <Row className=" icon-examples">
                     <div
-                      style={{ height: `600px` }}
-                      className="map-canvas"
-                      id="map-canvas"
-                    />
-                  }
-                  mapElement={
-                    <div style={{ height: `100%`, borderRadius: "inherit" }} />
-                  }
-                />
+
+                      className="gridContainer">
+                      {
+                        listData.map((item) => {
+                          return <div
+                            style={{ width: 200, marginLeft: 10, marginBottom: 15 }}
+                            className="item">
+                            <img
+                              alt="..."
+                              className=" img-fluid rounded shadow"
+                              src={item?.image || 'https://vn-test-11.slatic.net/p/b982fe3c7517d19571e1f0a6f24679f7.jpg'}
+                              style={{ width: 200 }}
+                            ></img>
+
+                            <div
+                              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
+                            >
+                              <Button
+                                onClick={() => {
+                                  console.log('ok')
+                                  store.addNotification({
+                                    title: "Thông báo",
+                                    message: "Đã thêm: " + item.name,
+                                    type: "success",
+                                    insert: "top",
+                                    container: "bottom-left",
+                                    animationOut: ["animate__animated animate__fadeOut"],
+                                    dismiss: {
+                                      duration: 2000,
+
+                                    }
+                                  });
+                                }}
+                                style={{ marginTop: 10, marginLeft: 10, width: '90%', marginBottom: 5 }} outline color="primary">Thêm vào giỏ hàng</Button>
+                              <h3 style={{ color: 'red', fontWeight: 'bold' }}>({item.price} VND)</h3>
+                              <p style={{ marginTop: -5, fontWeight: 'normal' }}>{item.name}</p>
+
+                            </div>
+
+                          </div>;
+                        })}
+                    </div>
+                  </Row>
+                </CardBody>
               </Card>
             </div>
           </Row>
@@ -119,4 +817,4 @@ class Maps extends React.Component {
   }
 }
 
-export default Maps;
+export default Icons;
