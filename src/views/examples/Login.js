@@ -1,3 +1,4 @@
+import { loginApi } from "../../domain";
 import React from "react";
 import { withRouter } from "react-router-dom";
 import {
@@ -23,9 +24,23 @@ class Login extends React.Component {
       password: '',
     }
   }
-  _onClickLogin() {
-    if (this.state.username === 'user' && this.state.password === 'user') {
-      // neu ten dang nhap va mat khau = user thi chuyen den trang home cua user (/admin)
+  async _onClickLogin() {
+    const data = {
+      username: this.state.username,
+      password: this.state.password
+    }
+    const res = await fetch(loginApi, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(data)
+    })
+    const authData = await res.json()
+    console.log(authData);
+    if (authData && authData.code === 0 && authData.message === "ok") {
+      localStorage.setItem("token", authData.data.token)
       this.props.history.push('/admin')
     } else {
       alert('Sai tài khoản hoặc mật khẩu')
@@ -79,7 +94,7 @@ class Login extends React.Component {
                     id=" customCheckLogin"
                     type="checkbox"
                   />
-                 
+
                 </div>
                 <div className="text-center">
                   <Button
@@ -93,7 +108,7 @@ class Login extends React.Component {
           </Card>
           <Row className="mt-3">
             <Col xs="6">
-             
+
             </Col>
             <Col className="text-right" xs="6">
               {/* <a

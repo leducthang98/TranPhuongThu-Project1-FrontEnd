@@ -54,6 +54,7 @@ import "./index.css";
 import Header from "components/Headers/Header.js";
 import HomeModal from "./examples/ModalHome";
 import { getAllItem } from "../domain";
+import { pantAPI } from "domain";
 const listData = [
   {
     id: 1,
@@ -174,7 +175,7 @@ const listData = [
   },
 ];
 
-class Index extends React.Component {
+class pants extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -195,7 +196,7 @@ class Index extends React.Component {
   getData = async () => {
     const token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoibGVkdWN0aGFuZyIsImlhdCI6MTYwOTE1NzEzNywiZXhwIjoxNjA5MjQzNTM3fQ.dVYSOtNOWFlAE0_taBdruhQI63nbmZ41Vf6Kg14Vy0I"
 
-    const data = await fetch(getAllItem, {
+    const data = await fetch(pantAPI, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": token
@@ -267,7 +268,7 @@ class Index extends React.Component {
                             <div
                               style={{ width: 200, marginLeft: 10, marginBottom: 15, alignItems: 'center' }}
                               onMouseEnter={() => this.handleMouseOver(isMouseOver, idx)}
-                              // onMouseLeave={() =>this.handleMouseLeaave(isMouseOver, idx)}
+                              onMouseLeave={() =>this.handleMouseLeaave(isMouseOver, idx)}
                               className="item">
                               <div>
                                 <img
@@ -320,4 +321,4 @@ class Index extends React.Component {
   }
 }
 
-export default Index;
+export default pants;
