@@ -1,14 +1,14 @@
 import axios from 'axios';
-import { token } from '../domain';
+
 
 export default (method, url, params = {}, headers = "", responseType) => {
     method = method.toLowerCase();
-    let storeData = localStorage.getItem(token);
+    let token = localStorage.getItem("token");
     let opts = {
         method: method,
         url: url,
         headers: {
-            token: storeData ? storeData : '',
+            'Authorization': "Bearer " + token,
             'Access-Control-Allow-Origin': "*"
         }
     };

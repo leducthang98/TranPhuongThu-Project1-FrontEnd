@@ -73,12 +73,12 @@ class Index extends React.Component {
     }
   }
  async componentDidMount() {
-    await axios.get("https://103.142.26.130:6001/get/all")
-    // this.getData()
+    this.getData()
   }
   getData = async () => {
     console.log(getAllItem);
-    const res = await MakeRequest("http://103.142.26.130:6001/get/all")
+    const ress = await MakeRequest("GET","http://103.142.26.130:6001/item/all")
+    let res = ress.data
     console.log("8666   ", res);
     if (res.code === 0 && res.message === "ok") {
       await this.setState({

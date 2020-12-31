@@ -15,6 +15,7 @@ import {
   Row,
   Col
 } from "reactstrap";
+import axios from "axios";
 
 class Login extends React.Component {
   constructor(props) {
@@ -29,16 +30,13 @@ class Login extends React.Component {
       username: this.state.username,
       password: this.state.password
     }
-    const res = await fetch(loginApi, {
+    const opt = {
+      url: loginApi,
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify(data)
-    })
-    const authData = await res.json()
-    console.log(authData);
+      data: data
+    }
+    const response = await axios(opt);
+    let authData = response.data;
     if (authData && authData.code === 0 && authData.message === "ok") {
       localStorage.setItem("token", authData.data.token)
       this.props.history.push('/admin')

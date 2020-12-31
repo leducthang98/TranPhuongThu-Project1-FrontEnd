@@ -24,12 +24,12 @@ const HomeModal = (props) => {
         <div>
             <Button style={{ position: 'absolute', zIndex: '1', marginTop: '-50px', marginLeft: '50px' }} color="danger" onClick={toggle}>Chi tiết</Button>
             <Modal isOpen={modal} toggle={toggle} className={className}>
-                <ModalHeader toggle={toggle}> Thông tin áo {data.name.toLowerCase()}</ModalHeader>
+                <ModalHeader toggle={toggle}> {data.name.toLowerCase()}</ModalHeader>
                 <ModalBody>
                     <Row>
                         <Col>
                             <FormGroup>
-                                <img style={{ width: '450px' }} src={data.image} />
+                                <img style={{ width: '450px' }} src={data.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaJHHovVO36rCgZDgAad5hchXWr1ZSil8bfw&usqp=CAU'} />
                             </FormGroup>
                         </Col>
                         <Col>
