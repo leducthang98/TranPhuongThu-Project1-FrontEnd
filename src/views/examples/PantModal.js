@@ -10,7 +10,7 @@ const HomeModal = (props) => {
         className
     } = props;
     useState(() => {
-        console.log(props.data);
+        //console.log(props.data);
     }, [])
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);

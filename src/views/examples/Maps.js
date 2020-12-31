@@ -37,6 +37,12 @@ import "../index.css";
 import Header from "components/Headers/Header.js";
 import { listData } from "./data";
 import HomeModal from "./ModalHome";
+import { getAllItem } from "domain";
+import MakeRequest from "views/MakeRequest";
+import FormGroup from "reactstrap/lib/FormGroup";
+import Input from "reactstrap/lib/Input";
+import Label from "reactstrap/lib/Label";
+import { seachByText } from "domain";
 
 
 class Icons extends React.Component {
@@ -47,11 +53,48 @@ class Icons extends React.Component {
       isMouseOver: [],
       displayModal: false,
       activeNav: 1,
-      alertVisible: false
+      alertVisible: false,
+      dataSearch: ''
+    }
+  }
+
+  componentDidMount() {
+    this.getData()
+  }
+  getData = async () => {
+    const params = {
+      type: 2
+    }
+    const data = await MakeRequest("GET", "http://103.142.26.130:6001/item/all", params)
+    const res = data.data
+    //console.log("8666   ", res);
+
+    if (res.code === 0 && res.message === "ok") {
+      await this.setState({
+        ...this.state,
+        listData: res.data
+      })
+    }
+  }
+  handleSearch = async (e) => {
+    const { name, value } = e.target
+    this.setState({
+      ...this.state,
+      [name]: value
+    })
+    const dataSearch = {
+      dataSearch: e.target.value
+    }
+    const res = MakeRequest("GET", "http://103.142.26.130:6001/item/search", dataSearch)
+    if (res && res.data && res.data.message === "ok" && res.data.code === 0) {
+      this.setState({
+        ...this.state,
+        listData: res.data.data
+      })
     }
   }
   handleMouseOver = async (isMouseOver, idx) => {
-    console.log(1111);
+    //console.log(1111);
     for (let index = 0; index < listData.length; index++) {
       isMouseOver[index] = false
       if (index === idx) {
@@ -62,7 +105,7 @@ class Icons extends React.Component {
       ...this.state,
       isMouseOver: isMouseOver
     })
-    console.log(this.state.isMouseOver);
+    //console.log(this.state.isMouseOver);
   }
   render() {
     var isMouseOver = this.state.isMouseOver
@@ -73,16 +116,32 @@ class Icons extends React.Component {
         {/* Page content */}
         <Container className=" mt--7" fluid>
           {/* Table */}
+
           <Row>
+
             <div className=" col">
               <Card className=" shadow">
+                <FormGroup style={{ display: 'flex', alignSelf: 'center' }}>
+                  <Input
+                    style={{ width: '500px' }}
+                    type="search"
+                    name="dataSearch"
+                    id="exampleSearch"
+                    placeholder="Tìm kiếm"
+                    onChange={(e) => {
+                      this.handleSearch(e)
+                    }}
+                  />
+                  <Button>
+                    <i class="fas fa-search"></i></Button>
+                </FormGroup>
                 <CardBody>
                   <Row className=" icon-examples">
                     <div
 
                       className="gridContainer">
                       {
-                        listData.map((item, idx) => {
+                        this.state.listData.map((item, idx) => {
                           return (
                             <div
                               style={{ width: 200, marginLeft: 10, marginBottom: 15 }}
@@ -105,7 +164,7 @@ class Icons extends React.Component {
                               >
                                 <Button
                                   onClick={() => {
-                                    console.log('ok')
+                                    //console.log('ok')
                                     store.addNotification({
                                       title: "Thông báo",
                                       message: "Đã thêm: " + item.name,

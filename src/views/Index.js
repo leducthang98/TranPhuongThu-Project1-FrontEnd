@@ -56,6 +56,8 @@ import HomeModal from "./examples/ModalHome";
 import { getAllItem } from "../domain";
 import axios from "axios";
 import MakeRequest from "./MakeRequest";
+import FormGroup from "reactstrap/lib/FormGroup";
+import Input from "reactstrap/lib/Input";
 
 class Index extends React.Component {
   constructor(props) {
@@ -66,20 +68,41 @@ class Index extends React.Component {
       displayModal: false,
       activeNav: 1,
       chartExample1Data: "data1",
+      dataSearch: '',
       alertVisible: false
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
     }
   }
- async componentDidMount() {
+  async componentDidMount() {
     this.getData()
   }
+  handleSearch = async (inputSearch) => {
+    // await this.setState({
+    //   ...this.state,
+    //   listData: []
+    // })
+    const searchData = {
+      searchData: inputSearch
+    }
+    const res = await MakeRequest("GET", "http://103.142.26.130:6001/item/search", searchData)
+    // console.log('res:', res)
+    if (res.data.code === 0) {
+      console.log('code ngu')
+      await this.setState({
+        ...this.state,
+        listData: res.data.data
+      })
+    }
+  }
+
   getData = async () => {
-    console.log(getAllItem);
-    const ress = await MakeRequest("GET","http://103.142.26.130:6001/item/all")
-    let res = ress.data
-    console.log("8666   ", res);
+    //console.log(getAllItem);
+    const data = await MakeRequest("GET", getAllItem)
+    const res = data.data
+    //console.log("8666   ", res);
+
     if (res.code === 0 && res.message === "ok") {
       await this.setState({
         ...this.state,
@@ -99,7 +122,7 @@ class Index extends React.Component {
       ...this.state,
       isMouseOver: isMouseOver
     })
-    console.log(this.state.isMouseOver);
+    //console.log(this.state.isMouseOver);
   }
   toggleNavs = (e, index) => {
     e.preventDefault();
@@ -112,7 +135,7 @@ class Index extends React.Component {
   render() {
     var isMouseOver = this.state.isMouseOver
     isMouseOver.length = this.state.listData.length
-    console.log(this.state.listData);
+    //console.log(this.state.listData);
     return (
       <>
         <Header />
@@ -120,6 +143,20 @@ class Index extends React.Component {
           <Row>
             <div className=" col">
               <Card className=" shadow">
+                <FormGroup style={{ display: 'flex', alignSelf: 'center' }}>
+                  <Input
+                    style={{ width: '500px' }}
+                    type="search"
+                    name="searchData"
+                    id="exampleSearch"
+                    placeholder="Tìm kiếm"
+                    onChange={(data) => {
+                      this.handleSearch(data.target.value)
+                    }}
+                  />
+                  <Button>
+                    <i class="fas fa-search"></i></Button>
+                </FormGroup>
                 <CardBody>
                   <Row className=" icon-examples">
                     <div
@@ -149,7 +186,7 @@ class Index extends React.Component {
                               >
                                 <Button
                                   onClick={() => {
-                                    console.log('ok')
+                                    //console.log('ok')
                                     store.addNotification({
                                       title: "Thông báo",
                                       message: "Đã thêm: " + item.name,
