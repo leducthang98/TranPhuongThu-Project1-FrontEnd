@@ -56,6 +56,8 @@ import HomeModal from "./examples/ModalHome";
 import { getAllItem } from "../domain";
 import axios from "axios";
 import MakeRequest from "./MakeRequest";
+import FormGroup from "reactstrap/lib/FormGroup";
+import Input from "reactstrap/lib/Input";
 
 class Index extends React.Component {
   constructor(props) {
@@ -66,20 +68,39 @@ class Index extends React.Component {
       displayModal: false,
       activeNav: 1,
       chartExample1Data: "data1",
+      dataSearch: '',
       alertVisible: false
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
     }
   }
- async componentDidMount() {
-    await axios.get("https://103.142.26.130:6001/get/all")
-    // this.getData()
+  async componentDidMount() {
+    this.getData()
+  }
+  handleSearch = async (e) => {
+    const { name, value } = e.target
+    this.setState({
+      ...this.state,
+      [name]: value
+    })
+    const dataSearch = {
+      dataSearch: e.target.value
+    }
+    const res = MakeRequest("GET", "http://103.142.26.130:6001/item/search", dataSearch)
+    if (res && res.data && res.data.message === "ok" && res.data.code === 0) {
+      this.setState({
+        ...this.state,
+        listData: res.data.data
+      })
+    }
   }
   getData = async () => {
     console.log(getAllItem);
-    const res = await MakeRequest("http://103.142.26.130:6001/get/all")
+    const data = await MakeRequest("GET", getAllItem)
+    const res = data.data
     console.log("8666   ", res);
+
     if (res.code === 0 && res.message === "ok") {
       await this.setState({
         ...this.state,
@@ -120,6 +141,20 @@ class Index extends React.Component {
           <Row>
             <div className=" col">
               <Card className=" shadow">
+                <FormGroup style={{ display: 'flex', alignSelf: 'center' }}>
+                  <Input
+                    style={{ width: '500px' }}
+                    type="search"
+                    name="dataSearch"
+                    id="exampleSearch"
+                    placeholder="Tìm kiếm"
+                    onChange={(e) => {
+                      this.handleSearch(e)
+                    }}
+                  />
+                  <Button>
+                    <i class="fas fa-search"></i></Button>
+                </FormGroup>
                 <CardBody>
                   <Row className=" icon-examples">
                     <div

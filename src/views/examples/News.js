@@ -30,7 +30,7 @@ import {
   InputGroupText,
   Input
 } from "reactstrap";
-
+import { getAllItem } from '../../domain'
 // core components
 import {
   chartOptions,
@@ -42,6 +42,8 @@ import "../index.css";
 
 import Header from "components/Headers/Header.js";
 import ModalNews from "./ModalNews";
+import MakeRequest from "views/MakeRequest";
+
 const listData = [
   {
     id: 1,
@@ -112,7 +114,30 @@ class News extends React.Component {
       activeNav: 1,
       alertVisible: false
     }
-  } handleMouseOver = async (isMouseOver, idx) => {
+  }
+  componentDidMount() {
+    // this.getData()
+  }
+
+
+
+  getData = async () => {
+    console.log(getAllItem);
+    const params = {
+      type: 1
+    }
+    const data = await MakeRequest("GET", getAllItem, params)
+    const res = data.data
+    console.log("8666   ", res);
+
+    if (res.code === 0 && res.message === "ok") {
+      await this.setState({
+        ...this.state,
+        listData: res.data
+      })
+    }
+  }
+  handleMouseOver = async (isMouseOver, idx) => {
     for (let index = 0; index < listData.length; index++) {
       isMouseOver[index] = false
       if (index === idx) {

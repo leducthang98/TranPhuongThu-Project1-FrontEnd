@@ -29,7 +29,7 @@ const HomeModal = (props) => {
                     <Row>
                         <Col>
                             <FormGroup>
-                                <img style={{ width: '450px' }} src={data.image} />
+                                <img style={{ width: '450px' }} src={data.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaJHHovVO36rCgZDgAad5hchXWr1ZSil8bfw&usqp=CAU"} />
                             </FormGroup>
                         </Col>
                         <Col>
