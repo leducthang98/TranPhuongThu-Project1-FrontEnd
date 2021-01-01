@@ -195,13 +195,13 @@ class Icons extends React.Component {
     }
   }
   getData = async () => {
-    console.log(getAllItem);
+    //console.log(getAllItem);
     const params = {
-      type: 2
+      type: 1
     }
     const data = await MakeRequest("GET", getAllItem, params)
     const res = data.data
-    console.log("8666   ", res);
+    //console.log("8666   ", res);
 
     if (res.code === 0 && res.message === "ok") {
       await this.setState({
@@ -222,7 +222,7 @@ class Icons extends React.Component {
       ...this.state,
       isMouseOver: isMouseOver
     })
-    console.log(this.state.isMouseOver);
+    //console.log(this.state.isMouseOver);
   }
   render() {
     var isMouseOver = this.state.isMouseOver
@@ -279,7 +279,7 @@ class Icons extends React.Component {
                             >
                               <Button
                                 onClick={() => {
-                                  console.log('ok')
+                                  //console.log('ok')
                                   store.addNotification({
                                     title: "Thông báo",
                                     message: "Đã thêm: " + item.name,

@@ -78,28 +78,30 @@ class Index extends React.Component {
   async componentDidMount() {
     this.getData()
   }
-  handleSearch = async (e) => {
-    const { name, value } = e.target
-    this.setState({
-      ...this.state,
-      [name]: value
-    })
-    const dataSearch = {
-      dataSearch: e.target.value
+  handleSearch = async (inputSearch) => {
+    // await this.setState({
+    //   ...this.state,
+    //   listData: []
+    // })
+    const searchData = {
+      searchData: inputSearch
     }
-    const res = MakeRequest("GET", "http://103.142.26.130:6001/item/search", dataSearch)
-    if (res && res.data && res.data.message === "ok" && res.data.code === 0) {
-      this.setState({
+    const res = await MakeRequest("GET", "http://103.142.26.130:6001/item/search", searchData)
+    // console.log('res:', res)
+    if (res.data.code === 0) {
+      console.log('code ngu')
+      await this.setState({
         ...this.state,
         listData: res.data.data
       })
     }
   }
+
   getData = async () => {
-    console.log(getAllItem);
+    //console.log(getAllItem);
     const data = await MakeRequest("GET", getAllItem)
     const res = data.data
-    console.log("8666   ", res);
+    //console.log("8666   ", res);
 
     if (res.code === 0 && res.message === "ok") {
       await this.setState({
@@ -120,7 +122,7 @@ class Index extends React.Component {
       ...this.state,
       isMouseOver: isMouseOver
     })
-    console.log(this.state.isMouseOver);
+    //console.log(this.state.isMouseOver);
   }
   toggleNavs = (e, index) => {
     e.preventDefault();
@@ -133,7 +135,7 @@ class Index extends React.Component {
   render() {
     var isMouseOver = this.state.isMouseOver
     isMouseOver.length = this.state.listData.length
-    console.log(this.state.listData);
+    //console.log(this.state.listData);
     return (
       <>
         <Header />
@@ -145,11 +147,11 @@ class Index extends React.Component {
                   <Input
                     style={{ width: '500px' }}
                     type="search"
-                    name="dataSearch"
+                    name="searchData"
                     id="exampleSearch"
                     placeholder="Tìm kiếm"
-                    onChange={(e) => {
-                      this.handleSearch(e)
+                    onChange={(data) => {
+                      this.handleSearch(data.target.value)
                     }}
                   />
                   <Button>
@@ -184,7 +186,7 @@ class Index extends React.Component {
                               >
                                 <Button
                                   onClick={() => {
-                                    console.log('ok')
+                                    //console.log('ok')
                                     store.addNotification({
                                       title: "Thông báo",
                                       message: "Đã thêm: " + item.name,

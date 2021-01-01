@@ -5,4 +5,3 @@ export const loginApi = baseUrl + "auth/login"
 export const searchById = baseUrl + "item"
 export const userInfo = baseUrl + "user/me"
 
-export const token = "Bearer " + localStorage.getItem("token")

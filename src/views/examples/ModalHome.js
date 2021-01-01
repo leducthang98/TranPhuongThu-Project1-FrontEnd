@@ -24,7 +24,7 @@ const HomeModal = (props) => {
         <div>
             <Button style={{ position: 'absolute', zIndex: '1', marginTop: '-50px', marginLeft: '50px' }} color="danger" onClick={toggle}>Chi tiết</Button>
             <Modal isOpen={modal} toggle={toggle} className={className}>
-                <ModalHeader toggle={toggle}> Thông tin áo {data.name.toLowerCase()}</ModalHeader>
+                <ModalHeader toggle={toggle}> {data.name.toLowerCase()}</ModalHeader>
                 <ModalBody>
                     <Row>
                         <Col>

@@ -63,11 +63,11 @@ class Icons extends React.Component {
   }
   getData = async () => {
     const params = {
-      type: 1
+      type: 2
     }
     const data = await MakeRequest("GET", "http://103.142.26.130:6001/item/all", params)
     const res = data.data
-    console.log("8666   ", res);
+    //console.log("8666   ", res);
 
     if (res.code === 0 && res.message === "ok") {
       await this.setState({
@@ -94,7 +94,7 @@ class Icons extends React.Component {
     }
   }
   handleMouseOver = async (isMouseOver, idx) => {
-    console.log(1111);
+    //console.log(1111);
     for (let index = 0; index < listData.length; index++) {
       isMouseOver[index] = false
       if (index === idx) {
@@ -105,7 +105,7 @@ class Icons extends React.Component {
       ...this.state,
       isMouseOver: isMouseOver
     })
-    console.log(this.state.isMouseOver);
+    //console.log(this.state.isMouseOver);
   }
   render() {
     var isMouseOver = this.state.isMouseOver
@@ -164,7 +164,7 @@ class Icons extends React.Component {
                               >
                                 <Button
                                   onClick={() => {
-                                    console.log('ok')
+                                    //console.log('ok')
                                     store.addNotification({
                                       title: "Thông báo",
                                       message: "Đã thêm: " + item.name,

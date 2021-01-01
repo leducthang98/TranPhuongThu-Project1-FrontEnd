@@ -122,13 +122,13 @@ class News extends React.Component {
 
 
   getData = async () => {
-    console.log(getAllItem);
+    //console.log(getAllItem);
     const params = {
       type: 1
     }
     const data = await MakeRequest("GET", getAllItem, params)
     const res = data.data
-    console.log("8666   ", res);
+    //console.log("8666   ", res);
 
     if (res.code === 0 && res.message === "ok") {
       await this.setState({
@@ -148,7 +148,7 @@ class News extends React.Component {
       ...this.state,
       isMouseOver: isMouseOver
     })
-    console.log(this.state.isMouseOver);
+    //console.log(this.state.isMouseOver);
   }
   render() {
     var isMouseOver = this.state.isMouseOver

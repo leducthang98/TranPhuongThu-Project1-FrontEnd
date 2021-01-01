@@ -47,7 +47,7 @@ class Register extends React.Component {
   }
 
   handleChange = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
     const { name, value } = e.target
     this.setState({
       ...this.state,
@@ -57,19 +57,19 @@ class Register extends React.Component {
   handleSubmit = async () => {
     if (this.state.username.length > 0 && this.state.password.length > 0) {
       if (this.state.checkbox === true) {
-        console.log(JSON.stringify(this.state));
+        //console.log(JSON.stringify(this.state));
         const data = await MakeRequest("POST", "http://103.142.26.130:6001/auth/regist", this.state)
         const res = data.data
-        console.log("8666   ", res);
+        //console.log("8666   ", res);
 
         if (res.code === 0 && res.message === "ok") {
-          console.log(res);
+          //console.log(res);
           alert("Đăng kí thành công")
           setTimeout(() => {
             this.props.history.push("/auth/login")
           }, 1000);
         } else {
-          console.log(1111111111);
+          //console.log(1111111111);
           alert("" + res.message)
         }
       } else {
@@ -130,7 +130,7 @@ class Register extends React.Component {
                         className="custom-control-input"
                         id="customCheckRegister" defaultChecked={this.state.checkbox}
                         type="checkbox" name="checkbox" onChange={(e) => {
-                          console.log(e.target.value);
+                          //console.log(e.target.value);
                           this.setState({
                             ...this.state,
                             checkbox: !this.state.checkbox
