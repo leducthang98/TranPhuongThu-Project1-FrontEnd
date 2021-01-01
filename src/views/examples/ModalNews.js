@@ -21,7 +21,7 @@ const ModalNews = (props) => {
     const handleClick = async () => {
         toggle()
         console.log(1111111111111);
-        const res = await MakeRequest("get", baseUrl + "news/increaseView/" + data.id)
+        const res = await MakeRequest("put", baseUrl + "news/increaseView/" + data.id)
         if (res && res.data && res.data.code === 0) {
             console.log(res.data.data);
             const listData = await MakeRequest("get", baseUrl + "news/all")
