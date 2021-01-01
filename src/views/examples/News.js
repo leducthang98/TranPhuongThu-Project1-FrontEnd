@@ -30,7 +30,7 @@ import {
   InputGroupText,
   Input
 } from "reactstrap";
-import { getAllItem } from '../../domain'
+import { baseUrl, getAllItem } from '../../domain'
 // core components
 import {
   chartOptions,
@@ -116,24 +116,37 @@ class News extends React.Component {
     }
   }
   componentDidMount() {
-    // this.getData()
+    this.getData()
   }
 
-
-
   getData = async () => {
-    //console.log(getAllItem);
-    const params = {
-      type: 1
-    }
-    const data = await MakeRequest("GET", getAllItem, params)
+
+    const data = await MakeRequest("GET", baseUrl + "news/all")
     const res = data.data
-    //console.log("8666   ", res);
 
     if (res.code === 0 && res.message === "ok") {
       await this.setState({
         ...this.state,
         listData: res.data
+      })
+    }
+  }
+
+  handleSearch = async (e) => {
+    const { name, value } = e.target
+    this.setState({
+      ...this.state,
+      [name]: value
+    })
+    const searchData = {
+      searchData: e.target.value,
+
+    }
+    const res = await MakeRequest("GET", baseUrl + "news/all", searchData)
+    if (res && res.data && res.data.message === "ok" && res.data.code === 0) {
+      this.setState({
+        ...this.state,
+        listData: res.data.data
       })
     }
   }
@@ -150,6 +163,12 @@ class News extends React.Component {
     })
     //console.log(this.state.isMouseOver);
   }
+  reload(data) {
+    this.setState({
+      ...this.state,
+      listData: data
+    })
+  }
   render() {
     var isMouseOver = this.state.isMouseOver
     isMouseOver.length = listData.length
@@ -165,37 +184,32 @@ class News extends React.Component {
           <Row>
 
             <div className=" col">
-
               <Card className=" shadow">
+                <FormGroup style={{ display: 'flex', alignSelf: 'center' }}>
+                  <Input
+                    style={{ width: '500px' }}
+                    type="search"
+                    name="dataSearch"
+                    id="exampleSearch"
+                    placeholder="Tìm kiếm"
+                    onChange={(e) => {
+                      this.handleSearch(e)
+                    }}
+                  />
+                  <Button>
+                    <i class="fas fa-search"></i></Button>
+                </FormGroup>
                 <CardBody>
                   <Row className=" icon-examples">
-                    <div style={{ width: '100%', height: 100, display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: -30 }}>
-                      <Form
-                        className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-                        <FormGroup className="mb-0">
-                          <InputGroup className="input-group-alternative">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="fas fa-search" />
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input placeholder="Tìm kiếmmmm" type="text" />
-                          </InputGroup>
-                        </FormGroup>
-                      </Form>
-                    </div>
                     <div
-
                       className="gridNewsContainer">
-
-
                       {
-                        listData.map((item, idx) => {
+                        this.state.listData.map((item, idx) => {
                           return <div
                             style={{ width: 200, marginLeft: 10, marginBottom: 15 }}
                             onMouseEnter={() => this.handleMouseOver(isMouseOver, idx)}
                             className="item">
-                            <div>
+                            <div style={{}}>
                               <img
                                 alt="..."
                                 className=" img-fluid shadow"
@@ -203,14 +217,17 @@ class News extends React.Component {
                                 style={{ width: 350 }}
                               ></img>
                               {
-                                (this.state.isMouseOver[idx]) ? (<ModalNews data={item} />
+                                (this.state.isMouseOver[idx]) ? (<ModalNews data={item} reload={(data) => this.reload(data)} />
                                 ) : ('')
                               }
                             </div>
-                            <div
-                              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginTop: 10 }}
-                            >
+                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}  >
                               <h3 style={{ color: 'black', fontWeight: '500', textAlign: 'center', fontSize: 20 }}>{item.title}</h3>
+                              <p style={{ fontSize: '11px', fontWeight: '500', color: '#000', paddingLeft: '20px', paddingTop: '5px' }}>
+                                <i class="fas fa-eye"></i>
+                                {item.view}
+
+                              </p>
                             </div>
 
                           </div>;
