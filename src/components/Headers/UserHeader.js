@@ -21,6 +21,14 @@ import React from "react";
 import { Button, Container, Row, Col } from "reactstrap";
 
 class UserHeader extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      userInfo:''
+    }
+  }
+
   render() {
     return (
       <>
@@ -50,7 +58,7 @@ class UserHeader extends React.Component {
                   href="#pablo"
                   onClick={e => e.preventDefault()}
                 >
-                  Edit profile
+                  Chỉnh sửa thông tin cá nhân
                 </Button>
               </Col>
             </Row>

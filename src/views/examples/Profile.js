@@ -16,7 +16,6 @@
 
 */
 import React from "react";
-
 // reactstrap components
 import {
   Button,
@@ -30,10 +29,19 @@ import {
   Row,
   Col
 } from "reactstrap";
+import MakeRequest from "../MakeRequest";
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
-
+import UserHeader from "../../components/Headers/UserHeader";
 class Profile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userInfo: ''
+    }
+  }
+  componentDidMount() {
+    const res = MakeRequest('get', "http://103.142.26.130:6001/user/me")
+  }
   render() {
     return (
       <>
@@ -78,7 +86,9 @@ class Profile extends React.Component {
                     </Button>
                   </div>
                 </CardHeader>
+
                 <CardBody className="pt-0 pt-md-4">
+                  {/* 
                   <Row>
                     <div className="col">
                       <div className="card-profile-stats d-flex justify-content-center mt-md-5">
@@ -97,6 +107,9 @@ class Profile extends React.Component {
                       </div>
                     </div>
                   </Row>
+                 */}
+
+                  <div style={{ height: '50px', width: '100%' }}></div>
                   <div className="text-center">
                     <h3>
                       Jessica Jones
@@ -125,6 +138,7 @@ class Profile extends React.Component {
                     </a>
                   </div>
                 </CardBody>
+
               </Card>
             </Col>
             <Col className="order-xl-1" xl="8">
@@ -149,7 +163,7 @@ class Profile extends React.Component {
                 <CardBody>
                   <Form>
                     <h6 className="heading-small text-muted mb-4">
-                      User information
+                      Thông tin cá nhân
                     </h6>
                     <div className="pl-lg-4">
                       <Row>
@@ -159,7 +173,7 @@ class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-username"
                             >
-                              Username
+                              Tên đăng nhập
                             </label>
                             <Input
                               className="form-control-alternative"
@@ -176,7 +190,7 @@ class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-email"
                             >
-                              Email address
+                              Email
                             </label>
                             <Input
                               className="form-control-alternative"
@@ -194,7 +208,7 @@ class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-first-name"
                             >
-                              First name
+                              Họ và đệm
                             </label>
                             <Input
                               className="form-control-alternative"
@@ -211,7 +225,7 @@ class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-last-name"
                             >
-                              Last name
+                              Tên
                             </label>
                             <Input
                               className="form-control-alternative"
@@ -227,7 +241,7 @@ class Profile extends React.Component {
                     <hr className="my-4" />
                     {/* Address */}
                     <h6 className="heading-small text-muted mb-4">
-                      Contact information
+                      Địa chỉ liên hệ
                     </h6>
                     <div className="pl-lg-4">
                       <Row>
@@ -237,7 +251,7 @@ class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-address"
                             >
-                              Address
+                              Địa chỉ
                             </label>
                             <Input
                               className="form-control-alternative"
@@ -256,7 +270,7 @@ class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-city"
                             >
-                              City
+                              Thành phố
                             </label>
                             <Input
                               className="form-control-alternative"
@@ -273,7 +287,7 @@ class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-country"
                             >
-                              Country
+                              Quốc tịch
                             </label>
                             <Input
                               className="form-control-alternative"
@@ -290,7 +304,7 @@ class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-country"
                             >
-                              Postal code
+                              Mã quốc gia
                             </label>
                             <Input
                               className="form-control-alternative"
@@ -304,10 +318,11 @@ class Profile extends React.Component {
                     </div>
                     <hr className="my-4" />
                     {/* Description */}
-                    <h6 className="heading-small text-muted mb-4">About me</h6>
+
+                    {/* <h6 className="heading-small text-muted mb-4">Giới thiệu bản thân</h6>
                     <div className="pl-lg-4">
                       <FormGroup>
-                        <label>About Me</label>
+                        <label>Miêu tả ngắn gọn </label>
                         <Input
                           className="form-control-alternative"
                           placeholder="A few words about you ..."
@@ -318,6 +333,7 @@ class Profile extends React.Component {
                         />
                       </FormGroup>
                     </div>
+                 */}
                   </Form>
                 </CardBody>
               </Card>
