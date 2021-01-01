@@ -25,7 +25,7 @@ class UserHeader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userInfo:''
+      userInfo: ''
     }
   }
 
@@ -36,8 +36,7 @@ class UserHeader extends React.Component {
           className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
           style={{
             minHeight: "600px",
-            backgroundImage:
-              "url(" + require("assets/img/theme/profile-cover.jpg") + ")",
+            backgroundImage: "url(" + require("assets/img/theme/profile-cover.jpg") + ")" || this.props.image,
             backgroundSize: "cover",
             backgroundPosition: "center top"
           }}
@@ -48,11 +47,10 @@ class UserHeader extends React.Component {
           <Container className="d-flex align-items-center" fluid>
             <Row>
               <Col lg="7" md="10">
-                <h1 className="display-2 text-white">Hello Jesse</h1>
-                <p className="text-white mt-0 mb-5">
-                  This is your profile page. You can see the progress you've
-                  made with your work and manage your projects or assigned tasks
-                </p>
+                <h1 className="display-2 text-white" style={{ display: 'inline'  }}>Hello {this.props.username}</h1>
+                {/* <p className="text-white mt-0 mb-5">
+
+                </p> */}
                 <Button
                   color="info"
                   href="#pablo"

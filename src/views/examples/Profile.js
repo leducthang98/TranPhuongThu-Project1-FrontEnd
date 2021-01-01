@@ -16,6 +16,7 @@
 
 */
 import React from "react";
+import { baseUrl } from '../../domain'
 // reactstrap components
 import {
   Button,
@@ -32,20 +33,102 @@ import {
 import MakeRequest from "../MakeRequest";
 // core components
 import UserHeader from "../../components/Headers/UserHeader";
+import Label from "reactstrap/lib/Label";
 class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userInfo: ''
+      userInfo: {
+        username: '',
+        age: '',
+      },
+      checked: false
     }
   }
-  componentDidMount() {
-    const res = MakeRequest('get', "http://103.142.26.130:6001/user/me")
+  async componentDidMount() {
+    this.getProfile()
+  }
+  getProfile = async () => {
+    const res = await MakeRequest('get', "http://103.142.26.130:6001/user/me")
+    if (res && res.data && res.data.code === 0) {
+      await this.setState({
+        ...this.state,
+        userInfo: {
+          ...this.state.userInfo,
+          username: res.data.data.username,
+          fullname: res.data.data.fullname,
+          age: res.data.data.age,
+          email: res.data.data.email,
+          gender: res.data.data.gender,
+          image: res.data.data.image,
+          address: res.data.data.address || "Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+        },
+        male: (res.data.data.gender === 1) ? (true) : (false),
+        female: (res.data.data.gender === 2) ? (true) : (false)
+
+      })
+    }
+    console.log(this.state.checked);
+  }
+  handleUpdateProfile = async () => {
+    console.log(this.state.userInfo);
+    if (this.state.checked === false) {
+      this.setState({
+        ...this.state,
+        userInfo: {
+          ...this.state.userInfo,
+          gender: 2
+        }
+      })
+    } else {
+      this.setState({
+        ...this.state,
+        userInfo: {
+          ...this.state.userInfo,
+          gender: 1
+        }
+      })
+    }
+    const dataUpdate = {
+      age: this.state.userInfo.age,
+      image: this.state.userInfo.image,
+      email: this.state.userInfo.email,
+      username: this.state.userInfo.username,
+      fullname: this.state.userInfo.fullname,
+      gender: this.state.userInfo.gender,
+      address: this.state.userInfo.address,
+
+    }
+    const res = await MakeRequest("PUT", baseUrl + "user/update/me", dataUpdate)
+    if (res && res.data && res.data.code === 0) {
+
+      alert("Cập nhật thành công")
+    }
+
+  }
+  handleChange = async (e) => {
+    const { name, value } = e.target
+    await this.setState({
+      ...this.state,
+      userInfo: {
+        ...this.state.userInfo,
+        [name]: value
+      }
+    })
+  }
+  handleCheckClick = (e) => {
+    this.setState({
+      ...this.state,
+      checked: !this.state.checked
+
+    });
+
   }
   render() {
+    console.log(this.state.checked);
     return (
       <>
-        <UserHeader />
+        <UserHeader image={this.state.userInfo.image} username={this.state.userInfo.username} />
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
@@ -112,20 +195,16 @@ class Profile extends React.Component {
                   <div style={{ height: '50px', width: '100%' }}></div>
                   <div className="text-center">
                     <h3>
-                      Jessica Jones
-                      <span className="font-weight-light">, 27</span>
+                      {this.state.userInfo.username}
+                      <span className="font-weight-light">{this.state.userInfo.age}</span>
                     </h3>
-                    <div className="h5 font-weight-300">
-                      <i className="ni location_pin mr-2" />
-                      Bucharest, Romania
-                    </div>
+
                     <div className="h5 mt-4">
                       <i className="ni business_briefcase-24 mr-2" />
-                      Solution Manager - Creative Tim Officer
                     </div>
                     <div>
                       <i className="ni education_hat mr-2" />
-                      University of Computer Science
+                      {this.state.userInfo.address}
                     </div>
                     <hr className="my-4" />
                     <p>
@@ -173,14 +252,16 @@ class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-username"
                             >
-                              Tên đăng nhập
+                              Họ và tên
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="lucky.jesse"
+                              value={this.state.userInfo.fullname}
                               id="input-username"
-                              placeholder="Username"
+                              placeholder="Họ và tên"
                               type="text"
+                              name="fullname"
+                              onChange={(e) => this.handleChange(e)}
                             />
                           </FormGroup>
                         </Col>
@@ -195,8 +276,11 @@ class Profile extends React.Component {
                             <Input
                               className="form-control-alternative"
                               id="input-email"
-                              placeholder="jesse@example.com"
+                              placeholder="Email"
+                              value={this.state.userInfo.email}
                               type="email"
+                              name="email"
+                              onChange={(e) => this.handleChange(e)}
                             />
                           </FormGroup>
                         </Col>
@@ -208,32 +292,22 @@ class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-first-name"
                             >
-                              Họ và đệm
+                              Giới tính
                             </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue="Lucky"
-                              id="input-first-name"
-                              placeholder="First name"
-                              type="text"
-                            />
+
                           </FormGroup>
-                        </Col>
-                        <Col lg="6">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-last-name"
-                            >
-                              Tên
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue="Jesse"
-                              id="input-last-name"
-                              placeholder="Last name"
-                              type="text"
-                            />
+                          <FormGroup check>
+                            <Label check>
+                              <Input type="radio" name="male" checked={this.state.checked}
+                                onChange={(e) => this.handleCheckClick(e)}
+                              />{"  "}Nam        </Label>
+                          </FormGroup>
+                          <FormGroup check>
+                            <Label check>
+                              <Input type="radio" name="female"
+                                checked={!this.state.checked}
+                                onChange={(e) => this.handleCheckClick(e)}
+                              />{"  "}Nữ        </Label>
                           </FormGroup>
                         </Col>
                       </Row>
@@ -255,90 +329,32 @@ class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                              value={this.state.userInfo.address || "Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"}
                               id="input-address"
-                              placeholder="Home Address"
+                              placeholder="Địa chỉ"
                               type="text"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col lg="4">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-city"
-                            >
-                              Thành phố
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue="New York"
-                              id="input-city"
-                              placeholder="City"
-                              type="text"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col lg="4">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-country"
-                            >
-                              Quốc tịch
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue="United States"
-                              id="input-country"
-                              placeholder="Country"
-                              type="text"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col lg="4">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-country"
-                            >
-                              Mã quốc gia
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              id="input-postal-code"
-                              placeholder="Postal code"
-                              type="number"
+                              name="address"
+                              onChange={(e) => this.handleChange(e)}
                             />
                           </FormGroup>
                         </Col>
                       </Row>
                     </div>
                     <hr className="my-4" />
-                    {/* Description */}
-
-                    {/* <h6 className="heading-small text-muted mb-4">Giới thiệu bản thân</h6>
-                    <div className="pl-lg-4">
-                      <FormGroup>
-                        <label>Miêu tả ngắn gọn </label>
-                        <Input
-                          className="form-control-alternative"
-                          placeholder="A few words about you ..."
-                          rows="4"
-                          defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and
-                          Open Source."
-                          type="textarea"
-                        />
-                      </FormGroup>
-                    </div>
-                 */}
                   </Form>
                 </CardBody>
               </Card>
             </Col>
           </Row>
+          <div style={{ paddingLeft: '200px', paddingTop: '30px' }}>
+            <Button
+              color="info"
+              onClick={() => {
+                this.handleUpdateProfile()
+              }}
+            >
+              Cập nhật</Button>
+          </div>
         </Container>
       </>
     );

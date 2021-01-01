@@ -82,10 +82,11 @@ class Icons extends React.Component {
       ...this.state,
       [name]: value
     })
-    const dataSearch = {
-      dataSearch: e.target.value
+    const searchData = {
+      searchData: e.target.value,
+      type: 2
     }
-    const res = MakeRequest("GET", "http://103.142.26.130:6001/item/search", dataSearch)
+    const res = await MakeRequest("GET", "http://103.142.26.130:6001/item/search", searchData)
     if (res && res.data && res.data.message === "ok" && res.data.code === 0) {
       this.setState({
         ...this.state,

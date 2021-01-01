@@ -89,8 +89,7 @@ class Index extends React.Component {
     const res = await MakeRequest("GET", "http://103.142.26.130:6001/item/search", searchData)
     // console.log('res:', res)
     if (res.data.code === 0) {
-      console.log('code ngu')
-      await this.setState({
+       await this.setState({
         ...this.state,
         listData: res.data.data
       })
@@ -98,10 +97,8 @@ class Index extends React.Component {
   }
 
   getData = async () => {
-    //console.log(getAllItem);
     const data = await MakeRequest("GET", getAllItem)
     const res = data.data
-    //console.log("8666   ", res);
 
     if (res.code === 0 && res.message === "ok") {
       await this.setState({
