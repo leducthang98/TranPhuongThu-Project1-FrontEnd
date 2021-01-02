@@ -1,8 +1,6 @@
-export const ADD_STATE_COMMENT_BOX = "ADD_STATE_COMMENT_BOX";
-export const ADD_STATE_GRID_TEXT_BOX = "ADD_STATE_GRID_TEXT_BOX";
-export const ADD_STATE_SIGLE_TEXT_BOX = "ADD_STATE_SIGLE_TEXT_BOX";
-export const ADD_STATE_GRID_SIGLE_CHOICE = "ADD_STATE_GRID_SIGLE_CHOICE";
-export const ADD_STATE_GRID_MULTI_CHOICE = "ADD_STATE_GRID_MULTI_CHOICE";
-export const ADD_STATE_GRID_SIGLE_TEXT = "ADD_STATE_GRID_SIGLE_TEXT";
-export const ADD_STATE_MULTI_CHOICE = "ADD_STATE_MULTI_CHOICE";
-export const ADD_STATE_SIGLE_CHOICE = "ADD_STATE_SIGLE_CHOICE";
+export const Update_To_Cart = "Update_To_Cart";
+export const Update_Success = "Update_Success";
+export const Update_Failure = "Update_Failure";
+export const get_cart_info = "get_cart_info";
+export const get_cart_info_success = "get_cart_info_success";
+export const get_cart_info_failure = "get_cart_info_failure";

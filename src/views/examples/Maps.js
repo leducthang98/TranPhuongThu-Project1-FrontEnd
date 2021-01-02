@@ -6,6 +6,7 @@ import Chart from "chart.js";
 // react plugin used to create charts
 import { Line, Bar } from "react-chartjs-2";
 import { store } from 'react-notifications-component';
+import * as actions from '../../store/actions/actions'
 
 // reactstrap components
 import {
@@ -43,6 +44,7 @@ import FormGroup from "reactstrap/lib/FormGroup";
 import Input from "reactstrap/lib/Input";
 import Label from "reactstrap/lib/Label";
 import { seachByText } from "domain";
+import { connect } from "react-redux";
 
 
 class Icons extends React.Component {
@@ -93,6 +95,72 @@ class Icons extends React.Component {
         listData: res.data.data
       })
     }
+  }
+  handleAddToCart = async (item, idx) => {
+    console.log(item);
+    const dataToStore = {
+      id: item.id,
+      name: item.name,
+      image: item.image,
+      price: item.price,
+      type: item.type,
+      amount: item.amount,
+      num:1
+    }
+    const oldStore = this.props.cart
+    let count = 0
+    for (let index = 0; index < oldStore.length; index++) {
+      console.log("index", index);
+      const data = oldStore[index]
+      console.log("oldStore[index]  ", oldStore[index]);
+      console.log("oldStore.length ", oldStore.length);
+      console.log("oldStore ", oldStore);
+
+      console.log(data);
+      if (item.id === data.id) {
+        console.log(112);
+        count++
+        if (item.amount > data.amount) {
+          oldStore[idx] = {
+            id: data.id,
+            name: data.name,
+            image: data.image,
+            price: data.price,
+            type: data.type,
+            amount:data.amount,
+            num: parseInt(data.amount) + 1
+          }
+        } else {
+          console.log(125);
+          oldStore[idx] = {
+            id: data.id,
+            name: data.name,
+            image: data.image,
+            price: data.price,
+            type: data.type,
+            amount:data.amount,
+            num: parseInt(item.amount)
+          }
+        }
+      }
+    }
+    if (count === 0) {
+      console.log(125);
+      oldStore.push(dataToStore)
+    }
+    await this.props.cartAdd(oldStore)
+    store.addNotification({
+      title: "Thông báo",
+      message: "Đã thêm: " + item.name,
+      type: "success",
+      insert: "top",
+      container: "bottom-left",
+      animationOut: ["animate__animated animate__fadeOut"],
+      dismiss: {
+        duration: 2000,
+
+      }
+    });
   }
   handleMouseOver = async (isMouseOver, idx) => {
     //console.log(1111);
@@ -179,7 +247,9 @@ class Icons extends React.Component {
                                       }
                                     });
                                   }}
-                                  style={{ marginTop: 10, marginLeft: 10, width: '90%', marginBottom: 5 }} outline color="primary">Thêm vào giỏ hàng</Button>
+                                  style={{ marginTop: 10, marginLeft: 10, width: '90%', marginBottom: 5 }} outline color="primary"
+                                  onClick={() => this.handleAddToCart(item, idx)}
+                                >Thêm vào giỏ hàng</Button>
                                 <h3 style={{ color: 'red', fontWeight: 'bold' }}>({item.price} VND)</h3>
                                 <p style={{ marginTop: -5, fontWeight: 'normal' }}>{item.name}</p>
 
@@ -198,5 +268,14 @@ class Icons extends React.Component {
     );
   }
 }
-
-export default Icons;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    cartAdd: (value) => dispatch(actions.addToCart(value)),
+  };
+};
+const mapStateToProps = (store) => {
+  return {
+    cart: store.cart.cart
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps) (Icons);

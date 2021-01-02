@@ -16,6 +16,8 @@
 
 */
 import React from "react";
+import * as actions from '../../store/actions/actions'
+
 
 // reactstrap components
 import {
@@ -39,9 +41,191 @@ import {
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
+import { connect } from "react-redux";
+import { store } from "react-notifications-component";
+import Button from "reactstrap/lib/Button";
+import MakeRequest from "views/MakeRequest";
+import { baseUrl } from "domain";
+import axios from "axios";
 
 class Tables extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      listData: [],
+      total: 0,
+      amount: []
+    }
+  }
+  async componentDidMount() {
+    await this.setState({
+      ...this.state,
+      listData: this.props.cart
+    })
+    let amount = []
+    let total = 0
+    this.state.listData.map((item) => {
+      total += parseInt(item.num) * parseInt(item.price)
+      amount.push(item.num)
+      this.setState({
+        ...this.state,
+        amount: amount,
+        total: total
+      })
+    })
+  }
+  addMore = async (idx, item) => {
+    let oldStore = this.state.listData
+    let oldAmout = this.state.amount
+    let data = ''
+    for (let index = 0; index < oldAmout.length; index++) {
+      if (index === idx) {
+        console.log(index + "==>" + oldAmout[idx] + "==>" + idx);
+
+        (oldAmout[idx] === item.amount) ? (oldAmout[idx] = item.amount)
+          : (oldAmout[idx] = parseInt(this.state.amount[idx]) + 1)
+
+        data = {
+          id: item.id,
+          name: item.name,
+          image: item.image,
+          price: item.price,
+          type: item.type,
+          amount: item.amount,
+          num: oldAmout[idx]
+        }
+        oldStore[idx] = data
+        console.log(oldStore);
+        await this.props.cartAdd(oldStore)
+      }
+    }
+    await this.setState({
+      ...this.state,
+      amount: oldAmout
+
+    })
+  }
+
+  minusMore = async (idx, item) => {
+    let oldStore = this.state.listData
+    let oldAmout = this.state.amount
+    let data = ''
+    for (let index = 0; index < oldAmout.length; index++) {
+      if (index === idx) {
+        console.log(index + "==>" + oldAmout[idx] + "==>" + idx);
+
+        (oldAmout[idx] === 1) ? (oldAmout[idx] = 1)
+          : (oldAmout[idx] = parseInt(this.state.amount[idx]) - 1)
+        data = {
+          id: item.id,
+          name: item.name,
+          image: item.image,
+          price: item.price,
+          type: item.type,
+          amount: item.amount,
+          num: oldAmout[idx]
+        }
+        oldStore[idx] = data
+        console.log(oldStore);
+        await this.props.cartAdd(oldStore)
+      }
+    }
+    await this.setState({
+      ...this.state,
+      amount: oldAmout
+    })
+  }
+  HandleDelItem = async (item, idx) => {
+    let oldStore = this.state.listData
+    let oldAmout = this.state.amount
+    oldStore.splice(idx, 1)
+    this.props.cartAdd(oldStore)
+    await this.setState({
+      ...this.state,
+      listData: this.props.cart
+    })
+    let amount = []
+    this.state.listData.map((item) => {
+      amount.push(item.num)
+      this.setState({
+        ...this.state,
+        amount: amount
+      })
+    })
+  }
+
+  handleExportBill =async () => {
+    let data = []
+    this.state.listData.map((item, idx) => {
+      for (let index = 0; index < item.num; index++) {
+        data.push(item.id)
+      }
+    })
+    console.log(data);
+    const res = await axios({
+      method: 'POST',
+      url: "http://103.142.26.130:6001/order/create",
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+        'Access-Control-Allow-Origin': "*"
+      },
+      data: {
+        foo: data,
+      }
+    });
+    if (res && res.data.code === 0) {
+      console.log(res.data.data);
+    }
+  }
+  contentInCart = () => {
+
+    let show = this.state.listData.map((item, idx) => {
+
+      return (
+        <tr key={idx}>
+          <td scope="row">
+            {item.name}
+          </td>
+          <td>
+            {item.image}
+          </td>
+          <td>{item.price} đ</td>
+
+          <td>
+            <div style={{ paddingTop: '20px', display: 'flex', textAlign: 'center' }}>
+              <button style={{ height: '30px', background: 'none', borderRight: 'none' }}
+                onClick={() => this.minusMore(idx, item)
+                }
+              >
+                <i class="fas fa-minus-circle" ></i>
+              </button>
+              <p style={{
+                width: '80px', height: '30px', border: '1px solid #525f7f',
+                paddingLeft: '5px', paddingRight: '5px',
+                textAlign: 'center'
+              }}>{parseInt(this.state.amount[idx])}</p>
+              <button style={{ height: '30px', background: 'none', borderLeft: 'none' }}
+                onClick={() => this.addMore(idx, item)
+                }
+              >
+                <i class="fas fa-plus-circle"
+                ></i>
+              </button>
+            </div>
+          </td>
+          <td>
+            {parseInt(this.state.amount[idx]) * parseInt(item.price)}
+          </td>
+          <td>
+            <Button onClick={() => this.HandleDelItem(item, idx)}>Xóa</Button>
+          </td>
+        </tr>
+      )
+    })
+    return show;
+  }
   render() {
+
     return (
       <>
         <Header />
@@ -52,172 +236,39 @@ class Tables extends React.Component {
             <div className="col">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">Card tables</h3>
+                  <h3 className="mb-0">Giỏ hàng</h3>
                 </CardHeader>
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                     <tr>
-                      <th scope="col">Project</th>
-                      <th scope="col">Budget</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Users</th>
-                      <th scope="col">Completion</th>
-                      <th scope="col" />
+                      <th >Tên sản phẩm</th>
+                      <th >Ảnh</th>
+                      <th >Giá tiền</th>
+                      <th >Số lượng</th>
+                      <th >Thành tiền</th>
+                      {/* <th >Completion</th> */}
+                      <th >Thành tiền</th>
+
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">
-                        <Media className="align-items-center">
-                          <a
-                            className="avatar rounded-circle mr-3"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
-                          >
-                            <img
-                              alt="..."
-                              src={require("assets/img/theme/vue.jpg")}
-                            />
-                          </a>
-                          <Media>
-                            <span className="mb-0 text-sm">
-                              Vue Paper UI Kit PRO
-                            </span>
-                          </Media>
-                        </Media>
-                      </th>
-                      <td>$2,200 USD</td>
-                      <td>
-                        <Badge color="" className="badge-dot mr-4">
-                          <i className="bg-success" />
-                          completed
-                        </Badge>
-                      </td>
-                      <td>
-                        <div className="avatar-group">
-                          <a
-                            className="avatar avatar-sm"
-                            href="#pablo"
-                            id="tooltip664029969"
-                            onClick={e => e.preventDefault()}
-                          >
-                            <img
-                              alt="..."
-                              className="rounded-circle"
-                              src={require("assets/img/theme/team-1-800x800.jpg")}
-                            />
-                          </a>
-                          <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip664029969"
-                          >
-                            Ryan Tompson
-                          </UncontrolledTooltip>
-                          <a
-                            className="avatar avatar-sm"
-                            href="#pablo"
-                            id="tooltip806693074"
-                            onClick={e => e.preventDefault()}
-                          >
-                            <img
-                              alt="..."
-                              className="rounded-circle"
-                              src={require("assets/img/theme/team-2-800x800.jpg")}
-                            />
-                          </a>
-                          <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip806693074"
-                          >
-                            Romina Hadid
-                          </UncontrolledTooltip>
-                          <a
-                            className="avatar avatar-sm"
-                            href="#pablo"
-                            id="tooltip844096937"
-                            onClick={e => e.preventDefault()}
-                          >
-                            <img
-                              alt="..."
-                              className="rounded-circle"
-                              src={require("assets/img/theme/team-3-800x800.jpg")}
-                            />
-                          </a>
-                          <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip844096937"
-                          >
-                            Alexander Smith
-                          </UncontrolledTooltip>
-                          <a
-                            className="avatar avatar-sm"
-                            href="#pablo"
-                            id="tooltip757459971"
-                            onClick={e => e.preventDefault()}
-                          >
-                            <img
-                              alt="..."
-                              className="rounded-circle"
-                              src={require("assets/img/theme/team-4-800x800.jpg")}
-                            />
-                          </a>
-                          <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip757459971"
-                          >
-                            Jessica Doe
-                          </UncontrolledTooltip>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="mr-2">100%</span>
-                          <div>
-                            <Progress
-                              max="100"
-                              value="100"
-                              barClassName="bg-success"
-                            />
-                          </div>
-                        </div>
-                      </td>
-                      <td className="text-right">
-                        <UncontrolledDropdown>
-                          <DropdownToggle
-                            className="btn-icon-only text-light"
-                            href="#pablo"
-                            role="button"
-                            size="sm"
-                            color=""
-                            onClick={e => e.preventDefault()}
-                          >
-                            <i className="fas fa-ellipsis-v" />
-                          </DropdownToggle>
-                          <DropdownMenu className="dropdown-menu-arrow" right>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
-                            >
-                              Action
-                            </DropdownItem>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
-                            >
-                              Another action
-                            </DropdownItem>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
-                            >
-                              Something else here
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </td>
-                    </tr>
+                    {this.contentInCart()}
                   </tbody>
+
                 </Table>
+
+                {this.state.listData.length > 0 && <div style={{
+                  display: 'flex', paddingLeft: '50px', width: '500p',
+                  border: '1px solid #f7fafc', paddingTop: '15px'
+                }}>
+                  <div style={{ width: "300px" }}>
+                    <p style={{ fontWeight: 500 }}>Tổng hóa đơn  </p >
+                  </div>
+                  <div>
+                    <p style={{ fontWeight: 500 }}>{this.state.total} đ</p>
+                  </div>
+                </div>
+                }
                 <CardFooter className="py-4">
                   <nav aria-label="...">
                     <Pagination
@@ -271,6 +322,11 @@ class Tables extends React.Component {
                   </nav>
                 </CardFooter>
               </Card>
+              <div>
+                {this.state.listData.length > 0 && <Button onClick={() => {
+                  this.handleExportBill()
+                }}>Đặt hàng</Button>}
+              </div>
             </div>
           </Row>
         </Container>
@@ -278,5 +334,14 @@ class Tables extends React.Component {
     );
   }
 }
-
-export default Tables;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    cartAdd: (value) => dispatch(actions.addToCart(value)),
+  };
+};
+const mapStateToProps = (store) => {
+  return {
+    cart: store.cart.cart
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Tables);

@@ -28,17 +28,20 @@ import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
 import 'react-notifications-component/dist/theme.css';
 import ReactNotification from 'react-notifications-component';
- 
+import { Provider } from "react-redux";
+
 ReactDOM.render(
   <>
-    <ReactNotification />
-    <BrowserRouter>
-      <Switch>
-        <Route path="/admin" render={props => <AdminLayout {...props} />} />
-        <Route path="/auth" render={props => <AuthLayout {...props} />} />
-        <Redirect from="/" to="/auth" />
-      </Switch>
-    </BrowserRouter>
+    <Provider store={store}>
+      <ReactNotification />
+      <BrowserRouter>
+        <Switch>
+          <Route path="/admin" render={props => <AdminLayout {...props} />} />
+          <Route path="/auth" render={props => <AuthLayout {...props} />} />
+          <Redirect from="/" to="/auth" />
+        </Switch>
+      </BrowserRouter>
+    </Provider>
   </>,
   document.getElementById("root")
 );

@@ -23,6 +23,8 @@ import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
 import News from "views/examples/News.js";
+import Order from "views/examples/Order";
+
 
 var routes = [
   {
@@ -54,6 +56,14 @@ var routes = [
     name: "Tin tức",
     icon: "ni ni-circle-08 text-pink",
     component: News,
+    layout: "/admin",
+    render: true
+  },
+  {
+    path: "/order",
+    name: "Đơn hàng",
+    icon: "ni ni-circle-08 text-pink",
+    component: Order,
     layout: "/admin",
     render: true
   },
@@ -90,6 +100,7 @@ var routes = [
     layout: "/admin",
     render: false
   },
+ 
 
 
 ];

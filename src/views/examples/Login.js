@@ -1,4 +1,4 @@
-import { loginApi } from "../../domain";
+import { baseUrl, loginApi } from "../../domain";
 import React from "react";
 import { withRouter } from "react-router-dom";
 import {
@@ -16,6 +16,7 @@ import {
   Col
 } from "reactstrap";
 import axios from "axios";
+import MakeRequest from "views/MakeRequest";
 
 class Login extends React.Component {
   constructor(props) {
@@ -39,7 +40,14 @@ class Login extends React.Component {
     let authData = response.data;
     if (authData && authData.code === 0 && authData.message === "ok") {
       localStorage.setItem("token", authData.data.token)
-      this.props.history.push('/admin')
+      const infor = await MakeRequest("GET", baseUrl + "user/me")
+      console.log(infor);
+      if (infor && infor.data.code === 0 && infor.data.data.role === "user") {
+        this.props.history.push('/admin')
+
+      } else {
+        alert("Không có quyền truy cập")
+      }
     } else {
       alert('Sai tài khoản hoặc mật khẩu')
     }
