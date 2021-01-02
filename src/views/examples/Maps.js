@@ -38,14 +38,14 @@ import "../index.css";
 import Header from "components/Headers/Header.js";
 import { listData } from "./data";
 import HomeModal from "./ModalHome";
-import { getAllItem } from "domain";
-import MakeRequest from "views/MakeRequest";
+ import MakeRequest from "views/MakeRequest";
 import FormGroup from "reactstrap/lib/FormGroup";
 import Input from "reactstrap/lib/Input";
 import Label from "reactstrap/lib/Label";
 import { seachByText } from "domain";
 import { connect } from "react-redux";
-import { baseUrl } from "domain";
+import { baseUrl, getAllItem } from "../../domain";
+
 
 
 class Icons extends React.Component {
@@ -208,9 +208,9 @@ class Icons extends React.Component {
           <Row>
 
             <div className=" col">
-              <Card className=" shadow">
-                <div style={{ display: 'flex' }}>
-                  <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px' }}>
+            <Card className=" shadow">
+                <div style={{ display: 'flex' , paddingTop:'20px'}}>
+                  <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px' , paddingLeft:'100px', margin:'0px'}}>
                     <Input
                       style={{ width: '500px' }}
                       type="search"
@@ -224,7 +224,7 @@ class Icons extends React.Component {
                     <Button>
                       <i class="fas fa-search"></i></Button>
                   </FormGroup>
-                  <FormGroup>
+                  <FormGroup style={{margin:'0px'}}>
                     <Input type="select" name="select" id="exampleSelect" onChange={(e) => {
                       this.handleSort(e)
                     }}>
@@ -236,6 +236,8 @@ class Icons extends React.Component {
 
                     </Input>
                   </FormGroup>
+
+            
 
                 </div>
                 <CardBody>

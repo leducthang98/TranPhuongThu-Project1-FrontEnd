@@ -87,7 +87,6 @@ class Icons extends React.Component {
     }
     const data = await MakeRequest("GET", getAllItem, params)
     const res = data.data
-    //console.log("8666   ", res);
 
     if (res.code === 0 && res.message === "ok") {
       await this.setState({
@@ -97,7 +96,7 @@ class Icons extends React.Component {
     }
   }
   handleAddToCart = async (item, idx) => {
-    console.log(item);
+    console.log(" 99 ", item);
     const dataToStore = {
       id: item.id,
       name: item.name,
@@ -110,15 +109,12 @@ class Icons extends React.Component {
     const oldStore = this.props.cart
     let count = 0
     for (let index = 0; index < oldStore.length; index++) {
-      console.log("index", index);
+      // console.log("oldStore", oldStore);
+      console.log("length", oldStore.length);
       const data = oldStore[index]
-      console.log("oldStore[index]  ", oldStore[index]);
-      console.log("oldStore.length ", oldStore.length);
-      console.log("oldStore ", oldStore);
-
       console.log(data);
       if (item.id === data.id) {
-        console.log(112);
+        // console.log(117);
         count++
         if (item.amount > data.amount) {
           oldStore[idx] = {
@@ -130,8 +126,9 @@ class Icons extends React.Component {
             amount: data.amount,
             num: parseInt(data.amount) + 1
           }
+          console.log("129  " + oldStore);
         } else {
-          console.log(125);
+          count++
           oldStore[idx] = {
             id: data.id,
             name: data.name,
@@ -141,11 +138,13 @@ class Icons extends React.Component {
             amount: data.amount,
             num: parseInt(item.amount)
           }
+          console.log("130  " + oldStore.length," count ",count);
         }
       }
     }
     if (count === 0) {
-      console.log(125);
+      console.log(146);
+      console.log("125 " + JSON.stringify(dataToStore));
       oldStore.push(dataToStore)
     }
     await this.props.cartAdd(oldStore)
@@ -184,7 +183,7 @@ class Icons extends React.Component {
     const data = {
       sortType: sortType,
       sortColumn: Sortcolumn,
-      type:1
+      type: 1
     }
     const res = await MakeRequest("GET", baseUrl + "item/all", data)
     if (res && res.data && res.data.message === "ok" && res.data.code === 0) {
@@ -208,8 +207,8 @@ class Icons extends React.Component {
           <Row>
             <div className=" col">
               <Card className=" shadow">
-                <div style={{ display: 'flex' }}>
-                  <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight:'200px' }}>
+                <div style={{ display: 'flex', paddingTop: '20px' }}>
+                  <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px', paddingLeft: '100px', margin: '0px' }}>
                     <Input
                       style={{ width: '500px' }}
                       type="search"
@@ -223,8 +222,8 @@ class Icons extends React.Component {
                     <Button>
                       <i class="fas fa-search"></i></Button>
                   </FormGroup>
-                  <FormGroup>
-                     <Input type="select" name="select" id="exampleSelect" onChange={(e) => {
+                  <FormGroup style={{ margin: '0px' }}>
+                    <Input type="select" name="select" id="exampleSelect" onChange={(e) => {
                       this.handleSort(e)
                     }}>
                       <option name="price" value="1price">Sắp xếp</option>

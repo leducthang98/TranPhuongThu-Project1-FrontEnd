@@ -85,8 +85,9 @@ class Index extends React.Component {
     //   ...this.state,
     //   listData: []
     // })
+    console.log();
     const searchData = {
-      searchData: inputSearch
+      searchData: inputSearch.target.value
     }
     const res = await MakeRequest("GET", "http://103.142.26.130:6001/item/search", searchData)
     // console.log('res:', res)
@@ -224,8 +225,8 @@ class Index extends React.Component {
           <Row>
             <div className=" col">
               <Card className=" shadow">
-                <div style={{ display: 'flex' }}>
-                  <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px' }}>
+                <div style={{ display: 'flex' , paddingTop:'20px'}}>
+                  <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px' , paddingLeft:'100px', margin:'0px'}}>
                     <Input
                       style={{ width: '500px' }}
                       type="search"
@@ -239,7 +240,7 @@ class Index extends React.Component {
                     <Button>
                       <i class="fas fa-search"></i></Button>
                   </FormGroup>
-                  <FormGroup>
+                  <FormGroup style={{margin:'0px'}}>
                     <Input type="select" name="select" id="exampleSelect" onChange={(e) => {
                       this.handleSort(e)
                     }}>
