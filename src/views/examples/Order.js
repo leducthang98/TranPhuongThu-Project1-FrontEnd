@@ -97,53 +97,89 @@ class Order extends React.Component {
     })
     return show
   }
+  async handleCancel(value) {
 
-
+    const res = await MakeRequest("put", baseUrl + "order/cancel/" + value.id)
+    console.log(res.data);
+    if (res.data.code === 0) {
+      alert("Hủy thành công đơn hàng")
+      await this.getData()
+    } else {
+      alert("Hủy thất bại")
+    }
+  }
+  status = (status, value) => {
+    if (status === 1) {
+      return (
+        <div  >
+          <p style={{ color: '#000', margin: '0px' }}>Đơn hàng đang xử lý</p>
+          <Button color='danger' onClick={() => {
+            this.handleCancel(value)
+          }}> Hủy đơn hàng</Button>
+        </div>
+      )
+    } else if (status === 2) {
+      return (
+        <div>
+          <p style={{ color: '#000', margin: '0px' }}>Đơn hàng đã được xác nhận</p>
+        </div>)
+    } else if (status === 3) {
+      return (
+        <div>
+          <p style={{ color: '#000', margin: '0px' }}>Đơn hàng đã bị từ chối</p>
+        </div>)
+    } else if (status === 4) {
+      return (
+        <div>
+          <p style={{ color: '#000', margin: '0px' }}>Đơn hàng đã hủy</p>
+        </div>)
+    }
+  }
   content = () => {
     let show = this.state.listData.map((value, idx) => {
       const items = value.items
       console.log(value);
       return (
-        <div>
-          <Card className="shadow">
-            <CardHeader className="border-0">
-              <p className="mb-0"></p>
-            </CardHeader>
-            <div style={{ width: '100%', height: '30px' , display:'flex'}}></div>
-            <p style={{ textAlign: 'center', color: '#000' }}>Đơn hàng {idx + 1}</p>
-            <p style={{ textAlign: 'center', color: '#000' }} > {"     "+value.created_time}</p>
-            <Table className="align-items-center table-flush" responsive>
-              <thead className="thead-light">
-                <tr>
-                  <th >Tên sản phẩm</th>
-                  <th >Ảnh</th>
-                  <th >Giá tiền</th>
-                  <th >Số lượng</th>
-                  <th >Thành tiền</th>
-                  {/* <th >Completion</th> */}
+        <Container>
+          <Row>
+            <Card className="shadow" style={{ width: '100%' }}>
+              <CardHeader className="border-0" style={{ display: 'flex' }}>
+                <div style={{ paddingRight: '500px' }}> <p style={{ color: '#000', margin: '0px' }}>Đơn hàng {idx + 1}</p>
+                  <p style={{ color: '#000', margin: '0px' }} > {"     " + value.created_time}</p></div>
+                {this.status(value.status, value)}
+              </CardHeader>
 
-                </tr>
-              </thead>
-              <tbody>
-                {this.subtable(value.items)}
-              </tbody>
-            </Table>
-            <div style={{
-              display: 'flex', paddingLeft: '50px', width: '500p',
-              border: '1px solid #f7fafc', paddingTop: '15px'
-            }}>
-              <div style={{ width: "300px" }}>
-                <p style={{ fontWeight: 500, color: '#000' }}>Tổng hóa đơn  </p >
+              <Table className="align-items-center table-flush" responsive>
+                <thead className="thead-light">
+                  <tr>
+                    <th >Tên sản phẩm</th>
+                    <th >Ảnh</th>
+                    <th >Giá tiền</th>
+                    <th >Số lượng</th>
+                    <th >Thành tiền</th>
+                    {/* <th >Completion</th> */}
+
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.subtable(value.items)}
+                </tbody>
+              </Table>
+              <div style={{
+                display: 'flex', paddingLeft: '50px', width: '500p',
+                border: '1px solid #f7fafc', paddingTop: '15px'
+              }}>
+                <div style={{ width: "300px" }}>
+                  <p style={{ fontWeight: 500, color: '#000' }}>Tổng hóa đơn  </p >
+                </div>
+                <div>
+                  <p style={{ fontWeight: 500, color: '#000' }}>{value.totalMoney} đ</p>
+                </div>
               </div>
-              <div>
-                <p style={{ fontWeight: 500, color: '#000' }}>{value.totalMoney} đ</p>
-              </div>
-            </div>
-            <div style={{ width: '100%', height: '30px' }}></div>
-          </Card>
-
-        </div >
-
+            </Card>
+          </Row>
+          <div style={{ width: '100%', height: '50px' }}></div>
+        </Container>
       )
     })
     return show;
@@ -159,13 +195,9 @@ class Order extends React.Component {
         {/* Page content */}
         <Container className=" mt--7" fluid>
           {/* Table */}
-          <Row>
-            <div className=" col">
 
+          {this.content()}
 
-              {this.content()}
-            </div>
-          </Row>
         </Container>
       </>
     );

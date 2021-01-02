@@ -47,6 +47,7 @@ import Button from "reactstrap/lib/Button";
 import MakeRequest from "views/MakeRequest";
 import { baseUrl } from "domain";
 import axios from "axios";
+import Alert from "reactstrap/lib/Alert";
 
 class Tables extends React.Component {
   constructor(props) {
@@ -174,6 +175,7 @@ class Tables extends React.Component {
     let clearStore = []
     if (res && res.data.code === 0) {
       this.props.cartAdd(clearStore)
+      alert("Đặt hàng thành công")
       this.props.history.push("/admin/order")
     }
   }

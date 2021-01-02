@@ -54,7 +54,7 @@ import "./index.css";
 
 import Header from "components/Headers/Header.js";
 import HomeModal from "./examples/ModalHome";
-import { getAllItem } from "../domain";
+import { baseUrl, getAllItem } from "../domain";
 import axios from "axios";
 import MakeRequest from "./MakeRequest";
 import FormGroup from "reactstrap/lib/FormGroup";
@@ -91,7 +91,7 @@ class Index extends React.Component {
     const res = await MakeRequest("GET", "http://103.142.26.130:6001/item/search", searchData)
     // console.log('res:', res)
     if (res.data.code === 0) {
-       await this.setState({
+      await this.setState({
         ...this.state,
         listData: res.data.data
       })
@@ -106,7 +106,7 @@ class Index extends React.Component {
       price: item.price,
       type: item.type,
       amount: item.amount,
-      num:1
+      num: 1
     }
     const oldStore = this.props.cart
     let count = 0
@@ -128,7 +128,7 @@ class Index extends React.Component {
             image: data.image,
             price: data.price,
             type: data.type,
-            amount:data.amount,
+            amount: data.amount,
             num: parseInt(data.amount) + 1
           }
         } else {
@@ -139,7 +139,7 @@ class Index extends React.Component {
             image: data.image,
             price: data.price,
             type: data.type,
-            amount:data.amount,
+            amount: data.amount,
             num: parseInt(item.amount)
           }
         }
@@ -174,7 +174,24 @@ class Index extends React.Component {
       })
     }
   }
+  handleSort = async (e) => {
+    const { name, value } = e.target
+    const sortType = value.charAt(0)
+    const Sortcolumn = value.slice(1, value.length)
 
+    const data = {
+      sortType: sortType,
+      sortColumn: Sortcolumn,
+    
+    }
+    const res = await MakeRequest("GET", baseUrl + "item/all", data)
+    if (res && res.data && res.data.message === "ok" && res.data.code === 0) {
+      await this.setState({
+        ...this.state,
+        listData: res.data.data
+      })
+    }
+  }
   handleMouseOver = async (isMouseOver, idx) => {
     for (let index = 0; index < this.state.listData.length; index++) {
       isMouseOver[index] = false
@@ -207,20 +224,35 @@ class Index extends React.Component {
           <Row>
             <div className=" col">
               <Card className=" shadow">
-                <FormGroup style={{ display: 'flex', alignSelf: 'center' }}>
-                  <Input
-                    style={{ width: '500px' }}
-                    type="search"
-                    name="searchData"
-                    id="exampleSearch"
-                    placeholder="Tìm kiếm"
-                    onChange={(data) => {
-                      this.handleSearch(data.target.value)
-                    }}
-                  />
-                  <Button>
-                    <i class="fas fa-search"></i></Button>
-                </FormGroup>
+                <div style={{ display: 'flex' }}>
+                  <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px' }}>
+                    <Input
+                      style={{ width: '500px' }}
+                      type="search"
+                      name="dataSearch"
+                      id="exampleSearch"
+                      placeholder="Tìm kiếm"
+                      onChange={(e) => {
+                        this.handleSearch(e)
+                      }}
+                    />
+                    <Button>
+                      <i class="fas fa-search"></i></Button>
+                  </FormGroup>
+                  <FormGroup>
+                    <Input type="select" name="select" id="exampleSelect" onChange={(e) => {
+                      this.handleSort(e)
+                    }}>
+                      <option name="price" value="1price">Sắp xếp</option>
+                      <option name="price" value="1price">Giá thấp đến cao</option>
+                      <option name="price" value="0price">Giá cao đến thấp</option>
+                      <option value="1" value="1name">Sắp xếp theo tên A-Z</option>
+                      <option value="0" value="0name">Sắp xếp theo tên Z-A</option>
+
+                    </Input>
+                  </FormGroup>
+
+                </div>
                 <CardBody>
                   <Row className=" icon-examples">
                     <div
@@ -266,7 +298,7 @@ class Index extends React.Component {
                                   }}
                                   style={{ marginTop: 10, marginLeft: 10, width: '90%', marginBottom: 5 }} outline color="primary"
                                   onClick={() => this.handleAddToCart(item, idx)}
-                                  >Thêm vào giỏ hàng</Button>
+                                >Thêm vào giỏ hàng</Button>
                                 <h3 style={{ color: 'red', fontWeight: 'bold' }}>({item.price} VND)</h3>
                                 <p style={{ marginTop: -5, fontWeight: 'normal' }}>{item.name}</p>
 
@@ -294,4 +326,4 @@ const mapStateToProps = (store) => {
     cart: store.cart.cart
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps) (Index);
+export default connect(mapStateToProps, mapDispatchToProps)(Index);

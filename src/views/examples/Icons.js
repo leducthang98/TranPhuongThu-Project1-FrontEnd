@@ -36,12 +36,13 @@ import "../index.css";
 
 import Header from "components/Headers/Header.js";
 import HomeModal from "./ModalHome";
-import { getAllItem } from "../../domain";
+import { baseUrl, getAllItem } from "../../domain";
 import MakeRequest from "views/MakeRequest";
 import FormGroup from "reactstrap/lib/FormGroup";
 import Input from "reactstrap/lib/Input";
 import * as actions from '../../store/actions/actions'
 import { connect } from "react-redux";
+import Label from "reactstrap/lib/Label";
 const UserContext = React.createContext()
 
 class Icons extends React.Component {
@@ -104,7 +105,7 @@ class Icons extends React.Component {
       price: item.price,
       type: item.type,
       amount: item.amount,
-      num:1
+      num: 1
     }
     const oldStore = this.props.cart
     let count = 0
@@ -126,7 +127,7 @@ class Icons extends React.Component {
             image: data.image,
             price: data.price,
             type: data.type,
-            amount:data.amount,
+            amount: data.amount,
             num: parseInt(data.amount) + 1
           }
         } else {
@@ -137,7 +138,7 @@ class Icons extends React.Component {
             image: data.image,
             price: data.price,
             type: data.type,
-            amount:data.amount,
+            amount: data.amount,
             num: parseInt(item.amount)
           }
         }
@@ -174,6 +175,25 @@ class Icons extends React.Component {
     })
     //console.log(this.state.isMouseOver);
   }
+
+  handleSort = async (e) => {
+    const { name, value } = e.target
+    const sortType = value.charAt(0)
+    const Sortcolumn = value.slice(1, value.length)
+
+    const data = {
+      sortType: sortType,
+      sortColumn: Sortcolumn,
+      type:1
+    }
+    const res = await MakeRequest("GET", baseUrl + "item/all", data)
+    if (res && res.data && res.data.message === "ok" && res.data.code === 0) {
+      await this.setState({
+        ...this.state,
+        listData: res.data.data
+      })
+    }
+  }
   render() {
 
     var isMouseOver = this.state.isMouseOver
@@ -188,20 +208,35 @@ class Icons extends React.Component {
           <Row>
             <div className=" col">
               <Card className=" shadow">
-                <FormGroup style={{ display: 'flex', alignSelf: 'center' }}>
-                  <Input
-                    style={{ width: '500px' }}
-                    type="search"
-                    name="dataSearch"
-                    id="exampleSearch"
-                    placeholder="Tìm kiếm"
-                    onChange={(e) => {
-                      this.handleSearch(e)
-                    }}
-                  />
-                  <Button>
-                    <i class="fas fa-search"></i></Button>
-                </FormGroup>
+                <div style={{ display: 'flex' }}>
+                  <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight:'200px' }}>
+                    <Input
+                      style={{ width: '500px' }}
+                      type="search"
+                      name="dataSearch"
+                      id="exampleSearch"
+                      placeholder="Tìm kiếm"
+                      onChange={(e) => {
+                        this.handleSearch(e)
+                      }}
+                    />
+                    <Button>
+                      <i class="fas fa-search"></i></Button>
+                  </FormGroup>
+                  <FormGroup>
+                     <Input type="select" name="select" id="exampleSelect" onChange={(e) => {
+                      this.handleSort(e)
+                    }}>
+                      <option name="price" value="1price">Sắp xếp</option>
+                      <option name="price" value="1price">Giá thấp đến cao</option>
+                      <option name="price" value="0price">Giá cao đến thấp</option>
+                      <option value="1" value="1name">Sắp xếp theo tên A-Z</option>
+                      <option value="0" value="0name">Sắp xếp theo tên Z-A</option>
+
+                    </Input>
+                  </FormGroup>
+
+                </div>
                 <CardBody>
                   <Row className=" icon-examples">
                     <div
