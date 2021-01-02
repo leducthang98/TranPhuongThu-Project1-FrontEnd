@@ -185,7 +185,7 @@ class News extends React.Component {
 
             <div className=" col">
               <Card className=" shadow">
-                <FormGroup style={{ display: 'flex', alignSelf: 'center' }}>
+                <FormGroup style={{ display: 'flex', alignSelf: 'center' , paddingTop:'20px'}}>
                   <Input
                     style={{ width: '500px' }}
                     type="search"
