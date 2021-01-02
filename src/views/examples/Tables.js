@@ -154,7 +154,7 @@ class Tables extends React.Component {
     })
   }
 
-  handleExportBill =async () => {
+  handleExportBill = async () => {
     let data = []
     this.state.listData.map((item, idx) => {
       for (let index = 0; index < item.num; index++) {
@@ -169,18 +169,17 @@ class Tables extends React.Component {
         "Authorization": "Bearer " + localStorage.getItem("token"),
         'Access-Control-Allow-Origin': "*"
       },
-      data: {
-        foo: data,
-      }
+      data: data
     });
+    let clearStore = []
     if (res && res.data.code === 0) {
-      console.log(res.data.data);
+      this.props.cartAdd(clearStore)
+      this.props.history.push("/admin/order")
     }
   }
   contentInCart = () => {
 
     let show = this.state.listData.map((item, idx) => {
-
       return (
         <tr key={idx}>
           <td scope="row">
@@ -247,7 +246,7 @@ class Tables extends React.Component {
                       <th >Số lượng</th>
                       <th >Thành tiền</th>
                       {/* <th >Completion</th> */}
-                      <th >Thành tiền</th>
+                      {/* <th >Thành tiền</th> */}
 
                     </tr>
                   </thead>
@@ -262,10 +261,10 @@ class Tables extends React.Component {
                   border: '1px solid #f7fafc', paddingTop: '15px'
                 }}>
                   <div style={{ width: "300px" }}>
-                    <p style={{ fontWeight: 500 }}>Tổng hóa đơn  </p >
+                    <p style={{ fontWeight: 500, color: '#000' }}>Tổng hóa đơn  </p >
                   </div>
                   <div>
-                    <p style={{ fontWeight: 500 }}>{this.state.total} đ</p>
+                    <p style={{ fontWeight: 500, color: '#000' }}>{this.state.total} đ</p>
                   </div>
                 </div>
                 }
@@ -323,9 +322,11 @@ class Tables extends React.Component {
                 </CardFooter>
               </Card>
               <div>
-                {this.state.listData.length > 0 && <Button onClick={() => {
+                {this.state.listData.length > 0 && <div style={{ paddingLeft: '500px', paddingTop: '30px' }}><Button color="info" onClick={() => {
                   this.handleExportBill()
-                }}>Đặt hàng</Button>}
+                }}>Đặt hàng</Button>
+                </div>
+                }
               </div>
             </div>
           </Row>
