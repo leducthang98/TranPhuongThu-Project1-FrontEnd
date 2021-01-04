@@ -142,7 +142,7 @@ class News extends React.Component {
       searchData: e.target.value,
 
     }
-    const res = await MakeRequest("GET", baseUrl + "news/all", searchData)
+    const res = await MakeRequest("GET", baseUrl + "news/search", searchData)
     if (res && res.data && res.data.message === "ok" && res.data.code === 0) {
       this.setState({
         ...this.state,
@@ -177,15 +177,12 @@ class News extends React.Component {
       <>
         <Header />
         {/* Page content */}
-
         <Container className=" mt--7" fluid>
           {/* Table */}
-
           <Row>
-
             <div className=" col">
               <Card className=" shadow">
-                <FormGroup style={{ display: 'flex', alignSelf: 'center' , paddingTop:'20px'}}>
+                <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingTop: '20px' }}>
                   <Input
                     style={{ width: '500px' }}
                     type="search"

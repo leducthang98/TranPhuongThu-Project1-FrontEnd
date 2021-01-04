@@ -36,6 +36,15 @@ import {
 } from "reactstrap";
 
 class AdminNavbar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
+  handleLogout = () => {
+    localStorage.removeItem("token")
+    localStorage.removeItem("role")
+    this.props.history.push("/auth/login")
+  }
   render() {
     return (
       <>
@@ -47,7 +56,7 @@ class AdminNavbar extends React.Component {
             >
               {this.props.brandText}
             </Link>
-          
+
             <Nav className="align-items-center d-none d-md-flex" navbar>
               <UncontrolledDropdown nav>
                 <DropdownToggle className="pr-0" nav>
@@ -73,7 +82,9 @@ class AdminNavbar extends React.Component {
                     <span>Thông tin cá nhân</span>
                   </DropdownItem>
 
-                  <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                  <DropdownItem href="#pablo" onClick={() => {
+                    this.handleLogout()
+                  }}>
                     <i className="ni ni-user-run" />
                     <span>Đăng xuất</span>
                   </DropdownItem>

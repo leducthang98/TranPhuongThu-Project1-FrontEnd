@@ -15,40 +15,41 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Index from "views/Index.js";
-import Profile from "views/examples/Profile.js";
-import Maps from "views/examples/Maps.js";
-import Register from "views/examples/Register.js";
-import Login from "views/examples/Login.js";
-import Tables from "views/examples/Tables.js";
-import Icons from "views/examples/Icons.js";
-import News from "views/examples/News.js";
-import Order from "views/examples/Order";
+import Index from "./views/Index";
+import Profile from "./views/examples/Profile.js";
+import Maps from "./views/examples/Maps.js";
+import Register from "./views/examples/Register.js";
+import Login from "./views/examples/Login.js";
+import Tables from "./views/examples/Tables.js";
+import Icons from "./views/examples/Icons.js";
+import News from "./views/examples/News.js";
+import Order from "./views/examples/Order";
+import AdminUser from "./views/Admin";
 
 
 var routes = [
   {
-    path: "/index",
+    path: "/home",
     name: "Trang chủ",
     icon: "ni ni-shop text-red",
     component: Index,
-    layout: "/admin",
+    layout: "/user",
     render: true
   },
   {
-    path: "/icons",
+    path: "/pants",
     name: "Quần",
     icon: "ni ni-bold-right text-red",
     component: Icons,
-    layout: "/admin",
+    layout: "/user",
     render: true
   },
   {
-    path: "/maps",
+    path: "/t-shirt",
     name: "Áo",
     icon: "ni ni-bold-right text-red ",
     component: Maps,
-    layout: "/admin",
+    layout: "/user",
     render: true
   },
   {
@@ -56,7 +57,7 @@ var routes = [
     name: "Tin tức",
     icon: "ni ni-circle-08 text-pink",
     component: News,
-    layout: "/admin",
+    layout: "/user",
     render: true
   },
   {
@@ -64,15 +65,15 @@ var routes = [
     name: "Đơn hàng",
     icon: "ni ni-circle-08 text-pink",
     component: Order,
-    layout: "/admin",
+    layout: "/user",
     render: true
   },
   {
-    path: "/tables",
+    path: "/cart",
     name: "Giỏ hàng",
     icon: "ni ni-bag-17 text-blue",
     component: Tables,
-    layout: "/admin",
+    layout: "/user",
     render: true
   },
 
@@ -97,10 +98,10 @@ var routes = [
     name: "profile",
     icon: "ni ni-circle-08 text-pink",
     component: Profile,
-    layout: "/admin",
+    layout: "/user",
     render: false
   },
- 
+
 
 
 ];

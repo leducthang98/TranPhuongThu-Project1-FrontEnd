@@ -27,30 +27,38 @@ class Login extends React.Component {
     }
   }
   async _onClickLogin() {
+    await localStorage.removeItem("token")
+    await localStorage.removeItem("role")
     const data = {
       username: this.state.username,
       password: this.state.password
     }
-    const opt = {
-      url: loginApi,
-      method: 'POST',
-      data: data
-    }
-    const response = await axios(opt);
-    let authData = response.data;
-    if (authData && authData.code === 0 && authData.message === "ok") {
-      localStorage.setItem("token", authData.data.token)
-      const infor = await MakeRequest("GET", baseUrl + "user/me")
-      console.log(infor);
-      if (infor && infor.data.code === 0 && infor.data.data.role === "user") {
-        this.props.history.push('/admin')
 
-      } else {
-        alert("Không có quyền truy cập")
+    const response = await MakeRequest('post', baseUrl + "auth/login", data)
+    let authData = response.data;
+    if (authData && authData.code === 0) {
+      await localStorage.setItem("token", authData.data.token)
+      const infor = await MakeRequest("GET", baseUrl + "user/me")
+      if (infor && infor.data.code === 0 && infor.data.data.role === "user") {
+        await localStorage.setItem("role", infor.data.data.role)
+        if (localStorage.getItem("role") === "user") {
+          console.log(51);
+          window.location.href = "http://localhost:3000/user/home"
+        }
+      }
+      if (infor && infor.data.code === 0 && infor.data.data.role === "admin") {
+        await localStorage.setItem("role", infor.data.data.role)
+        if (localStorage.getItem("role") === "admin") {
+
+          
+             window.location.href = "http://localhost:3000/admin/home"
+            
+        }
       }
     } else {
-      alert('Sai tài khoản hoặc mật khẩu')
+      alert('' + authData.message)
     }
+
   }
   render() {
     // js
