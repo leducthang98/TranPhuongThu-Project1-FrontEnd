@@ -30,7 +30,7 @@ import {
   InputGroupText,
   Input
 } from "reactstrap";
-import { baseUrl, getAllItem } from '../../domain'
+import { baseImage, baseUrl, getAllItem } from '../../domain'
 // core components
 import {
   chartOptions,
@@ -210,7 +210,7 @@ class News extends React.Component {
                               <img
                                 alt="..."
                                 className=" img-fluid shadow"
-                                src={item?.image || 'https://e3.365dm.com/20/12/768x432/skynews-papers-thursday_5201469.jpg?20201209232059'}
+                                src={baseImage+item.image || '../../assets/img/default.png'}
                                 style={{ width: 350 }}
                               ></img>
                               {

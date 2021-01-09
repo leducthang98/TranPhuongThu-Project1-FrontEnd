@@ -36,7 +36,7 @@ import "../index.css";
 
 import Header from "components/Headers/Header.js";
 import HomeModal from "./ModalHome";
-import { baseUrl, getAllItem } from "../../domain";
+import { baseImage, baseUrl, getAllItem } from "../../domain";
 import MakeRequest from "views/MakeRequest";
 import FormGroup from "reactstrap/lib/FormGroup";
 import Input from "reactstrap/lib/Input";
@@ -84,7 +84,7 @@ class Order extends React.Component {
             {item.name}
           </td>
           <td>
-            <img style={{ width: '75px', height: '75px' }} src={item.image} />
+            <img style={{ width: '75px', height: '75px' }} src={baseImage + item.image || "../../assets/img/default.png"} />
           </td>
           <td>{item.price} đ</td>
           <td>{item.count}  </td>
@@ -136,52 +136,91 @@ class Order extends React.Component {
     }
   }
   content = () => {
-    let show = this.state.listData.map((value, idx) => {
-      const items = value.items
-      console.log(value);
-      return (
-        <Container>
-          <Row>
-            <Card className="shadow" style={{ width: '100%' }}>
-              <CardHeader className="border-0" style={{ display: 'flex' }}>
-                <div style={{ paddingRight: '500px' }}> <p style={{ color: '#000', margin: '0px' }}>Đơn hàng {idx + 1}</p>
-                  <p style={{ color: '#000', margin: '0px' }} > {"     " + value.created_time}</p></div>
-                {this.status(value.status, value)}
-              </CardHeader>
+    console.log(this.state.listData.length);
+    let show =
+      (this.state.listData.length != 0) ? (
+        this.state.listData.map((value, idx) => {
+          const items = value.items
+          console.log(value);
+          return (
+            <Container>
+              <Row>
+                <Card className="shadow" style={{ width: '100%' }}>
+                  <CardHeader className="border-0" style={{ display: 'flex' }}>
+                    <div style={{ paddingRight: '500px' }}> <p style={{ color: '#000', margin: '0px' }}>Đơn hàng {idx + 1}</p>
+                      <p style={{ color: '#000', margin: '0px' }} > {"     " + value.created_time}</p></div>
+                    {this.status(value.status, value)}
+                  </CardHeader>
 
-              <Table className="align-items-center table-flush" responsive>
-                <thead className="thead-light">
-                  <tr>
-                    <th >Tên sản phẩm</th>
-                    <th >Ảnh</th>
-                    <th >Giá tiền</th>
-                    <th >Số lượng</th>
-                    <th >Thành tiền</th>
-                    {/* <th >Completion</th> */}
+                  <Table className="align-items-center table-flush" responsive>
+                    <thead className="thead-light">
+                      <tr>
+                        <th >Tên sản phẩm</th>
+                        <th >Ảnh</th>
+                        <th >Giá tiền</th>
+                        <th >Số lượng</th>
+                        <th >Thành tiền</th>
+                        {/* <th >Completion</th> */}
 
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.subtable(value.items)}
-                </tbody>
-              </Table>
-              <div style={{
-                display: 'flex', paddingLeft: '50px', width: '500p',
-                border: '1px solid #f7fafc', paddingTop: '15px'
-              }}>
-                <div style={{ width: "300px" }}>
-                  <p style={{ fontWeight: 500, color: '#000' }}>Tổng hóa đơn  </p >
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.subtable(value.items)}
+                    </tbody>
+                  </Table>
+                  <div style={{
+                    display: 'flex', paddingLeft: '50px', width: '500p',
+                    border: '1px solid #f7fafc', paddingTop: '15px'
+                  }}>
+                    <div style={{ width: "300px" }}>
+                      <p style={{ fontWeight: 500, color: '#000' }}>Tổng hóa đơn  </p >
+                    </div>
+                    <div>
+                      <p style={{ fontWeight: 500, color: '#000' }}>{value.totalMoney} đ</p>
+                    </div>
+                  </div>
+                </Card>
+              </Row>
+              <div style={{ width: '100%', height: '50px' }}></div>
+            </Container>
+          )
+        })) : (
+          <Container>
+            <Row>
+              <Card className="shadow" style={{ width: '100%' }}>
+                <CardHeader className="border-0" style={{ display: 'flex' }}>
+                  Đơn hàng
+                </CardHeader>
+
+                <Table className="align-items-center table-flush" responsive>
+                  <thead className="thead-light">
+                    <tr>
+                      <th >Tên sản phẩm</th>
+                      <th >Ảnh</th>
+                      <th >Giá tiền</th>
+                      <th >Số lượng</th>
+                      <th >Thành tiền</th>
+                      {/* <th >Completion</th> */}
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <p style={{ fontWeight: 500, color: '#000', paddingLeft:'500px' , paddingTop:'20px'}}>Chưa có đơn hàng nào   </p >
+                  </tbody>
+                </Table>
+                <div style={{
+                  display: 'flex', paddingLeft: '50px', width: '500p',
+                  border: '1px solid #f7fafc', paddingTop: '15px'
+                }}>
+                  {/* <div style={{ width: "300px" }}>
+                    <p style={{ fontWeight: 500, color: '#000' }}> </p >
+                  </div> */}
+
                 </div>
-                <div>
-                  <p style={{ fontWeight: 500, color: '#000' }}>{value.totalMoney} đ</p>
-                </div>
-              </div>
-            </Card>
-          </Row>
-          <div style={{ width: '100%', height: '50px' }}></div>
-        </Container>
-      )
-    })
+              </Card>
+            </Row>
+            <div style={{ width: '100%', height: '50px' }}></div>
+          </Container>)
     return show;
   }
   render() {

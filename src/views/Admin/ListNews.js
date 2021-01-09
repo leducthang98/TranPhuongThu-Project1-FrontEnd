@@ -1,14 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-// import { baseUrl } from 'domain'
-// import Card from 'reactstrap/lib/Card'
-// import CardHeader from 'reactstrap/lib/CardHeader'
-// import Container from 'reactstrap/lib/Container'
-// import Row from 'reactstrap/lib/Row'
-// import Table from 'reactstrap/lib/Table'
-// import MakeRequest from 'views/MakeRequest'
-// import Header from 'components/Headers/Header'
-// import AdminHeader from 'components/Headers/AdminHeader'
+import { baseUrl, baseImage } from '../../domain'
 import { withRouter } from 'react-router-dom'
 
 import {
@@ -36,13 +28,12 @@ import {
 import "../index.css";
 
 import Header from "components/Headers/Header.js";
-import { baseUrl, getAllItem } from "../../domain";
 import axios from "axios";
 import MakeRequest from "../MakeRequest";
 import FormGroup from "reactstrap/lib/FormGroup";
 import Input from "reactstrap/lib/Input";
-import { connect } from "react-redux";
-import DetailItem from './DetailItem';
+import DetailNew from './DetailNews';
+import DetailNews from './DetailNews';
 
 function ListNews(props) {
     const [listData, setList] = useState([])
@@ -50,10 +41,15 @@ function ListNews(props) {
         const data = await MakeRequest("get", baseUrl + "news/all")
         const res = data.data
 
-        if (res.code === 0 && res.message === "ok") {
+        if (res.code === 0) {
             setList(res.data)
         }
 
+    }
+
+    const updateData = (data) => {
+        console.log(data);
+        setList(data)
     }
     const HandleDelItem = async (item, idx) => {
         const res = await MakeRequest("delete", baseUrl + "news/" + item.id)
@@ -81,10 +77,7 @@ function ListNews(props) {
         }
     }
     const handleSearch = async (inputSearch) => {
-        // await this.setState({
-        //   ...this.state,
-        //   listData: []
-        // })
+
         console.log();
         const searchData = {
             searchData: inputSearch.target.value
@@ -111,7 +104,7 @@ function ListNews(props) {
                         {item.title}
                     </td>
                     <td>
-                        <img style={{ width: '75px', height: '75px' }} src={item.image}></img>
+                        <img style={{ width: '75px', height: '75px' }} src={baseImage + item.image}></img>
                     </td>
                     <td>{item.content} đ</td>
 
@@ -120,7 +113,7 @@ function ListNews(props) {
                     </td>
 
                     <td style={{ display: 'flex' }}>
-                        {/* <DetailItem data={item} /> */}
+                        <DetailNews data={item} updateData={(data) => updateData(data)} />
                         <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Xóa</Button>
 
                     </td>

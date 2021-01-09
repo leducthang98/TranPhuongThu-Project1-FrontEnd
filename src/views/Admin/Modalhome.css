@@ -1,0 +1,21 @@
+.modal-title{
+    color: #000;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+}
+.modal-content{
+    width: 180%;
+}
+#description-input{
+    height: 100px;
+}
+.custom-file-upload  {
+    background: #f53650;
+    width: 200px;
+     height: 40px;
+    text-align: center;
+     border-radius: 5px;
+    color: #fff;
+    padding-top: 5px;
+}

@@ -1,4 +1,5 @@
 
+import { baseImage } from 'domain';
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Col, Row } from 'reactstrap';
 import Label from 'reactstrap/lib/Label';
@@ -29,7 +30,7 @@ const HomeModal = (props) => {
                     <Row>
                         <Col>
                             <FormGroup>
-                                <img style={{ width: '450px' }} src={data.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaJHHovVO36rCgZDgAad5hchXWr1ZSil8bfw&usqp=CAU"} />
+                                <img style={{ width: '450px' }} src={(data.image != null) ? (baseImage + data.image) : ("../../assets/img/default.png")} />
                             </FormGroup>
                         </Col>
                         <Col>

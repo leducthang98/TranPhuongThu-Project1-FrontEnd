@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Col, Row } from 'reactstrap';
 import Label from 'reactstrap/lib/Label';
 import './Modalhome.css'
+import { baseImage } from '../../domain'
+
 const HomeModal = (props) => {
     const {
         data,
@@ -23,7 +25,7 @@ const HomeModal = (props) => {
                 <ModalBody>
                     <Row>
                         <Col> <FormGroup>
-                            <img style={{ width: '450px' }} thumb src={data.image} />
+                            <img style={{ width: '450px' }} thumb src={baseImage+data.image||"../../assets/img/default.png"} />
 
                         </FormGroup>
                         </Col>

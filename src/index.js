@@ -37,12 +37,15 @@ ReactDOM.render(
       <ReactNotification />
       <BrowserRouter>
         <Switch>
-          {(localStorage.getItem("role") === "user" && localStorage.getItem("token")) ? (<Route path="/user" render={props => <UserLayout {...props} />} />) : (null)}
+          {(localStorage.getItem("role") === "user" && localStorage.getItem("token")) ?
+            (<Route path="/user" render={props => <UserLayout {...props} />} />)
+            : (null)}
           {(localStorage.getItem("role") === "admin" && localStorage.getItem("token")) ?
             (<><Route path="/admin" render={props => <AdminLayout {...props} />} />
               <Redirect from="/admin/item" to="/admin/item/list" />
             </>
-            ) : (null)}
+            )
+            : (null)}
           <> <Route path="/auth" render={props => <AuthLayout {...props} />} />
             <Redirect from="/" to="/auth" />
             {/* <Redirect from="/user/" to="/user/home" /> */}

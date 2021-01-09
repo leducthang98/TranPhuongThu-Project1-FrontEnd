@@ -36,8 +36,7 @@ import {
 import "../index.css";
 
 import Header from "components/Headers/Header.js";
-import { baseUrl, getAllItem } from "../../domain";
-import axios from "axios";
+import { baseUrl, baseImage, getAllItem } from "../../domain";
 import MakeRequest from "../MakeRequest";
 import FormGroup from "reactstrap/lib/FormGroup";
 import Input from "reactstrap/lib/Input";
@@ -53,7 +52,11 @@ function ListProduct(props) {
         if (res.code === 0 && res.message === "ok") {
             setList(res.data)
         }
+    }
 
+    const updateData = (data) => {
+        console.log(data);
+        setList(data)
     }
     const HandleDelItem = async (item, idx) => {
         const res = await MakeRequest("delete", baseUrl + "item/" + item.id)
@@ -111,7 +114,7 @@ function ListProduct(props) {
                         {item.name}
                     </td>
                     <td>
-                        <img style={{ width: '75px', height: '75px' }} src={item.image}></img>
+                        <img style={{ width: '75px', height: '75px' }} src={baseImage + item.image}></img>
                     </td>
                     <td>{item.price} đ</td>
 
@@ -120,7 +123,7 @@ function ListProduct(props) {
                     </td>
 
                     <td style={{ display: 'flex' }}>
-                        <DetailItem data={item} />
+                        <DetailItem data={item} updateData={(data) => updateData(data)} />
                         <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Xóa</Button>
 
                     </td>

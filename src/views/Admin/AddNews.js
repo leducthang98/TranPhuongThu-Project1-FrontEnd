@@ -12,7 +12,7 @@ import Row from 'reactstrap/lib/Row'
 import MakeRequest from 'views/MakeRequest'
 import './Modalhome.css'
 
-function AddProduct() {
+function AddNews() {
     const [item, setItem] = useState('')
     const [file, setFile] = useState('')
 
@@ -49,26 +49,28 @@ function AddProduct() {
     const handleClick = async () => {
         let dataPost = new FormData()
         dataPost.append('image', file)
-        const res = await saveImage(dataPost)
-        if (res.code === 0) {
-            const product = {
-                image: res.data.imagePath,
-                name: item.name,
-                type: item.type,
-                price: item.price,
-                description: item.description,
-                amount: item.amount
+        if (file.length < 2) {
+            alert("Thêm ảnh cho tin tức")
+        } else {
+            const res = await saveImage(dataPost)
+            if (res.code === 0) {
+                const product = {
+                    image: res.data.imagePath,
+                    title: item.title,
+                    content: item.content,
+                    view: 0
+                }
+                const data = await saveProduct(product)
             }
-            const data = await saveProduct(product)
         }
     }
     const saveProduct = async (product) => {
-        const res = await MakeRequest('post', baseUrl + `item/create`, product)
+        const res = await MakeRequest('post', baseUrl + `news/create`, product)
         if (res.data && res.data.code === 0) {
-            alert("Thêm sản phẩm thành công")
+            alert("Thêm tin tức thành công")
             return res.data
         } else {
-            alert("Thêm sản phẩm thất bại!")
+            alert("Thêm tin tức thất bại!")
         }
     }
     const saveImage = async (dataPost) => {
@@ -102,34 +104,14 @@ function AddProduct() {
             <Container className="mt--7" fluid>
                 <Card className="shadow">
                     <Row>
-                        <Col style={{ paddingLeft: '100px' , paddingTop:'50px', paddingRight:'50px'}}>
+                        <Col style={{ paddingLeft: '100px', paddingTop:'50px', paddingRight:'50px'}}>
                             <FormGroup >
-                                <Label> Tên sản phẩm </Label>
-                                <Input name='name' value={item.name} style={{ color: '#000', }} onChange={(e) => { handleChange(e) }} ></Input>
-                            </FormGroup>
-                            <div style={{ display: 'flex' }}>
-                                <FormGroup  >
-                                    <Label>Số lượng trong kho</Label>
-                                    <Input type="number" name="amount" value={item.amount} style={{ color: '#000', width: '100px' }} onChange={(e) => { handleChange(e) }} ></Input>
-                                </FormGroup>
-                                <FormGroup style={{ paddingLeft: '300px' }} >
-                                    <Label>Giá tiền</Label>
-                                    <Input type="number" name="price" value={item.price} style={{ color: '#000', width: '300px' }} onChange={(e) => { handleChange(e) }} ></Input>
-                                </FormGroup>
-                            </div>
-                            <FormGroup check style={{ padidngTop: '10px', paddingBottom: '10px' }}>
-                                <Label style={{ paddingRight: '200px' }} check>
-                                    <Input type="radio" value={1} name="radio1"
-                                        onChange={(e) => handleCheckBox(e)} /> {'     '}Quần
-                                </Label>
-                                <Label check>
-                                    <Input type="radio" value={2} name="radio1"
-                                        onChange={(e) => handleCheckBox(e)} /> {' '}Áo
-                                </Label>
+                                <Label> Tiêu đề</Label>
+                                <Input name='title' value={item.name} style={{ color: '#000', }} onChange={(e) => { handleChange(e) }} ></Input>
                             </FormGroup>
                             <FormGroup>
                                 <Label>  Mô tả </Label>
-                                <Input id="description-input" type="textarea" name="description" value={item.description} style={{ color: '#000' }} onChange={(e) => { handleChange(e) }}></Input>
+                                <Input id="description-input" type="textarea" name="content" value={item.description} style={{ color: '#000' }} onChange={(e) => { handleChange(e) }}></Input>
                             </FormGroup>
                             <div>
                                 <div style={{ paddingLeft: '30px' }}>
@@ -159,4 +141,4 @@ function AddProduct() {
     )
 }
 
-export default AddProduct
+export default AddNews

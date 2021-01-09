@@ -1,5 +1,5 @@
 
-import { baseUrl } from '../../domain';
+import { baseImage, baseUrl } from '../../domain';
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Col, Row } from 'reactstrap';
 import Label from 'reactstrap/lib/Label';
@@ -40,7 +40,7 @@ const ModalNews = (props) => {
                     <Row>
                         <Col>
                             <FormGroup>
-                                <img style={{ width: '450px' }} src={data.image || "https://e3.365dm.com/20/12/768x432/skynews-papers-thursday_5201469.jpg?20201209232059"} />
+                                <img style={{ width: '450px' }} src={baseImage+data.image || "https://e3.365dm.com/20/12/768x432/skynews-papers-thursday_5201469.jpg?20201209232059"} />
                             </FormGroup>
                         </Col>
                         <Col>

@@ -7,6 +7,7 @@ import Chart from "chart.js";
 import { Line, Bar } from "react-chartjs-2";
 import { store } from 'react-notifications-component';
 import * as actions from '../../store/actions/actions'
+// import defaultImg from "../../assets/img/default.png"
 
 // reactstrap components
 import {
@@ -44,7 +45,7 @@ import Input from "reactstrap/lib/Input";
 import Label from "reactstrap/lib/Label";
 import { seachByText } from "domain";
 import { connect } from "react-redux";
-import { baseUrl, getAllItem } from "../../domain";
+import { baseImage, baseUrl, getAllItem } from "../../domain";
 
 
 
@@ -256,7 +257,7 @@ class Icons extends React.Component {
                                 <img
                                   alt="..."
                                   className=" img-fluid rounded shadow"
-                                  src={item?.image || 'https://vn-test-11.slatic.net/p/b982fe3c7517d19571e1f0a6f24679f7.jpg'}
+                                  src={baseImage+item.image|| '../../assets/img/default.png'}
                                   style={{ width: 200 }}
                                 ></img>
                                 {

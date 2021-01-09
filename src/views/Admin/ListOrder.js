@@ -104,55 +104,56 @@ function ListOrder(props) {
         }
 
     }
-    const buttonReder = (item) => {
+
+    const buttonReder = (item, idx) => {
         if (item.status === 1) {
-            setStatus("Đơn hàng chờ xử lý")
             return (
                 <>
-                    <Button color="danger" onClick={() => handleAccept(item)}>Chấp nhận</Button>
+                    <Button color="danger" onClick={() => handleAccept(item, idx)}>Chấp nhận</Button>
                     {/* <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Chi tiết</Button> */}
                 </>)
         }
         if (item.status === 2) {
-            setStatus("Đơn đã xử lý")
             return (
                 <>
-                    {/* <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Chi tiết</Button> */}
+                    <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Chi tiết</Button>
                 </>)
         }
         if (item.status === 3) {
-            setStatus("Đơn đã hủy")
             return (
                 <>
-                    {/* <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Chi tiết</Button> */}
+                    <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Chi tiết</Button>
 
                 </>)
         }
         if (item.status === 4) {
-            setStatus("Đơn khách hàng hủy")
             return (
                 <>
-                    {/* <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Chi tiết</Button> */}
+                    <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Chi tiết</Button>
 
                 </>)
         }
     }
-
     useEffect(() => {
         getAllItem()
     }, [])
+    useEffect(() => {
+        console.log(status)
+    }, [status])
     const content = () => {
         let show = listData.map((item, idx) => {
             return (
                 <tr key={idx}>
                     <td>{idx + 1}</td>
                     <td  >
-                        {item.id}
+                        {item.order_id}
                     </td>
                     <td>
                         {item.fullname}
                     </td>
-                    <td>{status}</td>
+                    <td>{
+                        (item.status === 1) ? ("Đơn hàng chờ xử lý") : ((item.status === 2) ? ("Đơn đã xử lý") : ((item.status === 3) ? ("Đơn đã hủy") : ((item.status === 4) ? ("Đơn khách hàng hủy") : (null))))
+                    }</td>
 
                     <td>
                         {item.create_time}
@@ -162,7 +163,7 @@ function ListOrder(props) {
                     </td>
 
                     <td style={{ display: 'flex' }}>
-                        {buttonReder(item)}
+                        {buttonReder(item, idx)}
 
                     </td>
                 </tr>
@@ -175,8 +176,8 @@ function ListOrder(props) {
             <Header />
             <Container className="mt--7" fluid>
                 <Card className="shadow">
-                    {/* <div style={{ display: 'flex', paddingTop: '20px' }}>
-                        <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px', paddingLeft: '100px', margin: '0px' }}>
+                    <div style={{ display: 'flex', paddingTop: '20px' }}>
+                        {/* <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px', paddingLeft: '100px', margin: '0px' }}>
                             <Input
                                 style={{ width: '500px' }}
                                 type="search"
@@ -189,8 +190,8 @@ function ListOrder(props) {
                             />
                             <Button>
                                 <i class="fas fa-search"></i></Button>
-                        </FormGroup>
-                        <FormGroup style={{ margin: '0px' }}>
+                        </FormGroup> */}
+                        {/* <FormGroup style={{ margin: '0px' }}>
                             <Input type="select" name="select" id="exampleSelect" onChange={(e) => {
                                 handleSort(e)
                             }}>
@@ -201,9 +202,9 @@ function ListOrder(props) {
                                 <option value="0" value="0name">Sắp xếp theo tên Z-A</option>
 
                             </Input>
-                        </FormGroup>
+                        </FormGroup> */}
 
-                    </div> */}
+                    </div>
                     <CardBody>
                         <Row>
                             <div className="col">

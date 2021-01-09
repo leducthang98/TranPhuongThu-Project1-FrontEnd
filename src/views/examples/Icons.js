@@ -36,7 +36,7 @@ import "../index.css";
 
 import Header from "components/Headers/Header.js";
 import HomeModal from "./ModalHome";
-import { baseUrl, getAllItem } from "../../domain";
+import { baseImage, baseUrl, getAllItem } from "../../domain";
 import MakeRequest from "views/MakeRequest";
 import FormGroup from "reactstrap/lib/FormGroup";
 import Input from "reactstrap/lib/Input";
@@ -252,7 +252,7 @@ class Icons extends React.Component {
                                 <img
                                   alt="..."
                                   className=" img-fluid rounded shadow"
-                                  src={item?.image || 'https://i-shop.vnecdn.net/resize/560/560/images/2018/11/16/5bee16b6d7f5b-img_5068.jpg'}
+                                  src={baseImage+item.image || '../../assets/img/default.png'}
                                   style={{ width: 200 }}
                                 ></img>
                                 {

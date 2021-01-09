@@ -16,7 +16,7 @@
 
 */
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 // reactstrap components
 import {
   DropdownMenu,
@@ -40,10 +40,10 @@ class AdminNavbar extends React.Component {
     super(props);
     this.state = {}
   }
-  handleLogout = () => {
+  handleLogout = async () => {
     localStorage.removeItem("token")
     localStorage.removeItem("role")
-    this.props.history.push("/auth/login")
+    await this.props.history.push("/auth/login")
   }
   render() {
     return (
@@ -82,7 +82,7 @@ class AdminNavbar extends React.Component {
                     <span>Thông tin cá nhân</span>
                   </DropdownItem>
 
-                  <DropdownItem href="#pablo" onClick={() => {
+                  <DropdownItem onClick={() => {
                     this.handleLogout()
                   }}>
                     <i className="ni ni-user-run" />
@@ -98,4 +98,4 @@ class AdminNavbar extends React.Component {
   }
 }
 
-export default AdminNavbar;
+export default withRouter(AdminNavbar);

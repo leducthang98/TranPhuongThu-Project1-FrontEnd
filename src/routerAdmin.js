@@ -30,6 +30,7 @@ import ListProduct from "./views/Admin/ListProduct";
 import ListAccount from "views/Admin/ListAccount.js";
 import ListNews from "views/Admin/ListNews.js";
 import ListOrder from "views/Admin/ListOrder.js";
+import AddNews from "views/Admin/AddNews.js";
 
 
 var routerAdmin = [
@@ -90,7 +91,7 @@ var routerAdmin = [
         submenu: [
             {
                 name: "Thêm tin mới",
-                component: AddProduct,
+                component: AddNews,
                 path: "/news/add",
                 icon: "ni ni-shop text-red",
             },
@@ -115,12 +116,12 @@ var routerAdmin = [
         right: "ni ni-bold-right text-blue",
         down: "ni ni-bold-down text-blue",
         submenu: [
-            {
-                name: "Xử lý đơn hàng",
-                component: AddProduct,
-                path: "/order/handle",
-                icon: "ni ni-shop text-red",
-            },
+            // {
+            //     name: "Xử lý đơn hàng",
+            //     component: AddProduct,
+            //     path: "/order/handle",
+            //     icon: "ni ni-shop text-red",
+            // },
             {
                 name: "Danh sách đơn hàng",
                 component: ListOrder,
