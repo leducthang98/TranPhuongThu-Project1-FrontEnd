@@ -1,5 +1,5 @@
 import Header from 'components/Headers/Header'
-import { baseUrl } from '../../domain'
+import { baseUrl, baseImage } from '../../domain'
 import React, { useEffect, useState } from 'react'
 import Button from 'reactstrap/lib/Button'
 import Card from 'reactstrap/lib/Card'
@@ -10,6 +10,7 @@ import Input from 'reactstrap/lib/Input'
 import Label from 'reactstrap/lib/Label'
 import Row from 'reactstrap/lib/Row'
 import MakeRequest from 'views/MakeRequest'
+import imageDefault from './default.png'
 import './Modalhome.css'
 
 function AddProduct() {
@@ -90,7 +91,7 @@ function AddProduct() {
         let show = (file.name) ?
             (
                 <>
-                    <img height={200} src={pathFile || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaJHHovVO36rCgZDgAad5hchXWr1ZSil8bfw&usqp=CAU"} />
+                    <img height={200} src={pathFile} />
                     <Button onClick={(e) => clearFile()}>x</Button>
                 </>
             ) : ('')
@@ -102,7 +103,7 @@ function AddProduct() {
             <Container className="mt--7" fluid>
                 <Card className="shadow">
                     <Row>
-                        <Col style={{ paddingLeft: '100px' , paddingTop:'50px', paddingRight:'50px'}}>
+                        <Col style={{ paddingLeft: '100px', paddingTop: '50px', paddingRight: '50px' }}>
                             <FormGroup >
                                 <Label> Tên sản phẩm </Label>
                                 <Input name='name' value={item.name} style={{ color: '#000', }} onChange={(e) => { handleChange(e) }} ></Input>
@@ -138,7 +139,7 @@ function AddProduct() {
                                         style={{ display: 'none' }} onChange={(e) => handleFile(e)} />
                                 </div>
                             </div>
-                            <FormGroup className='image_preview' style={{display:'flex'}}>
+                            <FormGroup className='image_preview' style={{ display: 'flex' }}>
                                 <div style={{
                                     float: 'right', width: '300px', height: '200px',
                                     marginRight: '100px', display: 'flex', border: '1px solid #e1e1ef'

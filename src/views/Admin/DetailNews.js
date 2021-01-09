@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Col, Row } from 'reactstrap';
 import Label from 'reactstrap/lib/Label';
 import MakeRequest from 'views/MakeRequest';
+import imageDefault from './default.png'
 import './Modalhome.css'
 const DetailNews = (props) => {
     const [item, setItem] = useState('')
@@ -53,7 +54,9 @@ const DetailNews = (props) => {
                     <img style={{ width: '300px', height: '200px' }} src={pathFile} />
                     <Button onClick={(e) => clearFile()}>x</Button>
                 </>
-            ) : (<img style={{ width: '300px', height: '200px' }} src={item.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaJHHovVO36rCgZDgAad5hchXWr1ZSil8bfw&usqp=CAU"} />
+            ) : (
+                item.image === null ? (<img style={{ width: '300px', height: '200px' }} src={imageDefault} />) : (<img style={{ width: '75px', height: '75px' }} src={baseImage + item.image} />)
+
             )
         return show
     }
@@ -73,12 +76,10 @@ const DetailNews = (props) => {
             }
         )
         if (res.data && res.data.code === 0) {
-            // setImgaeSaved(res.data.data)
             return res.data
 
         } else {
             alert('Không lưu được ảnh!')
-            // setLoading(false)
         }
     }
     const updateButton = async () => {

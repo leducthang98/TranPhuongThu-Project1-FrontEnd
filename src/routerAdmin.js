@@ -35,14 +35,14 @@ import AddNews from "views/Admin/AddNews.js";
 
 var routerAdmin = [
 
-    {
-        path: "/home",
-        name: "Trang chủ",
-        icon: "ni ni-shop text-red",
-        component: AdminUser,
-        layout: "/admin",
-        render: true
-    },
+    // {
+    //     path: "/home",
+    //     name: "Trang chủ",
+    //     icon: "ni ni-shop text-red",
+    //     component: AdminUser,
+    //     layout: "/admin",
+    //     render: true
+    // },
     {
         path: "/item/list",
         name: "Quản lý sản phẩm",

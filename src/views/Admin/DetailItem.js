@@ -5,6 +5,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, C
 import Label from 'reactstrap/lib/Label';
 import MakeRequest from 'views/MakeRequest';
 import './Modalhome.css'
+import imageDefault from './default.png'
+
 const DetailItem = (props) => {
     const [item, setItem] = useState('')
     const [isChecked, setChecked] = useState(false)
@@ -67,7 +69,8 @@ const DetailItem = (props) => {
                     <img style={{ width: '300px', height: '200px' }} src={pathFile || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaJHHovVO36rCgZDgAad5hchXWr1ZSil8bfw&usqp=CAU"} />
                     <Button onClick={(e) => clearFile()}>x</Button>
                 </>
-            ) : (<img style={{ width: '300px', height: '200px' }} src={baseImage + item.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaJHHovVO36rCgZDgAad5hchXWr1ZSil8bfw&usqp=CAU"} />
+            ) : (
+                item.image === null ? (<img style={{ width: '300px', height: '200px' }} src={imageDefault} />) : (<img style={{ width: '75px', height: '75px' }} src={baseImage + item.image} />)
             )
         return show
     }

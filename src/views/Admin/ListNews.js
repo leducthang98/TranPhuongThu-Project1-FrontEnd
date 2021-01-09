@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { baseUrl, baseImage } from '../../domain'
 import { withRouter } from 'react-router-dom'
+import imageDefault from './default.png'
 
 import {
     Button,
@@ -104,7 +105,8 @@ function ListNews(props) {
                         {item.title}
                     </td>
                     <td>
-                        <img style={{ width: '75px', height: '75px' }} src={baseImage + item.image}></img>
+                         {item.image === null ? (<img style={{ width: '75px', height: '75px' }} src={imageDefault} />) : (<img style={{ width: '75px', height: '75px' }} src={baseImage + item.image} />)}
+
                     </td>
                     <td>{item.content} đ</td>
 

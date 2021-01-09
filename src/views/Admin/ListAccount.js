@@ -27,16 +27,11 @@ import {
     Col,
     UncontrolledAlert
 } from "reactstrap";
-import {
-    chartOptions,
-    parseOptions,
-    chartExample1,
-    chartExample2,
-} from "variables/charts.js";
+import imageDefault from './default.png'
 import "../index.css";
 
 import Header from "components/Headers/Header.js";
-import { baseUrl, getAllItem } from "../../domain";
+import { baseUrl, baseImage } from "../../domain";
 import axios from "axios";
 import MakeRequest from "../MakeRequest";
 import FormGroup from "reactstrap/lib/FormGroup";
@@ -113,7 +108,7 @@ function ListAccount(props) {
                         {item.username}
                     </td>
                     <td>
-                        <img style={{ width: '75px', height: '75px' }} src={item.image}></img>
+                        {item.image === null ? (<img style={{ width: '75px', height: '75px' }} src={imageDefault} />) : (<img style={{ width: '75px', height: '75px' }} src={baseImage + item.image} />)}
                     </td>
                     <td>{item.email} đ</td>
 

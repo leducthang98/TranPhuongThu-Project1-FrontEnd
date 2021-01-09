@@ -1,15 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
-// import { baseUrl } from 'domain'
-// import Card from 'reactstrap/lib/Card'
-// import CardHeader from 'reactstrap/lib/CardHeader'
-// import Container from 'reactstrap/lib/Container'
-// import Row from 'reactstrap/lib/Row'
-// import Table from 'reactstrap/lib/Table'
-// import MakeRequest from 'views/MakeRequest'
-// import Header from 'components/Headers/Header'
-// import AdminHeader from 'components/Headers/AdminHeader'
-import { withRouter } from 'react-router-dom'
+
+import imageDefault from './default.png'
 
 import {
     Button,
@@ -114,7 +106,8 @@ function ListProduct(props) {
                         {item.name}
                     </td>
                     <td>
-                        <img style={{ width: '75px', height: '75px' }} src={baseImage + item.image}></img>
+                        {item.image === null ? (<img style={{ width: '75px', height: '75px' }} src={imageDefault} />) : (<img style={{ width: '75px', height: '75px' }} src={baseImage + item.image} />)}
+
                     </td>
                     <td>{item.price} đ</td>
 
