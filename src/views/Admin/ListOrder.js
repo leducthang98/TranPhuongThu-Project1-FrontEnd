@@ -65,6 +65,7 @@ function ListOrder(props) {
             alert("Xóa thất bại do " + res.data.message)
         }
     }
+
     const handleSort = async (e) => {
         const { name, value } = e.target
         const sortType = value.charAt(0)
@@ -94,11 +95,12 @@ function ListOrder(props) {
     //     }
     // }
 
-    const handleAccept = (item) => {
-        const res = MakeRequest('put', baseUrl + "order/cancel/" + item.id)
-        if (res && res.data && res.data.message === "ok" && res.data.code === 0) {
+    const handleAccept = async (item) => {
+        const res = await MakeRequest('put', baseUrl + "order/executeOrder?orderId=" + item.order_id)
+        console.log(res);
+        if (res && res.data && res.data.code === 0) {
+            await getAllItem()
             alert("Đơn hàng đã được xử lý")
-            setList(res.data.data)
         } else {
             alert("Xảy ra lỗi " + res.data.message)
         }
@@ -110,27 +112,30 @@ function ListOrder(props) {
             return (
                 <>
                     <Button color="danger" onClick={() => handleAccept(item, idx)}>Chấp nhận</Button>
-                    {/* <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Chi tiết</Button> */}
                 </>)
         }
         if (item.status === 2) {
             return (
                 <>
-                    <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Chi tiết</Button>
+                    <Button color="info"
+                    // onClick={() => HandleDelItem(item, idx)}
+                    >Chi tiết</Button>
                 </>)
         }
         if (item.status === 3) {
             return (
                 <>
-                    <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Chi tiết</Button>
-
+                    <Button color="info"
+                    // onClick={() => HandleDelItem(item, idx)}
+                    >Chi tiết</Button>
                 </>)
         }
         if (item.status === 4) {
             return (
                 <>
-                    <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Chi tiết</Button>
-
+                    <Button color="info"
+                    // onClick={() => HandleDelItem(item, idx)}
+                    >Chi tiết</Button>
                 </>)
         }
     }

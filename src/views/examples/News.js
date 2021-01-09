@@ -208,7 +208,6 @@ class News extends React.Component {
                             className="item">
                             <div style={{}}>
                               {item.image === null ? (<img style={{ width: '75px', height: '75px' }} src={imageDefault} />) : (<img style={{ width: '75px', height: '75px' }} src={baseImage + item.image} />)}
-
                               {
                                 (this.state.isMouseOver[idx]) ? (<ModalNews data={item} reload={(data) => this.reload(data)} />
                                 ) : ('')
