@@ -25,7 +25,7 @@ const HomeModal = (props) => {
                 <ModalBody>
                     <Row>
                         <Col> <FormGroup>
-                            <img style={{ width: '450px' }} thumb src={baseImage+data.image||"../../assets/img/default.png"} />
+                            {data.image === null ? (<img style={{ width: '75px', height: '75px' }} src={"../../assets/img/default.png"} />) : (<img style={{ width: '75px', height: '75px' }} src={baseImage + item.image} />)}
 
                         </FormGroup>
                         </Col>

@@ -7,8 +7,8 @@ import Chart from "chart.js";
 import { Line, Bar } from "react-chartjs-2";
 import { store } from 'react-notifications-component';
 import * as actions from '../../store/actions/actions'
-// import defaultImg from "../../assets/img/default.png"
-
+import imageDefault from '../default.png'
+  
 // reactstrap components
 import {
   Button,
@@ -39,7 +39,7 @@ import "../index.css";
 import Header from "components/Headers/Header.js";
 import { listData } from "./data";
 import HomeModal from "./ModalHome";
- import MakeRequest from "views/MakeRequest";
+import MakeRequest from "views/MakeRequest";
 import FormGroup from "reactstrap/lib/FormGroup";
 import Input from "reactstrap/lib/Input";
 import Label from "reactstrap/lib/Label";
@@ -209,9 +209,9 @@ class Icons extends React.Component {
           <Row>
 
             <div className=" col">
-            <Card className=" shadow">
-                <div style={{ display: 'flex' , paddingTop:'20px'}}>
-                  <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px' , paddingLeft:'100px', margin:'0px'}}>
+              <Card className=" shadow">
+                <div style={{ display: 'flex', paddingTop: '20px' }}>
+                  <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px', paddingLeft: '100px', margin: '0px' }}>
                     <Input
                       style={{ width: '500px' }}
                       type="search"
@@ -225,7 +225,7 @@ class Icons extends React.Component {
                     <Button>
                       <i class="fas fa-search"></i></Button>
                   </FormGroup>
-                  <FormGroup style={{margin:'0px'}}>
+                  <FormGroup style={{ margin: '0px' }}>
                     <Input type="select" name="select" id="exampleSelect" onChange={(e) => {
                       this.handleSort(e)
                     }}>
@@ -238,7 +238,7 @@ class Icons extends React.Component {
                     </Input>
                   </FormGroup>
 
-            
+
 
                 </div>
                 <CardBody>
@@ -254,12 +254,8 @@ class Icons extends React.Component {
                               onMouseEnter={() => this.handleMouseOver(isMouseOver, idx)}
                               className="item">
                               <div>
-                                <img
-                                  alt="..."
-                                  className=" img-fluid rounded shadow"
-                                  src={baseImage+item.image|| '../../assets/img/default.png'}
-                                  style={{ width: 200 }}
-                                ></img>
+                                {item.image === null ? (<img style={{ width: '200px', height: '200px' }} src={imageDefault} />) 
+                                : (<img style={{ width: '200px', height: '200px' }} src={baseImage + item.image} />)}
                                 {
                                   (this.state.isMouseOver[idx]) ? (< HomeModal data={item} />
                                   ) : ('')

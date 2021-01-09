@@ -24,7 +24,7 @@ import {
   Col,
   UncontrolledAlert
 } from "reactstrap";
-
+import imageDefault from '../default.png'
 // core components
 import {
   chartOptions,
@@ -138,7 +138,7 @@ class Icons extends React.Component {
             amount: data.amount,
             num: parseInt(item.amount)
           }
-          console.log("130  " + oldStore.length," count ",count);
+          console.log("130  " + oldStore.length, " count ", count);
         }
       }
     }
@@ -249,12 +249,14 @@ class Icons extends React.Component {
                               onMouseEnter={() => this.handleMouseOver(isMouseOver, idx)}
                               className="item">
                               <div>
-                                <img
+                                {item.image === null ? (<img style={{ width: '200px', height: '200px' }} src={imageDefault} />) : (<img style={{ width: '200px', height: '200px' }} src={baseImage + item.image} />)}
+
+                                {/* <img
                                   alt="..."
                                   className=" img-fluid rounded shadow"
-                                  src={baseImage+item.image || '../../assets/img/default.png'}
+                                 
                                   style={{ width: 200 }}
-                                ></img>
+                                ></img> */}
                                 {
                                   (this.state.isMouseOver[idx]) ? (< HomeModal data={item} />
                                   ) : ('')

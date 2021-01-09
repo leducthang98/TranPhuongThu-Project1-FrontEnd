@@ -51,10 +51,11 @@ import {
   chartExample2,
 } from "variables/charts.js";
 import "./index.css";
+import imageDefault from './default.png'
 
 import Header from "components/Headers/Header.js";
 import HomeModal from "./examples/ModalHome";
-import { baseUrl, getAllItem } from "../domain";
+import { baseImage, baseUrl, getAllItem } from "../domain";
 import axios from "axios";
 import MakeRequest from "./MakeRequest";
 import FormGroup from "reactstrap/lib/FormGroup";
@@ -183,7 +184,7 @@ class Index extends React.Component {
     const data = {
       sortType: sortType,
       sortColumn: Sortcolumn,
-    
+
     }
     const res = await MakeRequest("GET", baseUrl + "item/all", data)
     if (res && res.data && res.data.message === "ok" && res.data.code === 0) {
@@ -225,8 +226,8 @@ class Index extends React.Component {
           <Row>
             <div className=" col">
               <Card className=" shadow">
-                <div style={{ display: 'flex' , paddingTop:'20px'}}>
-                  <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px' , paddingLeft:'100px', margin:'0px'}}>
+                <div style={{ display: 'flex', paddingTop: '20px' }}>
+                  <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px', paddingLeft: '100px', margin: '0px' }}>
                     <Input
                       style={{ width: '500px' }}
                       type="search"
@@ -240,7 +241,7 @@ class Index extends React.Component {
                     <Button>
                       <i class="fas fa-search"></i></Button>
                   </FormGroup>
-                  <FormGroup style={{margin:'0px'}}>
+                  <FormGroup style={{ margin: '0px' }}>
                     <Input type="select" name="select" id="exampleSelect" onChange={(e) => {
                       this.handleSort(e)
                     }}>
@@ -266,13 +267,8 @@ class Index extends React.Component {
                               onMouseEnter={() => this.handleMouseOver(isMouseOver, idx)}
                               className="item">
                               <div>
-                                <img
+                                {item.image === null ? (<img style={{ width: '200px', height: '200px' }} src={ imageDefault } />) : (<img style={{ width: '200px', height: '200px' }} src={baseImage + item.image} />)}
 
-                                  alt="..."
-                                  className=" img-fluid rounded shadow"
-                                  src={item?.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaJHHovVO36rCgZDgAad5hchXWr1ZSil8bfw&usqp=CAU'}
-                                  style={{ width: 200 }}  >
-                                </img>
                                 {
                                   (this.state.isMouseOver[idx]) ? (< HomeModal data={item} />
                                   ) : ('')

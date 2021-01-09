@@ -31,7 +31,7 @@ import {
   Input
 } from "reactstrap";
 import { baseImage, baseUrl, getAllItem } from '../../domain'
-// core components
+import imageDefault from '../default.png'
 import {
   chartOptions,
   parseOptions,
@@ -207,12 +207,8 @@ class News extends React.Component {
                             onMouseEnter={() => this.handleMouseOver(isMouseOver, idx)}
                             className="item">
                             <div style={{}}>
-                              <img
-                                alt="..."
-                                className=" img-fluid shadow"
-                                src={baseImage+item.image || '../../assets/img/default.png'}
-                                style={{ width: 350 }}
-                              ></img>
+                              {item.image === null ? (<img style={{ width: '75px', height: '75px' }} src={imageDefault} />) : (<img style={{ width: '75px', height: '75px' }} src={baseImage + item.image} />)}
+
                               {
                                 (this.state.isMouseOver[idx]) ? (<ModalNews data={item} reload={(data) => this.reload(data)} />
                                 ) : ('')

@@ -84,7 +84,8 @@ class Order extends React.Component {
             {item.name}
           </td>
           <td>
-            <img style={{ width: '75px', height: '75px' }} src={baseImage + item.image || "../../assets/img/default.png"} />
+            {item.image === null ? (<img style={{ width: '75px', height: '75px' }} src={"../../assets/img/default.png"} />) : (<img style={{ width: '75px', height: '75px' }} src={baseImage + item.image} />)}
+            {/* || }  */}
           </td>
           <td>{item.price} đ</td>
           <td>{item.count}  </td>
@@ -205,7 +206,7 @@ class Order extends React.Component {
                     </tr>
                   </thead>
                   <tbody>
-                    <p style={{ fontWeight: 500, color: '#000', paddingLeft:'500px' , paddingTop:'20px'}}>Chưa có đơn hàng nào   </p >
+                    <p style={{ fontWeight: 500, color: '#000', paddingLeft: '500px', paddingTop: '20px' }}>Chưa có đơn hàng nào   </p >
                   </tbody>
                 </Table>
                 <div style={{
