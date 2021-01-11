@@ -117,7 +117,8 @@ function ListProduct(props) {
 
                     <td style={{ display: 'flex' }}>
                         <DetailItem data={item} updateData={(data) => updateData(data)} />
-                        <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Xóa</Button>
+                        <div style={{paddingLeft:'20px'}}>
+                        <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Xóa</Button></div>
 
                     </td>
                 </tr>

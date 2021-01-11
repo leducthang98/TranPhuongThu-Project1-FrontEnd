@@ -105,7 +105,7 @@ function ListNews(props) {
                         {item.title}
                     </td>
                     <td>
-                         {item.image === null ? (<img style={{ width: '75px', height: '75px' }} src={imageDefault} />) : (<img style={{ width: '75px', height: '75px' }} src={baseImage + item.image} />)}
+                        {item.image === null ? (<img style={{ width: '75px', height: '75px' }} src={imageDefault} />) : (<img style={{ width: '75px', height: '75px' }} src={baseImage + item.image} />)}
 
                     </td>
                     <td>{item.content} đ</td>
@@ -116,8 +116,8 @@ function ListNews(props) {
 
                     <td style={{ display: 'flex' }}>
                         <DetailNews data={item} updateData={(data) => updateData(data)} />
-                        <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Xóa</Button>
-
+                        <div style={{ paddingLeft: '20px' }}>   <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Xóa</Button>
+                        </div>
                     </td>
                 </tr>
             )

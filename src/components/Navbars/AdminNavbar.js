@@ -43,7 +43,8 @@ class AdminNavbar extends React.Component {
   handleLogout = async () => {
     localStorage.removeItem("token")
     localStorage.removeItem("role")
-    await this.props.history.push("/auth/login")
+    // this.props.history.push("/auth/login")
+    window.location.href = "http://localhost:3000/auth/login"
   }
   render() {
     return (
@@ -77,7 +78,9 @@ class AdminNavbar extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu className="dropdown-menu-arrow" right>
 
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
+                  <DropdownItem to="/admin/user-profile"
+                    tag={Link}
+                  >
                     <i className="ni ni-single-02" />
                     <span>Thông tin cá nhân</span>
                   </DropdownItem>

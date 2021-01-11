@@ -16,7 +16,7 @@
 
 */
 import React from "react";
-import { baseUrl } from '../../domain'
+import { baseUrl , baseImage} from '../../domain'
 // reactstrap components
 import {
   Button,
@@ -30,6 +30,7 @@ import {
   Row,
   Col
 } from "reactstrap";
+import imageDefault from '../default.png'
 import MakeRequest from "../MakeRequest";
 // core components
 import UserHeader from "../../components/Headers/UserHeader";
@@ -138,16 +139,26 @@ class Profile extends React.Component {
                   <Col className="order-lg-2" lg="3">
                     <div className="card-profile-image">
                       <a href="#pablo" onClick={e => e.preventDefault()}>
-                        <img
-                          alt="..."
-                          className="rounded-circle"
-                          src={require("assets/img/theme/team-4-800x800.jpg")}
-                        />
+                        {this.state.userInfo.image === null ? (
+                          <img
+                            alt="..."
+                            className="rounded-circle"
+                            src={imageDefault}
+                          />
+                        ) : (
+                            <img
+                              alt="..."
+                              // className="rounded-circle"
+                              src={baseImage+this.state.userInfo.image}
+                            />
+                          )}
+
                       </a>
                     </div>
                   </Col>
                 </Row>
                 <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+{/*                   
                   <div className="d-flex justify-content-between">
                     <Button
                       className="mr-4"
@@ -168,30 +179,9 @@ class Profile extends React.Component {
                       Message
                     </Button>
                   </div>
-                </CardHeader>
-
+                */}
+                 </CardHeader>
                 <CardBody className="pt-0 pt-md-4">
-                  {/* 
-                  <Row>
-                    <div className="col">
-                      <div className="card-profile-stats d-flex justify-content-center mt-md-5">
-                        <div>
-                          <span className="heading">22</span>
-                          <span className="description">Friends</span>
-                        </div>
-                        <div>
-                          <span className="heading">10</span>
-                          <span className="description">Photos</span>
-                        </div>
-                        <div>
-                          <span className="heading">89</span>
-                          <span className="description">Comments</span>
-                        </div>
-                      </div>
-                    </div>
-                  </Row>
-                 */}
-
                   <div style={{ height: '50px', width: '100%' }}></div>
                   <div className="text-center">
                     <h3>

@@ -210,7 +210,7 @@ class SidebarAdmin extends React.Component {
                         <span className="navbar-toggler-icon" />
                     </button>
                     {/* Brand */}
-                    {logo ? (
+                    {/* {logo ? (
                         <NavbarBrand className="pt-0" {...navbarBrandProps}>
                             <img
                                 alt={logo.imgAlt}
@@ -218,7 +218,7 @@ class SidebarAdmin extends React.Component {
                                 src={logo.imgSrc}
                             />
                         </NavbarBrand>
-                    ) : null}
+                    ) : null} */}
 
                     <Collapse navbar isOpen={this.state.collapseOpen}>
                         {/* Collapse header */}

@@ -25,6 +25,7 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
+import UserNavbar from "components/Navbars/UserNavbar";
 
 class Admin extends React.Component {
   componentDidUpdate(e) {
@@ -72,7 +73,7 @@ class Admin extends React.Component {
           }}
         />
         <div className="main-content" ref="mainContent">
-          <AdminNavbar
+          <UserNavbar
             {...this.props}
             brandText={this.getBrandText(this.props.location.pathname)}
           />

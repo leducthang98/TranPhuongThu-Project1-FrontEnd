@@ -23,10 +23,8 @@ import {
     Table,
     Container,
     Row,
-    Alert,
-    Col,
-    UncontrolledAlert
 } from "reactstrap";
+import DetailOrder from './DetailOrder'
 import {
     chartOptions,
     parseOptions,
@@ -111,31 +109,32 @@ function ListOrder(props) {
         if (item.status === 1) {
             return (
                 <>
-                    <Button color="danger" onClick={() => handleAccept(item, idx)}>Chấp nhận</Button>
+                    <DetailOrder id={item.order_id}
+                    >Chi tiết</DetailOrder>
+                   <div style={{paddingLeft:'20px'}}>
+                   <Button color="danger" onClick={() => handleAccept(item, idx)}>Chấp nhận</Button>
+                   </div>
                 </>)
         }
         if (item.status === 2) {
             return (
                 <>
-                    <Button color="info"
-                    // onClick={() => HandleDelItem(item, idx)}
-                    >Chi tiết</Button>
+                    <DetailOrder id={item.order_id}
+                    >Chi tiết</DetailOrder>
                 </>)
         }
         if (item.status === 3) {
             return (
                 <>
-                    <Button color="info"
-                    // onClick={() => HandleDelItem(item, idx)}
-                    >Chi tiết</Button>
+                    <DetailOrder id={item.order_id}
+                    >Chi tiết</DetailOrder>
                 </>)
         }
         if (item.status === 4) {
             return (
                 <>
-                    <Button color="info"
-                    // onClick={() => HandleDelItem(item, idx)}
-                    >Chi tiết</Button>
+                    <DetailOrder id={item.order_id}
+                    >Chi tiết</DetailOrder>
                 </>)
         }
     }
@@ -149,16 +148,24 @@ function ListOrder(props) {
         let show = listData.map((item, idx) => {
             return (
                 <tr key={idx}>
-                    <td>{idx + 1}</td>
+                    {/* <td>{idx + 1}</td> */}
                     <td  >
                         {item.order_id}
                     </td>
                     <td>
                         {item.fullname}
                     </td>
-                    <td>{
-                        (item.status === 1) ? ("Đơn hàng chờ xử lý") : ((item.status === 2) ? ("Đơn đã xử lý") : ((item.status === 3) ? ("Đơn đã hủy") : ((item.status === 4) ? ("Đơn khách hàng hủy") : (null))))
-                    }</td>
+                    {
+                        (item.status === 1) ? (<td style={{ color: "#ffd600" }}>
+                            Đơn hàng chờ xử lý
+                        </td>) : ((item.status === 2) ? (<td style={{ color: "" }}>
+                            Đơn đã xử lý
+                        </td>) : ((item.status === 3) ? (<td style={{ color: "#f5365c" }}>
+                            Đơn đã hủy
+                        </td>) : ((item.status === 4) ? (<td style={{ color: "#fb6340" }}>
+                            Đơn khách hàng hủy
+                        </td>) : (null))))
+                    }
 
                     <td>
                         {item.create_time}
@@ -182,32 +189,6 @@ function ListOrder(props) {
             <Container className="mt--7" fluid>
                 <Card className="shadow">
                     <div style={{ display: 'flex', paddingTop: '20px' }}>
-                        {/* <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px', paddingLeft: '100px', margin: '0px' }}>
-                            <Input
-                                style={{ width: '500px' }}
-                                type="search"
-                                name="dataSearch"
-                                id="exampleSearch"
-                                placeholder="Tìm kiếm"
-                                onChange={(e) => {
-                                    handleSearch(e)
-                                }}
-                            />
-                            <Button>
-                                <i class="fas fa-search"></i></Button>
-                        </FormGroup> */}
-                        {/* <FormGroup style={{ margin: '0px' }}>
-                            <Input type="select" name="select" id="exampleSelect" onChange={(e) => {
-                                handleSort(e)
-                            }}>
-                                <option name="price" value="1price">Sắp xếp</option>
-                                <option name="price" value="1price">Giá thấp đến cao</option>
-                                <option name="price" value="0price">Giá cao đến thấp</option>
-                                <option value="1" value="1name">Sắp xếp theo tên A-Z</option>
-                                <option value="0" value="0name">Sắp xếp theo tên Z-A</option>
-
-                            </Input>
-                        </FormGroup> */}
 
                     </div>
                     <CardBody>
@@ -219,7 +200,7 @@ function ListOrder(props) {
                                     <Table className="align-items-center table-flush" responsive>
                                         <thead className="thead-light">
                                             <tr>
-                                                <th >STT</th>
+                                                {/* <th >STT</th> */}
                                                 <th >Mã đơn hàng</th>
                                                 <th >Tên khách hàng</th>
                                                 <th >Trạng thái </th>
