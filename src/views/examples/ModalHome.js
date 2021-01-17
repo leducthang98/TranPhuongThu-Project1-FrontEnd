@@ -1,5 +1,5 @@
 
-import { baseImage } from 'domain';
+import { baseImage } from '../../domain';
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Col, Row } from 'reactstrap';
 import Label from 'reactstrap/lib/Label';
@@ -69,10 +69,10 @@ const HomeModal = (props) => {
                 </ModalBody>
 
                 <ModalFooter>
-                    <Button color="primary" onClick={() => {
+                    {/* <Button color="primary" onClick={() => {
                         handleAddToCart()
-                    }}>Thêm vào giỏ hàng</Button>{' '}
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                    }}>Thêm vào giỏ hàng</Button>{' '} */}
+                    <Button color="secondary" onClick={toggle}>Đóng</Button>
                 </ModalFooter>
             </Modal>
         </div>

@@ -78,12 +78,12 @@ class AdminNavbar extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu className="dropdown-menu-arrow" right>
 
-                  <DropdownItem to="/admin/user-profile"
+                  {/* <DropdownItem to="/admin/user-profile"
                     tag={Link}
                   >
                     <i className="ni ni-single-02" />
                     <span>Thông tin cá nhân</span>
-                  </DropdownItem>
+                  </DropdownItem> */}
 
                   <DropdownItem onClick={() => {
                     this.handleLogout()

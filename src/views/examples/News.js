@@ -182,7 +182,7 @@ class News extends React.Component {
           <Row>
             <div className=" col">
               <Card className=" shadow">
-                <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingTop: '20px' }}>
+                <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingTop: '20px', paddingRight: '50px' }}>
                   <Input
                     style={{ width: '500px' }}
                     type="search"
@@ -198,33 +198,41 @@ class News extends React.Component {
                 </FormGroup>
                 <CardBody>
                   <Row className=" icon-examples">
-                    <div
-                      className="gridNewsContainer">
-                      {
-                        this.state.listData.map((item, idx) => {
-                          return <div
-                            style={{ width: 200, marginLeft: 10, marginBottom: 15 }}
-                            onMouseEnter={() => this.handleMouseOver(isMouseOver, idx)}
-                            className="item">
-                            <div style={{}}>
-                              {item.image === null ? (<img style={{ width: '75px', height: '75px' }} src={imageDefault} />) : (<img style={{ width: '75px', height: '75px' }} src={baseImage + item.image} />)}
-                              {
-                                (this.state.isMouseOver[idx]) ? (<ModalNews data={item} reload={(data) => this.reload(data)} />
-                                ) : ('')
-                              }
-                            </div>
-                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}  >
-                              <h3 style={{ color: 'black', fontWeight: '500', textAlign: 'center', fontSize: 20 }}>{item.title}</h3>
-                              <p style={{ fontSize: '11px', fontWeight: '500', color: '#000', paddingLeft: '20px', paddingTop: '5px' }}>
-                                <i class="fas fa-eye"></i>
-                                {item.view}
 
-                              </p>
-                            </div>
+                    {
+                      this.state.listData.map((item, idx) => {
+                        return (
+                          <Col xs="6" sm="3" style={{}}>
+                            <div
+                              style={{ width: 200, marginLeft: 10, marginBottom: 15 }}
+                              onMouseEnter={() => this.handleMouseOver(isMouseOver, idx)}
+                              className="item">
+                              <div style={{}}>
+                                {item.image === null ? (<img style={{ width: '200px', height: '200px' }} src={imageDefault} />) : (<img style={{ width: '200px', height: '200px' }} src={baseImage + item.image} />)}
+                                {
+                                  (this.state.isMouseOver[idx]) ? (<ModalNews data={item} reload={(data) => this.reload(data)} />
+                                  ) : ('')
+                                }
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}  >
+                                <h3 style={{
+                                  color: 'black', fontWeight: '500', textAlign: 'center', fontSize: 20,
+                                  overflow: 'hidden',
+                                  whiteSpace: 'nowrap',
+                                  textOverflow: 'ellipsis'
+                                }}>{item.title}</h3>
+                                <p style={{ fontSize: '11px', fontWeight: '500', color: '#000', paddingLeft: '20px', paddingTop: '5px' }}>
+                                  <i class="fas fa-eye"></i>
+                                  {item.view}
 
-                          </div>;
-                        })}
-                    </div>
+                                </p>
+                              </div>
+
+                            </div>
+                          </Col>
+                        )
+                      })}
+
                   </Row>
                 </CardBody>
               </Card>

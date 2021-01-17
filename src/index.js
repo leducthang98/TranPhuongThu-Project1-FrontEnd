@@ -47,7 +47,12 @@ ReactDOM.render(
             )
             : (null)}
           <> <Route path="/auth" render={props => <AuthLayout {...props} />} />
-            <Redirect from="/" to="/auth" />
+            {localStorage.getItem('role') === "user" ? (
+              <Redirect from="/" to="/user/home" />
+            ) : (
+                <Redirect from="/" to="/admin/home" />
+              )}
+            {!localStorage.getItem('role') && <Redirect from="/" to="/auth/login" />}
             {/* <Redirect from="/user/" to="/user/home" /> */}
           </>
 

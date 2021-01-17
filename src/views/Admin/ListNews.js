@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { baseUrl, baseImage } from '../../domain'
 import { withRouter } from 'react-router-dom'
 import imageDefault from './default.png'
-
+import './table-responsive.css'
 import {
     Button,
     Card,
@@ -100,21 +100,22 @@ function ListNews(props) {
         let show = listData.map((item, idx) => {
             return (
                 <tr key={idx}>
-                    <td>{idx + 1}</td>
-                    <td  >
+                    <td scope="row">{idx + 1}</td>
+                    <td scope="row" >
                         {item.title}
                     </td>
-                    <td>
+                    <td scope="row">
                         {item.image === null ? (<img style={{ width: '75px', height: '75px' }} src={imageDefault} />) : (<img style={{ width: '75px', height: '75px' }} src={baseImage + item.image} />)}
 
                     </td>
-                    <td>{item.content} đ</td>
+                    {/* <td scope="row">
+                        <span  >{item.content} </span> </td> */}
 
-                    <td>
+                    <td scope="row">
                         {item.view}
                     </td>
 
-                    <td style={{ display: 'flex' }}>
+                    <td scope="row" style={{ display: 'flex' }}>
                         <DetailNews data={item} updateData={(data) => updateData(data)} />
                         <div style={{ paddingLeft: '20px' }}>   <Button color="danger" onClick={() => HandleDelItem(item, idx)}>Xóa</Button>
                         </div>
@@ -143,18 +144,6 @@ function ListNews(props) {
                         <Button>
                             <i class="fas fa-search"></i></Button>
                     </FormGroup>
-                    {/* <FormGroup style={{ margin: '0px' }}>
-                            <Input type="select" name="select" id="exampleSelect" onChange={(e) => {
-                                handleSort(e)
-                            }}>
-                                <option name="price" value="1price">Sắp xếp</option>
-                                <option name="price" value="1price">Giá thấp đến cao</option>
-                                <option name="price" value="0price">Giá cao đến thấp</option>
-                                <option value="1" value="1name">Sắp xếp theo tên A-Z</option>
-                                <option value="0" value="0name">Sắp xếp theo tên Z-A</option>
-
-                            </Input>
-                        </FormGroup> */}
 
                     <CardBody>
                         <Row>
@@ -165,12 +154,12 @@ function ListNews(props) {
                                     <Table className="align-items-center table-flush" responsive>
                                         <thead className="thead-light">
                                             <tr>
-                                                <th >STT</th>
-                                                <th >Tiêu đề</th>
-                                                <th >Ảnh</th>
-                                                <th >Nội dung</th>
-                                                <th >Lượt xem</th>
-                                                <th >Hành động</th>
+                                                <th scope="row">STT</th>
+                                                <th scope="row" >Tiêu đề</th>
+                                                <th scope="row">Ảnh</th>
+                                                {/* <th scope="row" >Nội dung</th> */}
+                                                <th scope="row" >Lượt xem</th>
+                                                <th scope="row" >Hành động</th>
                                             </tr>
                                         </thead>
                                         <tbody>

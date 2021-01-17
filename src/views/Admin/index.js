@@ -194,7 +194,9 @@ class AdminUser extends React.Component {
                                                                         });
                                                                     }}
                                                                     style={{ marginTop: 10, marginLeft: 10, width: '90%', marginBottom: 5 }} outline color="primary"
-                                                                    onClick={() => this.handleAddToCart(item, idx)}
+                                                                    onClick={() => {
+                                                                        this.handleAddToCart(item, idx)
+                                                                    }}
                                                                 >Thêm vào giỏ hàng</Button>
                                                                 <h3 style={{ color: 'red', fontWeight: 'bold' }}>({item.price} VND)</h3>
                                                                 <p style={{ marginTop: -5, fontWeight: 'normal' }}>{item.name}</p>

@@ -128,10 +128,10 @@ function AddNews() {
                                     {preview()}
                                 </div>
                             </FormGroup>
-                            <div>
+                            <div style={{paddingBottom:'20px'}}>
                                 <Button color="info" onClick={() => {
                                     handleClick()
-                                }}>Thêm sản phẩm</Button>
+                                }} >Thêm tin mới</Button>
                             </div>
                         </Col>
                     </Row>

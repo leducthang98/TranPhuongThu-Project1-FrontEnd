@@ -43,7 +43,10 @@ class AdminNavbar extends React.Component {
     handleLogout = async () => {
         localStorage.removeItem("token")
         localStorage.removeItem("role")
-        await this.props.history.push("/auth/login")
+        // console.log(111111111);
+        window.location.href = "http://localhost:3000/auth/login"
+
+        // await this.props.history.push("/auth/login")
     }
     render() {
         return (

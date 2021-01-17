@@ -25,12 +25,8 @@ import {
     Row,
 } from "reactstrap";
 import DetailOrder from './DetailOrder'
-import {
-    chartOptions,
-    parseOptions,
-    chartExample1,
-    chartExample2,
-} from "variables/charts.js";
+import './table-responsive.css'
+
 import "../index.css";
 
 import Header from "components/Headers/Header.js";
@@ -170,9 +166,9 @@ function ListOrder(props) {
                     <td>
                         {item.create_time}
                     </td>
-                    <td>
+                    {/* <td>
                         {item.address}
-                    </td>
+                    </td> */}
 
                     <td style={{ display: 'flex' }}>
                         {buttonReder(item, idx)}
@@ -205,7 +201,7 @@ function ListOrder(props) {
                                                 <th >Tên khách hàng</th>
                                                 <th >Trạng thái </th>
                                                 <th >Ngày tạo </th>
-                                                <th >Địa chỉ</th>
+                                                {/* <th >Địa chỉ</th> */}
                                                 <th >Hành động</th>
                                             </tr>
                                         </thead>

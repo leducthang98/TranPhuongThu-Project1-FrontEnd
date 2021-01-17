@@ -35,20 +35,23 @@ const ModalNews = (props) => {
         <div>
             <Button style={{ position: 'absolute', zIndex: '1', marginTop: '-50px', marginLeft: '50px' }} color="danger" onClick={() => { handleClick() }}>Chi tiết</Button>
             <Modal isOpen={modal} toggle={toggle} className={className}>
-                <ModalHeader toggle={toggle}>  {data.title.toLowerCase()}</ModalHeader>
+                <ModalHeader toggle={toggle}  >
+                    {data.title.toUpperCase()}
+                    {/* Lượt xem: {data.view} */}
+                </ModalHeader>
                 <ModalBody>
+
                     <Row>
-                        <Col>
-                            <FormGroup>
-                                <img style={{ width: '450px' }} src={baseImage+data.image || "https://e3.365dm.com/20/12/768x432/skynews-papers-thursday_5201469.jpg?20201209232059"} />
-                            </FormGroup>
-                        </Col>
-                        <Col>
-                            <FormGroup>
-                                <p style={{ color: '#000' }}>{data.description}</p>
-                            </FormGroup>
-                        </Col>
+                        <FormGroup>
+                            <img style={{ width: '450px' }} src={baseImage + data.image || "https://e3.365dm.com/20/12/768x432/skynews-papers-thursday_5201469.jpg?20201209232059"} />
+                        </FormGroup>
                     </Row>
+                    <Row>
+                        <FormGroup>
+                            <p style={{ color: '#000' }}>{data.content}</p>
+                        </FormGroup>
+                    </Row>
+
                 </ModalBody>
 
                 <ModalFooter>

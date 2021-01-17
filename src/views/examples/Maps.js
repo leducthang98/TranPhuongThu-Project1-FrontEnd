@@ -8,7 +8,7 @@ import { Line, Bar } from "react-chartjs-2";
 import { store } from 'react-notifications-component';
 import * as actions from '../../store/actions/actions'
 import imageDefault from '../default.png'
-  
+
 // reactstrap components
 import {
   Button,
@@ -100,7 +100,7 @@ class Icons extends React.Component {
   }
   handleAddToCart = async (item, idx) => {
     console.log(item);
-    const dataToStore = {
+    let dataToStore = {
       id: item.id,
       name: item.name,
       image: item.image,
@@ -110,45 +110,38 @@ class Icons extends React.Component {
       num: 1
     }
     const oldStore = this.props.cart
-    let count = 0
-    for (let index = 0; index < oldStore.length; index++) {
-      console.log("index", index);
-      const data = oldStore[index]
-      console.log("oldStore[index]  ", oldStore[index]);
-      console.log("oldStore.length ", oldStore.length);
-      console.log("oldStore ", oldStore);
-
-      console.log(data);
-      if (item.id === data.id) {
-        console.log(112);
-        count++
-        if (item.amount > data.amount) {
-          oldStore[idx] = {
-            id: data.id,
-            name: data.name,
-            image: data.image,
-            price: data.price,
-            type: data.type,
-            amount: data.amount,
-            num: parseInt(data.amount) + 1
+    let added = null
+    console.log(oldStore);
+    if (oldStore.length === 0) {
+      oldStore.push(dataToStore)
+    } else {
+      for (let index = 0; index < oldStore.length; index++) {
+        const element = oldStore[index];
+        if (element.id === dataToStore.id) {
+          const num = parseInt(element.num) + 1
+          console.log(num);
+          oldStore[index] = {
+            id: element.id,
+            name: element.name,
+            image: element.image,
+            price: element.price,
+            type: element.type,
+            amount: element.amount,
+            num: num
           }
+          added = true
+          console.log('1', added);
+          break;
         } else {
-          console.log(125);
-          oldStore[idx] = {
-            id: data.id,
-            name: data.name,
-            image: data.image,
-            price: data.price,
-            type: data.type,
-            amount: data.amount,
-            num: parseInt(item.amount)
-          }
+          added = false
+          console.log('138', added);
+          continue;
         }
       }
-    }
-    if (count === 0) {
-      console.log(125);
-      oldStore.push(dataToStore)
+      if (added === false) {
+        console.log('3', added);
+        oldStore.push(dataToStore)
+      }
     }
     await this.props.cartAdd(oldStore)
     store.addNotification({
@@ -210,8 +203,8 @@ class Icons extends React.Component {
 
             <div className=" col">
               <Card className=" shadow">
-                <div style={{ display: 'flex', paddingTop: '20px' }}>
-                  <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px', paddingLeft: '100px', margin: '0px' }}>
+                <div style={{ display: 'flex', paddingTop: '20px' , paddingRight: '50px'}}>
+                  <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '150px', paddingLeft: '100px', margin: '0px' }}>
                     <Input
                       style={{ width: '500px' }}
                       type="search"
@@ -243,19 +236,18 @@ class Icons extends React.Component {
                 </div>
                 <CardBody>
                   <Row className=" icon-examples">
-                    <div
 
-                      className="gridContainer">
-                      {
-                        this.state.listData.map((item, idx) => {
-                          return (
+                    {
+                      this.state.listData.map((item, idx) => {
+                        return (
+                          <Col xs="6" sm="3">
                             <div
                               style={{ width: 200, marginLeft: 10, marginBottom: 15 }}
                               onMouseEnter={() => this.handleMouseOver(isMouseOver, idx)}
                               className="item">
                               <div>
-                                {item.image === null ? (<img style={{ width: '200px', height: '200px' }} src={imageDefault} />) 
-                                : (<img style={{ width: '200px', height: '200px' }} src={baseImage + item.image} />)}
+                                {item.image === null ? (<img style={{ width: '200px', height: '200px' }} src={imageDefault} />)
+                                  : (<img style={{ width: '200px', height: '200px' }} src={baseImage + item.image} />)}
                                 {
                                   (this.state.isMouseOver[idx]) ? (< HomeModal data={item} />
                                   ) : ('')
@@ -288,9 +280,10 @@ class Icons extends React.Component {
 
                               </div>
 
-                            </div>)
-                        })}
-                    </div>
+                            </div>
+                          </Col>
+                        )
+                      })}
                   </Row>
                 </CardBody>
               </Card>

@@ -131,8 +131,8 @@ function ListProduct(props) {
             <Header />
             <Container className="mt--7" fluid>
                 <Card className="shadow">
-                    <div style={{ display: 'flex', paddingTop: '20px' }}>
-                        <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px', paddingLeft: '100px', margin: '0px' }}>
+                    <div style={{ display: 'flex', paddingTop: '20px', paddingRight:'50px' }}>
+                        <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '150px', paddingLeft: '100px', margin: '0px' }}>
                             <Input
                                 style={{ width: '500px' }}
                                 type="search"

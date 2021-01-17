@@ -55,7 +55,7 @@ const DetailNews = (props) => {
                     <Button onClick={(e) => clearFile()}>x</Button>
                 </>
             ) : (
-                item.image === null ? (<img style={{ width: '300px', height: '200px' }} src={imageDefault} />) : (<img style={{ width: '75px', height: '75px' }} src={baseImage + item.image} />)
+                item.image === null ? (<img style={{ width: '300px', height: '200px' }} src={imageDefault} />) : (<img style={{ width: '300px', height: '200px' }} src={baseImage + item.image} />)
 
             )
         return show

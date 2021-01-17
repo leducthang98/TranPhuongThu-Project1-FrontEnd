@@ -96,8 +96,8 @@ class Icons extends React.Component {
     }
   }
   handleAddToCart = async (item, idx) => {
-    console.log(" 99 ", item);
-    const dataToStore = {
+    console.log(item);
+    let dataToStore = {
       id: item.id,
       name: item.name,
       image: item.image,
@@ -107,45 +107,38 @@ class Icons extends React.Component {
       num: 1
     }
     const oldStore = this.props.cart
-    let count = 0
-    for (let index = 0; index < oldStore.length; index++) {
-      // console.log("oldStore", oldStore);
-      console.log("length", oldStore.length);
-      const data = oldStore[index]
-      console.log(data);
-      if (item.id === data.id) {
-        // console.log(117);
-        count++
-        if (item.amount > data.amount) {
-          oldStore[idx] = {
-            id: data.id,
-            name: data.name,
-            image: data.image,
-            price: data.price,
-            type: data.type,
-            amount: data.amount,
-            num: parseInt(data.amount) + 1
+    let added = null
+    console.log(oldStore);
+    if (oldStore.length === 0) {
+      oldStore.push(dataToStore)
+    } else {
+      for (let index = 0; index < oldStore.length; index++) {
+        const element = oldStore[index];
+        if (element.id === dataToStore.id) {
+          const num = parseInt(element.num) + 1
+          console.log(num);
+          oldStore[index] = {
+            id: element.id,
+            name: element.name,
+            image: element.image,
+            price: element.price,
+            type: element.type,
+            amount: element.amount,
+            num: num
           }
-          console.log("129  " + oldStore);
+          added = true
+          console.log('1', added);
+          break;
         } else {
-          count++
-          oldStore[idx] = {
-            id: data.id,
-            name: data.name,
-            image: data.image,
-            price: data.price,
-            type: data.type,
-            amount: data.amount,
-            num: parseInt(item.amount)
-          }
-          console.log("130  " + oldStore.length, " count ", count);
+          added = false
+          console.log('138', added);
+          continue;
         }
       }
-    }
-    if (count === 0) {
-      console.log(146);
-      console.log("125 " + JSON.stringify(dataToStore));
-      oldStore.push(dataToStore)
+      if (added === false) {
+        console.log('3', added);
+        oldStore.push(dataToStore)
+      }
     }
     await this.props.cartAdd(oldStore)
     store.addNotification({
@@ -207,8 +200,9 @@ class Icons extends React.Component {
           <Row>
             <div className=" col">
               <Card className=" shadow">
-                <div style={{ display: 'flex', paddingTop: '20px' }}>
-                  <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '200px', paddingLeft: '100px', margin: '0px' }}>
+                <div style={{ display: 'flex', paddingTop: '20px', paddingRight:'50px' }}>
+                        <FormGroup style={{ display: 'flex', alignSelf: 'center', paddingRight: '150px', paddingLeft: '100px', margin: '0px' }}>
+                      
                     <Input
                       style={{ width: '500px' }}
                       type="search"
@@ -238,12 +232,11 @@ class Icons extends React.Component {
                 </div>
                 <CardBody>
                   <Row className=" icon-examples">
-                    <div
 
-                      className="gridContainer">
-                      {
-                        this.state.listData.map((item, idx) => {
-                          return (
+                    {
+                      this.state.listData.map((item, idx) => {
+                        return (
+                          <Col xs="6" sm="3">
                             <div
                               style={{ width: 200, marginLeft: 10, marginBottom: 15 }}
                               onMouseEnter={() => this.handleMouseOver(isMouseOver, idx)}
@@ -273,9 +266,11 @@ class Icons extends React.Component {
 
                               </div>
 
-                            </div>)
-                        })}
-                    </div>
+                            </div>
+                          </Col>
+                        )
+                      })}
+
                   </Row>
                 </CardBody>
               </Card>

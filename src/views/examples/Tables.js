@@ -76,67 +76,87 @@ class Tables extends React.Component {
     })
   }
   addMore = async (idx, item) => {
-    let oldStore = this.state.listData
-    let oldAmout = this.state.amount
-    let data = ''
-    for (let index = 0; index < oldAmout.length; index++) {
-      if (index === idx) {
-        console.log(index + "==>" + oldAmout[idx] + "==>" + idx);
+    if (item.amount > item.num) {
+      let total = parseInt(this.state.total) + (parseInt(item.price))
+      await this.setState({
+        ...this.state,
+        total: total
+      })
+      let oldStore = this.state.listData
+      let oldAmout = this.state.amount
+      let data = ''
+      for (let index = 0; index < oldAmout.length; index++) {
 
-        (oldAmout[idx] === item.amount) ? (oldAmout[idx] = item.amount)
-          : (oldAmout[idx] = parseInt(this.state.amount[idx]) + 1)
+        if (index === idx) {
 
-        data = {
-          id: item.id,
-          name: item.name,
-          image: item.image,
-          price: item.price,
-          type: item.type,
-          amount: item.amount,
-          num: oldAmout[idx]
+          (oldAmout[idx] === item.amount) ? (oldAmout[idx] = item.amount)
+            : (oldAmout[idx] = parseInt(this.state.amount[idx]) + 1)
+
+          data = {
+            id: item.id,
+            name: item.name,
+            image: item.image,
+            price: item.price,
+            type: item.type,
+            amount: item.amount,
+            num: oldAmout[idx]
+          }
+          oldStore[idx] = data
+          console.log(oldStore);
+          await this.props.cartAdd(oldStore)
         }
-        oldStore[idx] = data
-        console.log(oldStore);
-        await this.props.cartAdd(oldStore)
       }
-    }
-    await this.setState({
-      ...this.state,
-      amount: oldAmout
+      await this.setState({
+        ...this.state,
+        amount: oldAmout
 
-    })
+      })
+    }else(
+      alert('kho đã hết hàng')
+    )
   }
-
   minusMore = async (idx, item) => {
-    let oldStore = this.state.listData
-    let oldAmout = this.state.amount
-    let data = ''
-    for (let index = 0; index < oldAmout.length; index++) {
-      if (index === idx) {
-        console.log(index + "==>" + oldAmout[idx] + "==>" + idx);
+    if (item.num > 1) {
+      let total = parseInt(this.state.total) - (parseInt(item.price))
+       await this.setState({
+        ...this.state,
+        total: total
+      })
+      let oldStore = this.state.listData
+      let oldAmout = this.state.amount
+      let data = ''
+      for (let index = 0; index < oldAmout.length; index++) {
 
-        (oldAmout[idx] === 1) ? (oldAmout[idx] = 1)
-          : (oldAmout[idx] = parseInt(this.state.amount[idx]) - 1)
-        data = {
-          id: item.id,
-          name: item.name,
-          image: item.image,
-          price: item.price,
-          type: item.type,
-          amount: item.amount,
-          num: oldAmout[idx]
+        if (index === idx) {
+          console.log(index + "==>" + oldAmout[idx] + "==>" + JSON.stringify(oldStore[idx]));
+          (oldAmout[idx] === 1) ? (oldAmout[idx] = 1)
+            : (oldAmout[idx] = parseInt(this.state.amount[idx]) - 1)
+          data = {
+            id: item.id,
+            name: item.name,
+            image: item.image,
+            price: item.price,
+            type: item.type,
+            amount: item.amount,
+            num: oldAmout[idx]
+          }
+          oldStore[idx] = data
+          console.log(oldStore);
+          await this.props.cartAdd(oldStore)
         }
-        oldStore[idx] = data
-        console.log(oldStore);
-        await this.props.cartAdd(oldStore)
       }
+      await this.setState({
+        ...this.state,
+        amount: oldAmout
+      })
     }
-    await this.setState({
-      ...this.state,
-      amount: oldAmout
-    })
   }
   HandleDelItem = async (item, idx) => {
+    let total = parseInt(this.state.total) - (parseInt(item.price) * parseInt(item.num))
+    await this.setState({
+      ...this.state,
+      total: total
+    })
     let oldStore = this.state.listData
     let oldAmout = this.state.amount
     oldStore.splice(idx, 1)
@@ -188,7 +208,7 @@ class Tables extends React.Component {
             {item.name}
           </td>
           <td>
-           <img style={{ width: '75px', height: '75px' }}  src= {item.image}></img>
+            <img style={{ width: '75px', height: '75px' }} src={item.image}></img>
           </td>
           <td>{item.price} đ</td>
 
