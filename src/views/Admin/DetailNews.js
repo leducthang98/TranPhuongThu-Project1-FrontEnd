@@ -129,8 +129,7 @@ const DetailNews = (props) => {
         }
     }
     useEffect(() => {
-        // console.log(item);
-    }, [item])
+     }, [item])
 
     return (
         <div>
@@ -173,9 +172,9 @@ const DetailNews = (props) => {
                     </Row>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="success" onClick={() => updateButton()}>Cập nhật</Button>
+                    {/* <Button color="success" onClick={() => updateButton()}>Cập nhật</Button> */}
 
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                    <Button color="secondary" onClick={toggle}>Đóng</Button>
                 </ModalFooter>
             </Modal>
         </div >

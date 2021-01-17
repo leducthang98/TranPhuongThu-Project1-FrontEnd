@@ -107,7 +107,6 @@ const DetailOrder = (props) => {
                         </Col>
                     </Row>
                 </ModalBody>
-
                 <ModalFooter>
                     <Button color="secondary" onClick={toggle}>Đóng</Button>
                 </ModalFooter>

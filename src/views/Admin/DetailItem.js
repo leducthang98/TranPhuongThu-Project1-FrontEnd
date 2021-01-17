@@ -211,7 +211,7 @@ const DetailItem = (props) => {
                 <ModalFooter>
                     <Button color="success" onClick={() => updateButton()}>Cập nhật</Button>
 
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                    <Button color="secondary" onClick={toggle}>Đóng</Button>
                 </ModalFooter>
             </Modal>
         </div >
