@@ -45,7 +45,7 @@ import { connect } from "react-redux";
 import { store } from "react-notifications-component";
 import Button from "reactstrap/lib/Button";
 import MakeRequest from "views/MakeRequest";
-import { baseUrl } from "domain";
+import { baseUrl } from "../../domain";
 import axios from "axios";
 import Alert from "reactstrap/lib/Alert";
 
@@ -111,14 +111,14 @@ class Tables extends React.Component {
         amount: oldAmout
 
       })
-    }else(
+    } else (
       alert('kho đã hết hàng')
     )
   }
   minusMore = async (idx, item) => {
     if (item.num > 1) {
       let total = parseInt(this.state.total) - (parseInt(item.price))
-       await this.setState({
+      await this.setState({
         ...this.state,
         total: total
       })
@@ -208,7 +208,7 @@ class Tables extends React.Component {
             {item.name}
           </td>
           <td>
-            <img style={{ width: '75px', height: '75px' }} src={item.image}></img>
+            <img style={{ width: '75px', height: '75px' }} src={baseUrl + item.image}></img>
           </td>
           <td>{item.price} đ</td>
 

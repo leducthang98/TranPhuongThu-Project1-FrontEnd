@@ -213,9 +213,6 @@ class Order extends React.Component {
                   display: 'flex', paddingLeft: '50px', width: '500p',
                   border: '1px solid #f7fafc', paddingTop: '15px'
                 }}>
-                  {/* <div style={{ width: "300px" }}>
-                    <p style={{ fontWeight: 500, color: '#000' }}> </p >
-                  </div> */}
 
                 </div>
               </Card>
